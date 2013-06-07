@@ -2,6 +2,7 @@
 #define TEABAG_GAME_HPP
 
 #include "defines.hpp"
+#include "map.hpp"
 #include "tileman.hpp"
 
 #include <iostream>
@@ -30,10 +31,8 @@ public:
 private:
 	std::string gameName;
 
-	std::string currentMapName;
-	std::vector<std::vector<sf::RectangleShape>> currentMapTiles;
-
 	TileManager tileMan;
+	GameMap gameMap;
 
 	sf::RenderWindow gameWindow;
 
