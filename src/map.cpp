@@ -2,10 +2,12 @@
 
 TEABAG_NAMESPACE_BEGIN
 
-GameMap::GameMap(TileManager *tileMan)
-	: tileMan(tileMan) {
+GameMap::GameMap(TileManager *tileMan, SpriteManager *sprMan, EntityManager *entMan)
+	: tileMan(tileMan),
+	  sprMan(sprMan),
+	  entMan(entMan) {
 
-} // GameMap::GameMap(TileManager *tileMan);
+} // GameMap::GameMap(TileManager *tileMan, SpriteManager *sprMan, EntityManager *entMan);
 
 int GameMap::loadMap(std::string name) {
 	mapName = name;
@@ -45,7 +47,34 @@ int GameMap::loadMap() {
 
 		} // if(value == "tile");
 
+		if(value == "spritesheet") {
+			std::string name;
+			lineStream >> name;
+
+			if(sprMan->loadSpritesheet(name) < 0) {
+				mapfile.close();
+				return -1;
+
+			} // if(sprMan->loadSpritesheet(name) < 0);
+
+		} // if(value == "spritesheet");
+
+		if(value == "entity") {
+			std::string name;
+			int x, y;
+			lineStream >> name >> x >> y;
+
+			if(entMan->loadEntity(x, y, name) < 0) {
+				mapfile.close();
+				return -1;
+
+			} // if(entMan->loadEntity(x, y, name) < 0);
+
+		} // if(value == "entity");
+
 	} // while(std::getline(mapfile, line));
+
+	mapfile.close();
 
 	// Read map img.
 	filename = TEABAG_MAP_IMGFILE(mapName);
@@ -70,7 +99,7 @@ int GameMap::loadMap() {
 
 	} // for(int x = 0; x < mapimg.getSize().x; x++);
 
-	mapfile.close();
+	entMan->setAllSprites(sprMan);
 
 	return 0;
 

@@ -8,6 +8,9 @@
 #define TEABAG_MAP_TEXTFILE(map_name) "data/maps/" + map_name + ".tea"
 #define TEABAG_MAP_IMGFILE(map_name) "data/maps/" + map_name + ".png"
 #define TEABAG_TILE_FILE(tile_name) "data/tiles/" + tile_name + ".png"
+#define TEABAG_SPR_TEXTFILE(sprite_name) "data/sprites/" + sprite_name + ".tea"
+#define TEABAG_SPR_IMGFILE(sprite_name) "data/sprites/" + sprite_name + ".png"
+#define TEABAG_ENT_FILE(ent_name) "data/entities/" + ent_name + ".tea"
 
 #define TEABAG_DEFAULT_NAME "Teabag Engine"
 

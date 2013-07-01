@@ -4,7 +4,9 @@ TEABAG_NAMESPACE_BEGIN
 
 Game::Game()
 	: tileMan(),
-	  gameMap(&tileMan) {
+	  sprMan(),
+	  entMan(),
+	  gameMap(&tileMan, &sprMan, &entMan) {
 
 } // Game::Game(bool init);
 
@@ -87,13 +89,18 @@ int Game::run() {
 
 		gameWindow.clear();
 
-		for(auto v : gameMap.mapTiles) {
-			for(auto t : v) {
+		for(auto& v : gameMap.mapTiles) {
+			for(auto& t : v) {
 				gameWindow.draw(t);
 
-			} // for(auto t : v);
+			} // for(auto& t : v);
 
-		} // for(auto v : gameMap.mapTiles);
+		} // for(auto& v : gameMap.mapTiles);
+
+		for(auto& p : entMan.entities) {
+			gameWindow.draw(p.second.sprite);
+
+		} // for(auto& p : entMan.entities);
 
 		gameWindow.display();
 

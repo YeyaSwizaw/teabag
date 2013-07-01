@@ -3,6 +3,8 @@
 
 #include "defines.hpp"
 #include "tileman.hpp"
+#include "sprman.hpp"
+#include "entman.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -17,7 +19,7 @@ class Game;
 
 class GameMap {
 public:
-	GameMap(TileManager *tileMan);
+	GameMap(TileManager *tileMan, SpriteManager *sprMan, EntityManager *entMan);
 
 	int loadMap(std::string name);
 	int loadMap();
@@ -26,6 +28,8 @@ private:
 	friend class Game;
 
 	TileManager *tileMan;
+	SpriteManager *sprMan;
+	EntityManager *entMan;
 
 	std::string mapName;
 	std::vector<std::vector<sf::RectangleShape>> mapTiles;

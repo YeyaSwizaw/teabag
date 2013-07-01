@@ -4,6 +4,8 @@
 #include "defines.hpp"
 #include "map.hpp"
 #include "tileman.hpp"
+#include "sprman.hpp"
+#include "entman.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -32,6 +34,8 @@ private:
 	std::string gameName;
 
 	TileManager tileMan;
+	SpriteManager sprMan;
+	EntityManager entMan;
 	GameMap gameMap;
 
 	sf::RenderWindow gameWindow;
