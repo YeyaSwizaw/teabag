@@ -18,6 +18,8 @@ class Entity {
 public:
 	Entity(sf::Vector2f pos, std::string sprName, sf::Vector2i sprPos);
 
+	void move(sf::Vector2f delta);
+
 private:
 	friend class Game;
 	friend class Map;

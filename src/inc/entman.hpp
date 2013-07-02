@@ -21,6 +21,8 @@ public:
 	int loadEntity(int x, int y, std::string name);
 	int setAllSprites(SpriteManager *sprMan);
 
+	Entity* getEntity(std::string name);
+
 private:
 	friend class Game;
 

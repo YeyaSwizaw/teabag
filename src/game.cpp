@@ -76,6 +76,11 @@ int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(
 
 } // int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
 
+Entity* Game::getEntity(std::string name) {
+	return entMan.getEntity(name);
+
+} // Entity* Game::getEntity(std::string name);
+
 int Game::run() {
 	while(gameWindow.isOpen()) {
 		sf::Event e;

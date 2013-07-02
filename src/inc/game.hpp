@@ -32,6 +32,8 @@ public:
 
 	int addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
 
+	Entity* getEntity(std::string name);
+
 	int run();
 
 	int quit();

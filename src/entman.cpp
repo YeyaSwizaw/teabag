@@ -60,4 +60,9 @@ int EntityManager::setAllSprites(SpriteManager *sprMan) {
 
 } // int EntityManager::setAllSprites(SpriteManager *sprMan);
 
+Entity* EntityManager::getEntity(std::string name) {
+	return (entities.count(name) == 0 ? NULL : &(entities.at(name)));
+
+} // Entity* EntityManager::getEntity(std::string name);
+
 TEABAG_NAMESPACE_END
