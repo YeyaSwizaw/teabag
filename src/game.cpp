@@ -71,19 +71,16 @@ int Game::init(bool loadMapNow) {
 
 } // void Game::init();
 
+int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func) {
+	return eventMan.addCallback(sfEventType, func);
+
+} // int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
+
 int Game::run() {
 	while(gameWindow.isOpen()) {
 		sf::Event e;
 		while(gameWindow.pollEvent(e)) {
-			switch(e.type) {
-				case sf::Event::Closed:
-					gameWindow.close();
-					break;
-
-				default:
-					break;
-
-			} // switch(e.type);
+			eventMan.handleEvent(e);
 
 		} // while(gameWindow.pollEvent(e));
 
@@ -109,5 +106,12 @@ int Game::run() {
 	return 0;
 
 } // int Game::run();
+
+int Game::quit() {
+	gameWindow.close();
+
+	return 0;
+
+} // int Game::quit();
 
 TEABAG_NAMESPACE_END

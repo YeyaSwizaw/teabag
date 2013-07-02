@@ -6,6 +6,7 @@
 #include "tileman.hpp"
 #include "sprman.hpp"
 #include "entman.hpp"
+#include "eventman.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -14,6 +15,7 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 
@@ -28,7 +30,11 @@ public:
 	int loadMap();
 	int loadMap(std::string mapName);
 
+	int addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
+
 	int run();
+
+	int quit();
 
 private:
 	std::string gameName;
@@ -37,6 +43,8 @@ private:
 	SpriteManager sprMan;
 	EntityManager entMan;
 	GameMap gameMap;
+
+	EventManager eventMan;
 
 	sf::RenderWindow gameWindow;
 
