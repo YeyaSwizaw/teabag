@@ -14,6 +14,8 @@ int Test::run() {
 	g.addEventCallback(sf::Event::KeyPressed, [](sf::Event e){std::cout << "Key Pressed: " << e.key.code << "\n";});
 	g.addEventCallback(sf::Event::KeyPressed, std::bind(&Test::moveEntity, this, std::placeholders::_1));
 
+	g.addCollisionCallback("test", [&](std::string s){g.getEntity("test")->move(lastDelta * -1.0f);});
+
 	g.run();
 
 	return 0;
@@ -44,6 +46,8 @@ void Test::moveEntity(sf::Event e) {
 	} // else if(e.key.code == sf::Keyboard::Right);
 
 	g.getEntity("test")->move(d * 5.0f);
+
+	lastDelta = d;
 
 } // void Test::moveEntity(sf::Event e);
 

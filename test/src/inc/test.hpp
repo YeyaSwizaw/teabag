@@ -19,6 +19,8 @@ public:
 private:
 	teabag::Game g;
 
+	sf::Vector2f lastDelta;
+
 }; // class Test;
 
 #endif // TEABAGTEST_HPP

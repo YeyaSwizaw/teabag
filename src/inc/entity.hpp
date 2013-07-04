@@ -13,6 +13,7 @@ TEABAG_NAMESPACE_BEGIN
 class Game;
 class Map;
 class EntityManager;
+class EventManager;
 
 class Entity {
 public:
@@ -24,6 +25,7 @@ private:
 	friend class Game;
 	friend class Map;
 	friend class EntityManager;
+	friend class EventManager;
 
 	std::string sprName;
 	sf::Vector2i sprPos;

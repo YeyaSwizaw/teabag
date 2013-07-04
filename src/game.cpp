@@ -83,6 +83,11 @@ int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(
 
 } // int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
 
+int Game::addCollisionCallback(std::string entName, std::function<void(std::string)> func) {
+	return eventMan.addCollisionCallback(entName, func);
+
+} // int Game::addCollisionCallback(std::string entName, std::function<void(std::string)> func);
+
 Entity* Game::getEntity(std::string name) {
 	return entMan.getEntity(name);
 
@@ -105,6 +110,8 @@ int Game::run() {
 			} // for(auto& t : v);
 
 		} // for(auto& v : gameMap.mapTiles);
+
+		eventMan.checkCollisions(&entMan);
 
 		for(auto& p : entMan.entities) {
 			gameWindow.draw(p.second.sprite);

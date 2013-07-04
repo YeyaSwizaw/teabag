@@ -31,6 +31,7 @@ public:
 	int loadMap(std::string mapName);
 
 	int addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
+	int addCollisionCallback(std::string entName, std::function<void(std::string)> func);
 
 	Entity* getEntity(std::string name);
 

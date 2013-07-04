@@ -2,6 +2,8 @@
 #define TEABAG_EVENTMAN_HPP
 
 #include "defines.hpp"
+#include "entity.hpp"
+#include "entman.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -16,11 +18,14 @@ public:
 	EventManager();
 
 	int addCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
+	int addCollisionCallback(std::string entName, std::function<void(std::string)> func);
 
 	void handleEvent(sf::Event e);
+	void checkCollisions(EntityManager *entMan);
 
 private:
 	std::unordered_map<int, std::vector<std::function<void(sf::Event)>>> callbacks;
+	std::unordered_map<std::string, std::vector<std::function<void(std::string)>>> collisionCallbacks;
 
 }; // class EventManager;
 

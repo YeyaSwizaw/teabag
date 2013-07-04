@@ -13,6 +13,7 @@
 TEABAG_NAMESPACE_BEGIN
 
 class Game;
+class EventManager;
 
 class EntityManager {
 public:
@@ -25,6 +26,7 @@ public:
 
 private:
 	friend class Game;
+	friend class EventManager;
 
 	std::unordered_map<std::string, Entity> entities;
 
