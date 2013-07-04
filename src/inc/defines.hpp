@@ -14,6 +14,9 @@
 
 #define TEABAG_DEFAULT_NAME "Teabag Engine"
 
+#define TEABAG_DEFAULT_WIN_WIDTH 800
+#define TEABAG_DEFAULT_WIN_HEIGHT 600
+
 #define TEABAG_DEFAULT_TILE_SIZE 32
 
 #define TEABAG_ERROR(tea_err_str) std::cout << "Error: " << tea_err_str << "\n";

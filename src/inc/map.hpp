@@ -31,6 +31,8 @@ private:
 	SpriteManager *sprMan;
 	EntityManager *entMan;
 
+	unsigned int tileSize;
+
 	std::string mapName;
 	std::vector<std::vector<sf::RectangleShape>> mapTiles;
 

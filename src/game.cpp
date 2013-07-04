@@ -20,6 +20,9 @@ int Game::init(bool loadMapNow) {
 
 	} // if(!mainfile);
 
+	unsigned int winWidth = TEABAG_DEFAULT_WIN_WIDTH;
+	unsigned int winHeight = TEABAG_DEFAULT_WIN_HEIGHT;
+
 	std::string line;
 	while(std::getline(mainfile, line)) {
 		std::istringstream lineStream(line);
@@ -28,9 +31,13 @@ int Game::init(bool loadMapNow) {
 		lineStream >> value;
 
 		if(value == "name") {
-			gameName == lineStream.str();
+			gameName = lineStream.str().substr(5);
 
 		} // if(value == "name");
+
+		else if(value == "windowsize")
+			lineStream >> winWidth >> winHeight;
+		
 		else if(value == "start") {
 			lineStream >> gameMap.mapName;
 
@@ -65,7 +72,7 @@ int Game::init(bool loadMapNow) {
 	} // if(loadMapNow);
 
 	TEABAG_LOG("Opening SFML window.")
-	gameWindow.create(sf::VideoMode(800, 600), gameName);
+	gameWindow.create(sf::VideoMode(winWidth, winHeight), gameName);
 
 	return 0;
 
