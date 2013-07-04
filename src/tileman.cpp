@@ -11,7 +11,7 @@ TileManager::TileManager()
 
 } // TileManager::TileManager();
 
-int TileManager::loadTile(int r, int g, int b, std::string name) {
+int TileManager::loadTile(int r, int g, int b, std::string name, bool collision) {
 	std::string filename = TEABAG_TILE_FILE(name);
 
 	sf::Texture t;
@@ -20,7 +20,9 @@ int TileManager::loadTile(int r, int g, int b, std::string name) {
 
 	nameFromColour.insert(std::make_pair(sf::Color(r, g, b), name));
 
-	TEABAG_LOG("Tile Loaded: " + std::to_string(r) + " " + std::to_string(g) + " " + (std::to_string)(b) + " " + name)
+	hasCollision.insert(std::make_pair(name, collision));
+
+	TEABAG_LOG("Tile Loaded: " + std::to_string(r) + " " + std::to_string(g) + " " + std::to_string(b) + " " + name + " " + std::to_string(collision));
 
 	return 0;
 
@@ -40,5 +42,10 @@ std::string TileManager::getNameFromColour(sf::Color colour) {
 	return nameFromColour.at(colour);
 
 } // std::string TileManager::getNameFromColour(sf::Color colour);
+
+bool TileManager::canCollide(std::string name) {
+	return hasCollision.at(name);
+
+} // bool TileManager::canCollide(std::string name);
 
 TEABAG_NAMESPACE_END

@@ -20,9 +20,9 @@ int EventManager::addCallback(sf::Event::EventType sfEventType, std::function<vo
 
 } // int EventManager::addCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
 
-int EventManager::addCollisionCallback(std::string entName, std::function<void(std::string)> func) {
+int EventManager::addCollisionCallback(std::string entName, std::function<void(std::string, bool)> func) {
 	if(collisionCallbacks.count(entName) == 0) {
-		collisionCallbacks.insert(std::make_pair(entName, std::vector<std::function<void(std::string)>>({ func })));
+		collisionCallbacks.insert(std::make_pair(entName, std::vector<std::function<void(std::string, bool)>>({ func })));
 
 	} // if(collisionCallbacks.count(entName) == 0);
 	else {
@@ -32,7 +32,7 @@ int EventManager::addCollisionCallback(std::string entName, std::function<void(s
 
 	return 0;
 
-} // int EventManager::addCollisionCallback(std::string entName, std::function<void(std::string)> func);
+} // int EventManager::addCollisionCallback(std::string entName, std::function<void(std::string, bool)> func);
 
 int EventManager::addTickCallback(std::function<void()> func) {
 	tickCallbacks.push_back(func);
@@ -52,7 +52,7 @@ void EventManager::handleEvent(sf::Event e) {
 
 } // void EventManager::handleEvent(sf::Event e);
 
-void EventManager::checkCollisions(EntityManager *entMan) {
+void EventManager::checkCollisions(EntityManager *entMan, TileManager *tileMan, GameMap *gMap) {
 	for(auto& collPair : collisionCallbacks) {
 		Entity* e = entMan->getEntity(collPair.first);
 
@@ -60,7 +60,7 @@ void EventManager::checkCollisions(EntityManager *entMan) {
 			if(collPair.first != entPair.first) {
 				while(e->sprite.getGlobalBounds().intersects(entPair.second.sprite.getGlobalBounds())) {
 					for(auto& f : collPair.second) {
-						f(entPair.first);
+						f(entPair.first, false);
 
 					} // for(auto& f : collPair.second);
 
@@ -70,9 +70,37 @@ void EventManager::checkCollisions(EntityManager *entMan) {
 
 		} // for(auto* entPair : entMan->entities);
 
+		std::string name = "";
+
+		while([&](std::string &n){
+			int x1 = static_cast<int>(std::floor(e->sprite.getGlobalBounds().left / gMap->tileSize));
+			int y1 = static_cast<int>(std::floor(e->sprite.getGlobalBounds().top / gMap->tileSize));
+
+			for(int x = x1; x <= (x1 + 1); x++) {
+				for(int y = y1; y <= (y1 + 1); y++) {
+					if(tileMan->canCollide(gMap->mapTileNames[x][y])) {
+						n = gMap->mapTileNames[x][y];
+						return true;
+
+					} // if(tileMan->canCollide(gMap->mapTileNames[y][x]));
+
+				} // for(int y = y1; y <= (y1 + 1); y++);
+
+			} // for(int x = x1; x <= (x1 + 1); x++);
+
+			return false;
+
+		}(name)) {
+			for(auto& f : collPair.second) {
+				f(name, true);
+
+			} // for(auto& f : collPair.second);
+
+		} // });
+
 	} // for(auto& p : collisionCallbacks);
 
-} // void EventManager::checkCollisions(EntityManager *entMan);
+} // void EventManager::checkCollisions(EntityManager *entMan, TileManager *tileMan, GameMap *gMap);
 
 void EventManager::callTickCallbacks() {
 	for(auto& f : tickCallbacks) {

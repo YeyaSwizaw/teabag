@@ -16,6 +16,7 @@
 TEABAG_NAMESPACE_BEGIN
 
 class Game;
+class EventManager;
 
 class GameMap {
 public:
@@ -26,6 +27,7 @@ public:
 
 private:
 	friend class Game;
+	friend class EventManager;
 
 	TileManager *tileMan;
 	SpriteManager *sprMan;
@@ -35,6 +37,7 @@ private:
 
 	std::string mapName;
 	std::vector<std::vector<sf::RectangleShape>> mapTiles;
+	std::vector<std::vector<std::string>> mapTileNames;
 
 }; // class GameMap;
 

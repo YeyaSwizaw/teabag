@@ -39,13 +39,14 @@ int GameMap::loadMap() {
 		if(value == "tile") {
 			int r, g, b;
 			std::string name;
-			lineStream >> r >> g >> b >> name;
+			bool hasCollision;
+			lineStream >> r >> g >> b >> name >> hasCollision;
 
-			if(tileMan->loadTile(r, g, b, name) < 0) {
+			if(tileMan->loadTile(r, g, b, name, hasCollision) < 0) {
 				mapfile.close();
 				return -1;
 
-			} // if(tileMan->loadTile(r, g, b, name) < 0);
+			} // if(tileMan->loadTile(r, g, b, name, hasCollision) < 0);
 
 		} // if(value == "tile");
 
@@ -95,12 +96,15 @@ int GameMap::loadMap() {
 
 	for(unsigned int x = 0; x < mapimg.getSize().x; x++) {
 		mapTiles.push_back(std::vector<sf::RectangleShape>());
+		mapTileNames.push_back(std::vector<std::string>());
 
 		for(unsigned int y = 0; y < mapimg.getSize().y; y++) {
 			mapTiles.back().push_back(sf::RectangleShape());
 			mapTiles.back().back().setSize(sf::Vector2f(tileSize, tileSize));
 			mapTiles.back().back().setPosition(x * tileSize, y * tileSize);
 			mapTiles.back().back().setTexture(tileMan->getTexFromColour(mapimg.getPixel(x, y)));
+
+			mapTileNames.back().push_back(tileMan->getNameFromColour(mapimg.getPixel(x, y)));
 
 		} // for(int y = 0; y < mapimg.getSize().y; y++);
 
