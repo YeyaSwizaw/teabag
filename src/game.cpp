@@ -23,6 +23,8 @@ int Game::init(bool loadMapNow) {
 	unsigned int winWidth = TEABAG_DEFAULT_WIN_WIDTH;
 	unsigned int winHeight = TEABAG_DEFAULT_WIN_HEIGHT;
 
+	unsigned int fpsLimit = TEABAG_DEFAULT_FRAMERATE_LIMIT;
+
 	std::string line;
 	while(std::getline(mainfile, line)) {
 		std::istringstream lineStream(line);
@@ -35,8 +37,15 @@ int Game::init(bool loadMapNow) {
 
 		} // if(value == "name");
 
-		else if(value == "windowsize")
+		else if(value == "windowsize") {
 			lineStream >> winWidth >> winHeight;
+
+		} // else if(value == "windowsize");
+
+		else if(value == "fps") {
+			lineStream >> fpsLimit;
+
+		} // else if(value == "fps");
 		
 		else if(value == "start") {
 			lineStream >> gameMap.mapName;
@@ -73,6 +82,8 @@ int Game::init(bool loadMapNow) {
 
 	TEABAG_LOG("Opening SFML window.")
 	gameWindow.create(sf::VideoMode(winWidth, winHeight), gameName);
+
+	gameWindow.setFramerateLimit(fpsLimit);
 
 	return 0;
 

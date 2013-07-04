@@ -19,6 +19,8 @@
 
 #define TEABAG_DEFAULT_TILE_SIZE 32
 
+#define TEABAG_DEFAULT_FRAMERATE_LIMIT 30
+
 #define TEABAG_ERROR(tea_err_str) std::cout << "Error: " << tea_err_str << "\n";
 #define TEABAG_FILE_NOT_FOUND(file) TEABAG_ERROR(std::string("File \"") + file + std::string("\" not found"));
 #define TEABAG_LOG(tea_log_str) std::cout << "Log: " << tea_log_str << "\n";
