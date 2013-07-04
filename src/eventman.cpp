@@ -34,6 +34,13 @@ int EventManager::addCollisionCallback(std::string entName, std::function<void(s
 
 } // int EventManager::addCollisionCallback(std::string entName, std::function<void(std::string)> func);
 
+int EventManager::addTickCallback(std::function<void()> func) {
+	tickCallbacks.push_back(func);
+
+	return 0;
+
+} // int EventManager::addTickCallback(std::function<void()> func);
+
 void EventManager::handleEvent(sf::Event e) {
 	if(callbacks.count(e.type) != 0) {
 		for(auto& f : callbacks.at(e.type)) {
@@ -66,5 +73,13 @@ void EventManager::checkCollisions(EntityManager *entMan) {
 	} // for(auto& p : collisionCallbacks);
 
 } // void EventManager::checkCollisions(EntityManager *entMan);
+
+void EventManager::callTickCallbacks() {
+	for(auto& f : tickCallbacks) {
+		f();
+
+	} // for(auto& f : tickCallbacks);
+
+} // void EventManager::callTickCallbacks();
 
 TEABAG_NAMESPACE_END

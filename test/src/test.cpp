@@ -16,6 +16,8 @@ int Test::run() {
 
 	g.addCollisionCallback("test", [&](std::string s){g.getEntity("test")->move(lastDelta * -1.0f);});
 
+	g.addTickCallback(std::bind(&Test::onTick, this));
+
 	g.run();
 
 	return 0;
@@ -50,6 +52,14 @@ void Test::moveEntity(sf::Event e) {
 	lastDelta = d;
 
 } // void Test::moveEntity(sf::Event e);
+
+void Test::onTick() {
+	if(g.isKeyDown(sf::Keyboard::Space)) {
+		std::cout << "SPAAAAAAAAAAAAAACE\n";
+
+	} // if(g.isKeyDown(sf::Keyboard::Space));
+
+} // void Test::onTick();
 
 int main(int argc, char* argv[]) {
 	Test t;

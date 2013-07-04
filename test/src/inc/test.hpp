@@ -16,6 +16,8 @@ public:
 
 	void moveEntity(sf::Event e);
 
+	void onTick();
+
 private:
 	teabag::Game g;
 

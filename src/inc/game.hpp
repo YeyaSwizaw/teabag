@@ -32,6 +32,9 @@ public:
 
 	int addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
 	int addCollisionCallback(std::string entName, std::function<void(std::string)> func);
+	int addTickCallback(std::function<void()> func);
+
+	bool isKeyDown(sf::Keyboard::Key k);
 
 	Entity* getEntity(std::string name);
 

@@ -99,6 +99,16 @@ int Game::addCollisionCallback(std::string entName, std::function<void(std::stri
 
 } // int Game::addCollisionCallback(std::string entName, std::function<void(std::string)> func);
 
+int Game::addTickCallback(std::function<void()> func) {
+	return eventMan.addTickCallback(func);
+
+} // int Game::addTickCallback(std::function<void()> func);
+
+bool Game::isKeyDown(sf::Keyboard::Key k) {
+	return sf::Keyboard::isKeyPressed(k);
+
+} // bool Game::isKeyDown(sf::Keyboard::Key k);
+
 Entity* Game::getEntity(std::string name) {
 	return entMan.getEntity(name);
 
@@ -106,11 +116,15 @@ Entity* Game::getEntity(std::string name) {
 
 int Game::run() {
 	while(gameWindow.isOpen()) {
+		eventMan.callTickCallbacks();
+
 		sf::Event e;
 		while(gameWindow.pollEvent(e)) {
 			eventMan.handleEvent(e);
 
 		} // while(gameWindow.pollEvent(e));
+
+		eventMan.checkCollisions(&entMan);
 
 		gameWindow.clear();
 
@@ -121,8 +135,6 @@ int Game::run() {
 			} // for(auto& t : v);
 
 		} // for(auto& v : gameMap.mapTiles);
-
-		eventMan.checkCollisions(&entMan);
 
 		for(auto& p : entMan.entities) {
 			gameWindow.draw(p.second.sprite);

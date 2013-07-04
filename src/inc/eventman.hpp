@@ -19,13 +19,16 @@ public:
 
 	int addCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
 	int addCollisionCallback(std::string entName, std::function<void(std::string)> func);
+	int addTickCallback(std::function<void()> func);
 
 	void handleEvent(sf::Event e);
 	void checkCollisions(EntityManager *entMan);
+	void callTickCallbacks();
 
 private:
 	std::unordered_map<int, std::vector<std::function<void(sf::Event)>>> callbacks;
 	std::unordered_map<std::string, std::vector<std::function<void(std::string)>>> collisionCallbacks;
+	std::vector<std::function<void()>> tickCallbacks;
 
 }; // class EventManager;
 
