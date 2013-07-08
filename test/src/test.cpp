@@ -14,7 +14,7 @@ int Test::run() {
 	g.addEventCallback(sf::Event::KeyPressed, [](sf::Event e){std::cout << "Key Pressed: " << e.key.code << "\n";});
 	g.addEventCallback(sf::Event::KeyPressed, std::bind(&Test::moveEntity, this, std::placeholders::_1));
 
-	g.addCollisionCallback("test", [&](std::string s, bool b){g.getEntity("test")->move(lastDelta * -1.0f);});
+	g.addCollisionCallback("test", [&](teabag::Collision c){g.getEntity("test")->move(lastDelta * -1.0f);});
 
 	g.addTickCallback(std::bind(&Test::onTick, this));
 

@@ -6,12 +6,14 @@
 #include "entman.hpp"
 #include "tileman.hpp"
 #include "map.hpp"
+#include "collision.hpp"
 
 #include <functional>
 #include <unordered_map>
 #include <vector>
 
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 TEABAG_NAMESPACE_BEGIN
 
@@ -20,7 +22,7 @@ public:
 	EventManager();
 
 	int addCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
-	int addCollisionCallback(std::string entName, std::function<void(std::string, bool)> func);
+	int addCollisionCallback(std::string entName, std::function<void(Collision)> func);
 	int addTickCallback(std::function<void()> func);
 
 	void handleEvent(sf::Event e);
@@ -29,7 +31,7 @@ public:
 
 private:
 	std::unordered_map<int, std::vector<std::function<void(sf::Event)>>> callbacks;
-	std::unordered_map<std::string, std::vector<std::function<void(std::string, bool)>>> collisionCallbacks;
+	std::unordered_map<std::string, std::vector<std::function<void(Collision)>>> collisionCallbacks;
 	std::vector<std::function<void()>> tickCallbacks;
 
 }; // class EventManager;

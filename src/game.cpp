@@ -94,10 +94,10 @@ int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(
 
 } // int Game::addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
 
-int Game::addCollisionCallback(std::string entName, std::function<void(std::string, bool)> func) {
+int Game::addCollisionCallback(std::string entName, std::function<void(Collision)> func) {
 	return eventMan.addCollisionCallback(entName, func);
 
-} // int Game::addCollisionCallback(std::string entName, std::function<void(std::string, bool)> func);
+} // int Game::addCollisionCallback(std::string entName, std::function<void(Collision)> func);
 
 int Game::addTickCallback(std::function<void()> func) {
 	return eventMan.addTickCallback(func);

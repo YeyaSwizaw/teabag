@@ -31,7 +31,7 @@ public:
 	int loadMap(std::string mapName);
 
 	int addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
-	int addCollisionCallback(std::string entName, std::function<void(std::string, bool)> func);
+	int addCollisionCallback(std::string entName, std::function<void(Collision)> func);
 	int addTickCallback(std::function<void()> func);
 
 	bool isKeyDown(sf::Keyboard::Key k);
