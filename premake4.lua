@@ -1,7 +1,7 @@
 solution "Teabag Engine"
 	configurations { "debug", "release" }
-	include "examples"
 	include "test"
+	--include "examples"
 
 project "teabag"
 	kind "SharedLib"

@@ -2,60 +2,71 @@
 #define TEABAG_GAME_HPP
 
 #include "defines.hpp"
-#include "map.hpp"
-#include "tileman.hpp"
-#include "sprman.hpp"
-#include "entman.hpp"
-#include "eventman.hpp"
-
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <unordered_map>
-#include <vector>
-#include <list>
-#include <functional>
+#include "eventmanager.hpp"
 
 #include <SFML/Graphics.hpp>
 
-TEABAG_NAMESPACE_BEGIN
+TEABAG_NS
 
+/**
+ * The base class for a game.
+ * This class is the starting point for anything created with the teabag
+ * engine. It contains functions to manage initialisation, events, entities,
+ * and the game map.
+ */
 class Game {
 public:
+	/**
+	 * Constructs an empty Game object.
+	 * This does not acually load anything. init() must be called to initialise
+	 * the class properly.
+	 */
 	Game();
 
-	int init(bool loadMapNow = true);
+	/**
+	 * Initialises the game.
+	 * This reads the main game definition file, and initialises the window
+	 * and optionally loads the first map.
+	 *
+	 * @param loadMapNow If true, loads the first map after initialising the
+	 * window.
+	 * @return Negative on failure, 0 on success.
+	 */
+	int init(bool loadMapNow = false);
 
-	int loadMap();
-	int loadMap(std::string mapName);
+	/**
+	 * Adds an event callback.
+	 * Adds a function to be called whenever an event of the specified type
+	 * is fired.
+	 *
+	 * @param eventType The event type the function is to be registered with.
+	 * @param callback The function to be called.
+	 * @return Negative on failure, 0 on success.
+	 */
+	int addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback);
 
-	int addEventCallback(sf::Event::EventType sfEventType, std::function<void(sf::Event)> func);
-	int addCollisionCallback(std::string entName, std::function<void(Collision)> func);
-	int addTickCallback(std::function<void()> func);
-
-	bool isKeyDown(sf::Keyboard::Key k);
-
-	Entity* getEntity(std::string name);
-
+	/**
+	 * Runs the game.
+	 * Starts the main loop, calling tick callbacks every loop, event callbacks
+	 * when the relevant events happen, and collision callbacks when the 
+	 * relevant objects collide.
+	 *
+	 * @return Negative on error, 0 on clean exit.
+	 */
 	int run();
 
-	int quit();
+	/**
+	 * Ends the game.
+	 */
+	void exit();
 
 private:
-	std::string gameName;
+	sf::RenderWindow gameWind;
 
-	TileManager tileMan;
-	SpriteManager sprMan;
-	EntityManager entMan;
-	GameMap gameMap;
-
-	EventManager eventMan;
-
-	sf::RenderWindow gameWindow;
+	EventManager eventManager;
 
 }; // class Game;
 
-TEABAG_NAMESPACE_END
+TEABAG_NS_END
 
 #endif // TEABAG_GAME_HPP
