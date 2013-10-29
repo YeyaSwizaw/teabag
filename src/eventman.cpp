@@ -83,8 +83,8 @@ void EventManager::checkCollisions(EntityManager *entMan, TileManager *tileMan, 
 			int sprx = (int)std::ceil(e->sprite.getGlobalBounds().width / gMap->tileSize);
 			int spry = (int)std::ceil(e->sprite.getGlobalBounds().height / gMap->tileSize);
 
-			for(int x = x1; x <= (x1 + sprx); x++) {
-				for(int y = y1; y <= (y1 + spry); y++) {
+			for(int x = x1; x <= (x1 + sprx) && x < gMap->mapTileNames.size(); x++) {
+				for(int y = y1; y <= (y1 + spry) && y < gMap->mapTileNames[x].size(); y++) {
 					if(tileMan->canCollide(gMap->mapTileNames[x][y])) {
 						c.obj1 = collPair.first;
 						c.obj2 = gMap->mapTileNames[x][y];

@@ -39,7 +39,7 @@ int GameMap::loadMap() {
 		if(value == "tile") {
 			int r, g, b;
 			std::string name;
-			bool hasCollision;
+			int hasCollision;
 			lineStream >> r >> g >> b >> name >> hasCollision;
 
 			if(tileMan->loadTile(r, g, b, name, hasCollision) < 0) {
