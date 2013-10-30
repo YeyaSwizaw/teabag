@@ -25,12 +25,20 @@ private:
 
 	explicit operator bool() const;
 
-	bool nextOption();
+	bool nextLine();
+	template<typename T> bool get(T& t);
 
 	std::ifstream file;
 	std::string line;
+	std::istringstream linestream;
 
 }; // class OptionsParser;
+
+template<typename T>
+bool OptionsParser::get(T& t) {
+	return (linestream >> t);
+
+} // bool OptionsParser::get(T& t);
 
 TEABAG_NS_END
 

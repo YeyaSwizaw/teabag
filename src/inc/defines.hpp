@@ -14,5 +14,6 @@
 #define TEABAG_ERROR(msg) std::cout << "Error: " << msg << std::endl
 
 #define TEABAG_FILE_OPEN_ERROR(file) TEABAG_ERROR("Unable to open file: \"" + file + "\"")
+#define TEABAG_FILE_PARSE_ERROR(file, line) TEABAG_ERROR("Parse error in file: \"" + file + "\", line: \"" + line + "\"")
 
 #endif // TEABAG_DEFINES_HPP

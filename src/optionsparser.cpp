@@ -17,10 +17,12 @@ OptionsParser::operator bool() const {
 
 } // OptionsParser::operator bool();
 
-bool OptionsParser::nextOption() {
+bool OptionsParser::nextLine() {
 	line.clear();
+	linestream.clear();
 	while(std::getline(file, line)) {
 		if(!line.empty()) {
+			linestream.str(line);
 			return true;
 
 		} // if(!line.empty());
@@ -29,6 +31,6 @@ bool OptionsParser::nextOption() {
 
 	return false;
 
-} // bool OptionsParser::nextOption();
+} // bool OptionsParser::nextLine();
 
 TEABAG_NS_END
