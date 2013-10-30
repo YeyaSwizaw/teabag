@@ -1,0 +1,7 @@
+build
+doc
+Makefile
+*.make
+*.so
+test/test
+

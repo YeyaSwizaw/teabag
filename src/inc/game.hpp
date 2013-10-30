@@ -3,6 +3,9 @@
 
 #include "defines.hpp"
 #include "eventmanager.hpp"
+#include "optionsparser.hpp"
+
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 

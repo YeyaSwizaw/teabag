@@ -12,6 +12,10 @@ TEABAG_NS
 
 class Game;
 
+/**
+ * Manages events.
+ * This class is used internally to manage events and callback functions.
+ */
 class EventManager {
 private:
 	friend class Game;

@@ -7,6 +7,18 @@ Game::Game() {
 } // Game::Game();
 
 int Game::init(bool loadMapNow) {
+	std::string file = TEABAG_MAIN_FILE;
+	OptionsParser parser(file);
+	if(!parser) {
+		return -1;
+
+	} // if(!parser);
+
+	while(parser.nextOption()) {
+		std::cout << parser.line << std::endl;
+
+	} // while(parser.nextOption());
+
 	unsigned int width = TEABAG_DEF_WIN_WIDTH;
 	unsigned int height = TEABAG_DEF_WIN_HEIGHT;
 	std::string name = TEABAG_DEF_NAME;
