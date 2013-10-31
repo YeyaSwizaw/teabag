@@ -5,7 +5,7 @@ Test::Test() {
 } // Test::Test();
 
 int Test::run() {
-	if(g.init() < 0) {
+	if(g.init(true) < 0) {
 		return -1;
 
 	} // if(g.init() < 0);

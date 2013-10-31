@@ -18,6 +18,7 @@ int Game::init(bool loadMapNow) {
 	unsigned int width = TEABAG_DEF_WIN_WIDTH;
 	unsigned int height = TEABAG_DEF_WIN_HEIGHT;
 	std::string name = TEABAG_DEF_NAME;
+	std::string start;
 
 	while(parser.nextLine()) {
 		std::string option;
@@ -39,10 +40,31 @@ int Game::init(bool loadMapNow) {
 			} // if(!parser.get(width));
 
 		} // else if(option == "wind");
+		else if(option == "start") {
+			if(!parser.get(start)) {
+				TEABAG_FILE_PARSE_ERROR(file, parser.line);
+				return -1;
+
+			} // if(!parser.get(start));
+
+		} // else if(option == "start");
 
 	} // while(parser.nextLine());
 
 	gameWind.create(sf::VideoMode(width, height), name);
+
+	if(loadMapNow) {
+		if(start.empty()) {
+			return -1;
+
+		} // if(start.empty());
+
+		if(gameMap.loadMap(start) < 0) {
+			return -1;
+
+		} // if(gameMap.loadMap(start) < 0);
+
+	} // if(loadMapNow);
 
 	return 0;
 

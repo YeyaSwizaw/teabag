@@ -4,6 +4,7 @@
 #include "defines.hpp"
 #include "eventmanager.hpp"
 #include "optionsparser.hpp"
+#include "map.hpp"
 
 #include <iostream>
 
@@ -66,6 +67,7 @@ public:
 private:
 	sf::RenderWindow gameWind;
 
+	GameMap gameMap;
 	EventManager eventManager;
 
 }; // class Game;

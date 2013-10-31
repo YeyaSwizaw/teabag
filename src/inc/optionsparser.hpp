@@ -11,6 +11,7 @@
 TEABAG_NS
 
 class Game;
+class GameMap;
 
 /**
  * Parses options files.
@@ -19,6 +20,7 @@ class Game;
 class OptionsParser {
 private:
 	friend class Game;
+	friend class GameMap;
 
 	OptionsParser(std::string filename);
 	~OptionsParser();
