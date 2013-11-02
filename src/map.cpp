@@ -7,6 +7,11 @@ GameMap::GameMap() {
 } // GameMap::GameMap();
 
 int GameMap::loadMap(std::string mapname) {
+	return (loadText(mapname) >= 0) && (loadImg(mapname) >= 0);
+
+} // int GameMap::loadMap(std::string mapname);
+
+int GameMap::loadText(std::string mapname) {
 	std::string filename = TEABAG_MAP_TEA(mapname);
 	OptionsParser parser(filename);
 	if(!parser) {
@@ -42,6 +47,31 @@ int GameMap::loadMap(std::string mapname) {
 
 	return 0;
 
-} // int GameMap::loadMap(std::string mapname);
+} // int GameMap::loadText(std::string mapname);
+
+int GameMap::loadImg(std::string mapname) {
+	std::string filename = TEABAG_MAP_IMG(mapname);
+
+	sf::Image img;
+	if(!img.loadFromFile(filename)) {
+		TEABAG_IMG_ERROR(filename);
+		return -1;
+
+	} // if(!img.loadFromFile(filename));
+
+	for(int x = 0; x < img.getSize().x; ++x) {
+		tileNames.push_back(std::vector<std::string>());
+
+		for(int y = 0; y < img.getSize().y; ++y) {
+			TileInfo* t = tileManager.getTile(img.getPixel(x, y));
+			tileNames.back().push_back(t ? t->name : "");
+
+		} // for(int y = 0; y < img.getSize().y; ++y);
+
+	} // for(int x = 0; x < img.getSize().x; ++x);
+
+	return 0;
+
+} // int GameMap::loadImg(std::string mapname);
 
 TEABAG_NS_END

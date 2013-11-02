@@ -5,6 +5,9 @@
 #include "optionsparser.hpp"
 #include "tilemanager.hpp"
 
+#include <vector>
+#include <string>
+
 TEABAG_NS
 
 class Game;
@@ -21,7 +24,12 @@ private:
 
 	int loadMap(std::string mapname);
 
+	int loadText(std::string mapname);
+	int loadImg(std::string mapname);
+
 	TileManager tileManager;
+
+	std::vector<std::vector<std::string>> tileNames;
 
 }; // class GameMap;
 

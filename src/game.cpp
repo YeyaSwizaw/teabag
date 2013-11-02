@@ -64,6 +64,16 @@ int Game::init(bool loadMapNow) {
 
 		} // if(gameMap.loadMap(start) < 0);
 
+		for(auto a : gameMap.tileNames) {
+			for(auto b : a) {
+				std::cout << b.substr(0, 1) << ":";
+
+			} // for(auto b : a);
+
+			std::cout << std::endl;
+
+		} // for(auto a : gameMap.tileNames);
+
 	} // if(loadMapNow);
 
 	return 0;
