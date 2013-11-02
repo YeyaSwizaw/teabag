@@ -26,15 +26,15 @@ int GameMap::loadMap(std::string mapname) {
 		if(option == "tile") {
 			int r, g, b;
 			std::string name;
-			bool collidable;
+			bool blocking;
 
-			if(!parser.get(r) || !parser.get(g) || !parser.get(b) || !parser.get(name) || !parser.get(collidable)) {
+			if(!parser.get(r) || !parser.get(g) || !parser.get(b) || !parser.get(name) || !parser.get(blocking)) {
 				TEABAG_FILE_PARSE_ERROR(filename, parser.line);
 				return -1;
 
-			} // if(!parser.get(r) || !parser.get(g) || !parser.get(name) || !parser.get(name) || !parser.get(collidable));
+			} // if(!parser.get(r) || !parser.get(g) || !parser.get(name) || !parser.get(name) || !parser.get(blocking));
 
-			std::cout << "Loaded Tile: " << name << ": " << r << ", " << g << ", " << b << " - " << collidable << std::endl;
+			tileManager.addTile(name, r, g, b, blocking);
 
 		} // if(option == "tile");
 

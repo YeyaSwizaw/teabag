@@ -3,6 +3,7 @@
 
 #include "defines.hpp"
 #include "optionsparser.hpp"
+#include "tilemanager.hpp"
 
 TEABAG_NS
 
@@ -19,6 +20,8 @@ private:
 	GameMap();
 
 	int loadMap(std::string mapname);
+
+	TileManager tileManager;
 
 }; // class GameMap;
 

@@ -11,10 +11,12 @@
 
 #define TEABAG_MAIN_FILE "data/main.tea"
 #define TEABAG_MAP_TEA(name) "data/maps/" + name + ".tea"
+#define TEABAG_TILE_IMG(name) "data/tiles/" + name + ".png"
 
 #define TEABAG_ERROR(msg) std::cout << "Error: " << msg << std::endl
 
 #define TEABAG_FILE_OPEN_ERROR(file) TEABAG_ERROR("Unable to open file: \"" + file + "\"")
 #define TEABAG_FILE_PARSE_ERROR(file, line) TEABAG_ERROR("Parse error in file: \"" + file + "\", line: \"" + line + "\"")
+#define TEABAG_IMG_ERROR(file) TEABAG_ERROR("Unable to load image \"" + file + "\"")
 
 #endif // TEABAG_DEFINES_HPP
