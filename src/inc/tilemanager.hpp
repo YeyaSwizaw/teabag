@@ -45,6 +45,7 @@ private:
 
 	std::unordered_map<sf::Color, TileInfo*, std::function<size_t(sf::Color)>> colourMap;
 	std::unordered_map<std::string, TileInfo*> nameMap;
+	unsigned int tileWidth, tileHeight;
 
 }; // class TileManager;
 

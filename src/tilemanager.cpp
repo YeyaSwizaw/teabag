@@ -3,7 +3,7 @@
 TEABAG_NS
 
 TileManager::TileManager()
-	: colourMap(10, [](sf::Color c) {
+	: tileWidth(0), tileHeight(0), colourMap(10, [](sf::Color c) {
 		return std::hash<std::string>()(static_cast<std::ostringstream&>(std::ostringstream().flush() << c.r << c.g << c.b).str());
 									}) {
 
@@ -23,6 +23,12 @@ int TileManager::addTile(std::string name, int r, int g, int b, bool blocking) {
 		return -1;
 
 	} // if(!t.loadFromFile(filename));
+
+	if(colourMap.empty()) {
+		tileWidth = tex.getSize().x;
+		tileHeight = tex.getSize().y;
+
+	} // if(colourMap.empty());
 
 	TileInfo* t = new TileInfo;
 	t->name = name;

@@ -26,10 +26,13 @@ private:
 
 	int loadText(std::string mapname);
 	int loadImg(std::string mapname);
+	int renderTex();
 
 	TileManager tileManager;
 
 	std::vector<std::vector<std::string>> tileNames;
+
+	sf::RenderTexture mapTex;
 
 }; // class GameMap;
 

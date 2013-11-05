@@ -11,6 +11,8 @@ public:
 
 	int run();
 
+	void keyPressed(sf::Event e);
+
 private:
 	teabag::Game g;
 

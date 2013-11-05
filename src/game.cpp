@@ -59,26 +59,29 @@ int Game::init(bool loadMapNow) {
 
 		} // if(start.empty());
 
-		if(gameMap.loadMap(start) < 0) {
+		if(loadMap(start) < 0) {
 			return -1;
 
-		} // if(gameMap.loadMap(start) < 0);
-
-		for(auto a : gameMap.tileNames) {
-			for(auto b : a) {
-				std::cout << b.substr(0, 1) << ":";
-
-			} // for(auto b : a);
-
-			std::cout << std::endl;
-
-		} // for(auto a : gameMap.tileNames);
+		} // if(loadMap(start) < 0);
 
 	} // if(loadMapNow);
 
 	return 0;
 
 } // int Game::init(bool loadMapNow);
+
+int Game::loadMap(std::string mapname) {
+	if(gameMap.loadMap(mapname) < 0) {
+		return -1;
+
+	} // if(gameMap.loadMap(start) < 0);
+
+	mapSprite.setTexture(gameMap.mapTex.getTexture());
+	mapSprite.setPosition(0, 0);
+
+	return 0;
+
+} // int Game::loadMap(std::string mapname);
 
 int Game::addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback) {
 	return eventManager.addEventCallback(eventType, callback);
@@ -90,6 +93,7 @@ int Game::run() {
 		eventManager.tick(gameWind);
 
 		gameWind.clear();
+		gameWind.draw(mapSprite);
 		gameWind.display();
 
 	} // while(gameWind.isOpen());
@@ -97,6 +101,11 @@ int Game::run() {
 	return 0;
 
 } // int Game::run();
+
+void Game::scrollMap(int xd, int yd) {
+	mapSprite.move(xd, yd);
+
+} // void Game::scrollMap(int xd, int yd);
 
 void Game::exit() {
 	gameWind.close();

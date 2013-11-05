@@ -39,6 +39,15 @@ public:
 	int init(bool loadMapNow = false);
 
 	/**
+	 * Loads the given map.
+	 *
+	 * @param mapname The map to load.
+	 * @return Negative on failure, 0 on success.
+	 */
+	int loadMap(std::string mapname);
+
+
+	/**
 	 * Adds an event callback.
 	 * Adds a function to be called whenever an event of the specified type
 	 * is fired.
@@ -60,6 +69,14 @@ public:
 	int run();
 
 	/**
+	 * Scrolls the map.
+	 * 
+	 * @param xd The distance to scroll the map horizontally.
+	 * @param yd The distance to scroll the map vertically.
+	 */
+	void scrollMap(int xd, int yd);
+
+	/**
 	 * Ends the game.
 	 */
 	void exit();
@@ -69,6 +86,8 @@ private:
 
 	GameMap gameMap;
 	EventManager eventManager;
+
+	sf::Sprite mapSprite;	
 
 }; // class Game;
 

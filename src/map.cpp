@@ -7,7 +7,7 @@ GameMap::GameMap() {
 } // GameMap::GameMap();
 
 int GameMap::loadMap(std::string mapname) {
-	return (loadText(mapname) >= 0) && (loadImg(mapname) >= 0);
+	return (loadText(mapname) >= 0) && (loadImg(mapname) >= 0) && (renderTex() >= 0);
 
 } // int GameMap::loadMap(std::string mapname);
 
@@ -73,5 +73,33 @@ int GameMap::loadImg(std::string mapname) {
 	return 0;
 
 } // int GameMap::loadImg(std::string mapname);
+
+int GameMap::renderTex() {
+	unsigned int mapWidth = tileNames.size() * tileManager.tileWidth;
+	unsigned int mapHeight = tileNames[0].size() * tileManager.tileHeight;
+
+	if(!mapTex.create(mapWidth, mapHeight)) {
+		return -1;
+
+	} // if(!mapTex.create(mapWidth, mapHeight));
+
+	mapTex.clear();
+
+	for(int i = 0; i < tileNames.size(); ++i) {
+		for(int j = 0; j < tileNames[0].size(); ++j) {
+			sf::Sprite spr;
+			spr.setTexture(tileManager.getTile(tileNames[i][j])->texture);
+			spr.setPosition(i * tileManager.tileWidth, j * tileManager.tileHeight);
+			mapTex.draw(spr);
+
+		} // for(int j = 0; j < mapHeight; ++j);
+
+	} // for(int i = 0; i < mapWidth; ++i);
+
+	mapTex.display();
+	return 0;
+
+} // int GameMap::renderTex();
+
 
 TEABAG_NS_END
