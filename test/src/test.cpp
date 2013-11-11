@@ -34,6 +34,10 @@ void Test::keyPressed(sf::Event e) {
 		g.scrollMap(5, 0);
 
 	} // else if(e.key.code == sf::Keyboard::Right);
+	else if(e.key.code == sf::Keyboard::Space) {
+		g.getEntity("test")->move(10, 10);
+
+	} // else if(e.key.code == sf::Keyboard::Space);
 
 } // void Test::keyPressed(sf::Event e);
 

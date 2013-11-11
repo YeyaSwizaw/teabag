@@ -4,6 +4,7 @@
 #include "defines.hpp"
 #include "eventmanager.hpp"
 #include "optionsparser.hpp"
+#include "entitymanager.hpp"
 #include "map.hpp"
 
 #include <iostream>
@@ -75,6 +76,14 @@ public:
 	 * @param yd The distance to scroll the map vertically.
 	 */
 	void scrollMap(int xd, int yd);
+
+	/**
+	 * Gets an entity.
+	 *
+	 * @param name The name of the entity, as defined in the map's .tea file.
+	 * @return A pointer to the entity.
+	 */
+	Entity* getEntity(std::string name);
 
 	/**
 	 * Ends the game.
