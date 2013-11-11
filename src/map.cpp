@@ -39,9 +39,31 @@ int GameMap::loadText(std::string mapname) {
 
 			} // if(!parser.get(r) || !parser.get(g) || !parser.get(name) || !parser.get(name) || !parser.get(blocking));
 
-			tileManager.addTile(name, r, g, b, blocking);
+			if(tileManager.addTile(name, r, g, b, blocking) < 0) {
+				return -1;
+
+			} // if(tileManager.addTile(name, r, g, b, blocking) < 0);
 
 		} // if(option == "tile");
+
+		else if(option == "entity") {
+			std::string name;
+			int x, y;
+
+			if(!parser.get(name) || !parser.get(x) || !parser.get(y)) {
+				TEABAG_FILE_PARSE_ERROR(filename, parser.line);
+				return -1;
+
+			} // if(!parser.get(name) || !parser.get(x) || !parser.get(y));
+
+			if(entityManager.addEntity(name, x, y) < 0) {
+				return -1;
+
+			} // if(entityManager.addEntity(name, x, y) < 0);
+
+			entityNames.push_back(name);
+
+		} // else if(option == "entity");
 
 	} // while(parser.nextLine());
 

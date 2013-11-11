@@ -94,6 +94,12 @@ int Game::run() {
 
 		gameWind.clear();
 		gameWind.draw(mapSprite);
+
+		for(auto n : gameMap.entityNames) {
+			gameWind.draw(gameMap.entityManager.entityMap[n]);
+
+		} // for(auto n : gameMap.entityNames);
+
 		gameWind.display();
 
 	} // while(gameWind.isOpen());

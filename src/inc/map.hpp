@@ -3,6 +3,7 @@
 
 #include "defines.hpp"
 #include "optionsparser.hpp"
+#include "entitymanager.hpp"
 #include "tilemanager.hpp"
 
 #include <vector>
@@ -29,8 +30,10 @@ private:
 	int renderTex();
 
 	TileManager tileManager;
+	EntityManager entityManager;
 
 	std::vector<std::vector<std::string>> tileNames;
+	std::vector<std::string> entityNames;
 
 	sf::RenderTexture mapTex;
 

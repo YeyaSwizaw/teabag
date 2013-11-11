@@ -13,6 +13,8 @@
 #define TEABAG_MAP_TEA(name) "data/maps/" + name + ".tea"
 #define TEABAG_MAP_IMG(name) "data/maps/" + name + ".png"
 #define TEABAG_TILE_IMG(name) "data/tiles/" + name + ".png"
+#define TEABAG_ENTITY_TEA(name) "data/entities/" + name + ".tea"
+#define TEABAG_ENTITY_IMG(name) "data/sprites/" + name + ".png"
 
 #define TEABAG_ERROR(msg) std::cout << "Error: " << msg << std::endl
 

@@ -12,6 +12,7 @@ TEABAG_NS
 
 class Game;
 class GameMap;
+class EntityManager;
 
 /**
  * Parses options files.
@@ -21,6 +22,7 @@ class OptionsParser {
 private:
 	friend class Game;
 	friend class GameMap;
+	friend class EntityManager;
 
 	OptionsParser(std::string filename);
 	~OptionsParser();
