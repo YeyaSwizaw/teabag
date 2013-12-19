@@ -10,14 +10,16 @@
 
 TEABAG_NS
 
-typedef sf::Sprite Entity;
-
 class Game;
 class GameMap;
 
+TEABAG_INTERNAL
+
+typedef sf::Sprite Entity;
+
 class EntityManager {
 private:
-	friend class Game;
+	friend class teabag::Game;
 	friend class GameMap;
 
 	EntityManager();
@@ -32,6 +34,7 @@ private:
 
 }; // class EntityManager;
 
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END
 

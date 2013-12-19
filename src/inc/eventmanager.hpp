@@ -12,13 +12,15 @@ TEABAG_NS
 
 class Game;
 
+TEABAG_INTERNAL
+
 /**
  * Manages events.
  * This class is used internally to manage events and callback functions.
  */
 class EventManager {
 private:
-	friend class Game;
+	friend class teabag::Game;
 
 	EventManager();
 
@@ -29,6 +31,8 @@ private:
 	std::unordered_map<sf::Event::EventType, std::vector<std::function<void(sf::Event)>>, std::hash<int>> eventCallbacks;
 
 }; // class EventManager;
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END
 

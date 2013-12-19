@@ -2,6 +2,8 @@
 
 TEABAG_NS
 
+TEABAG_INTERNAL
+
 TileManager::TileManager()
 	: tileWidth(0), tileHeight(0), colourMap(10, [](sf::Color c) {
 		return std::hash<std::string>()(static_cast<std::ostringstream&>(std::ostringstream().flush() << c.r << c.g << c.b).str());
@@ -63,5 +65,7 @@ void TileManager::clear() {
 	nameMap.clear();
 
 } // void TileManager::clear();
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END

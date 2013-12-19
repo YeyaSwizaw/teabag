@@ -2,6 +2,8 @@
 
 TEABAG_NS
 
+TEABAG_INTERNAL
+
 EventManager::EventManager()
 	: eventCallbacks() {
 
@@ -25,5 +27,7 @@ void EventManager::tick(sf::RenderWindow& wind) {
 	} // while(wind.pollEvent(e));
 
 } // void EventManager::tick(sf::RencerWindow& wind);
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END

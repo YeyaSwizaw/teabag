@@ -2,6 +2,8 @@
 
 TEABAG_NS
 
+TEABAG_INTERNAL
+
 GameMap::GameMap() {
 
 } // GameMap::GameMap();
@@ -123,5 +125,6 @@ int GameMap::renderTex() {
 
 } // int GameMap::renderTex();
 
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END

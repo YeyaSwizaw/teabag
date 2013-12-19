@@ -15,6 +15,8 @@ TEABAG_NS
 
 class GameMap;
 
+TEABAG_INTERNAL
+
 /**
  * This struct stores the information for a tile.
  * The information is loaded from the tile's .tea file, and consists of
@@ -48,6 +50,8 @@ private:
 	unsigned int tileWidth, tileHeight;
 
 }; // class TileManager;
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END
 

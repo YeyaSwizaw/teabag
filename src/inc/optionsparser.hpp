@@ -14,13 +14,15 @@ class Game;
 class GameMap;
 class EntityManager;
 
+TEABAG_INTERNAL
+
 /**
  * Parses options files.
  * This class is used internally to parse .tea files.
  */
 class OptionsParser {
 private:
-	friend class Game;
+	friend class teabag::Game;
 	friend class GameMap;
 	friend class EntityManager;
 
@@ -43,6 +45,8 @@ bool OptionsParser::get(T& t) {
 	return (linestream >> t);
 
 } // bool OptionsParser::get(T& t);
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END
 

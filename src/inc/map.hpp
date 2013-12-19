@@ -13,13 +13,15 @@ TEABAG_NS
 
 class Game;
 
+TEABAG_INTERNAL
+
 /**
  * Loads and manages the game map.
  * This class is used internally to load, store data about, and render maps.
  */
 class GameMap {
 private:
-	friend class Game;
+	friend class teabag::Game;
 
 	GameMap();
 
@@ -38,6 +40,8 @@ private:
 	sf::RenderTexture mapTex;
 
 }; // class GameMap;
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END
 

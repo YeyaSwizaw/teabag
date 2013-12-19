@@ -2,6 +2,8 @@
 
 TEABAG_NS
 
+TEABAG_INTERNAL
+
 EntityManager::EntityManager() {
 
 } // EntityManager::EntityManager();
@@ -61,5 +63,7 @@ int EntityManager::addEntity(std::string name, int x, int y) {
 	return 0;
 
 } // int EntityManager::addEntity(std::string name, int x, int y);
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END

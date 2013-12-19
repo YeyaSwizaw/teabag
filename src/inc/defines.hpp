@@ -4,6 +4,9 @@
 #define TEABAG_NS namespace teabag {
 #define TEABAG_NS_END }
 
+#define TEABAG_INTERNAL namespace internal {
+#define TEABAG_INTERNAL_END }
+
 #define TEABAG_DEF_NAME "Teabag Engine"
 
 #define TEABAG_DEF_WIN_WIDTH 800

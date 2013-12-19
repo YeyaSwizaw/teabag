@@ -71,7 +71,7 @@ public:
 	 * @param name The name of the entity, as defined in the map's .tea file.
 	 * @return A pointer to the entity.
 	 */
-	Entity* getEntity(std::string name);
+	internal::Entity* getEntity(std::string name);
 
 	/**
 	 * Ends the game.
@@ -123,8 +123,8 @@ public:
 private:
 	sf::RenderWindow gameWind;
 
-	GameMap gameMap;
-	EventManager eventManager;
+	internal::GameMap gameMap;
+	internal::EventManager eventManager;
 
 	sf::Sprite mapSprite;	
 

@@ -8,7 +8,7 @@ Game::Game() {
 
 int Game::init(bool loadMapNow) {
 	std::string file = TEABAG_MAIN_FILE;
-	OptionsParser parser(file);
+	internal::OptionsParser parser(file);
 	if(!parser) {
 		TEABAG_FILE_OPEN_ERROR(file);
 		return -1;
@@ -108,7 +108,7 @@ void Game::scrollMap(int xd, int yd) {
 
 } // void Game::scrollMap(int xd, int yd);
 
-Entity* Game::getEntity(std::string name) {
+internal::Entity* Game::getEntity(std::string name) {
 	return &(gameMap.entityManager.entityMap[name]);
 
 } // Entity* Game::getEntity(std::string name);

@@ -2,6 +2,8 @@
 
 TEABAG_NS
 
+TEABAG_INTERNAL
+
 OptionsParser::OptionsParser(std::string filename) {
 	file.open(filename);
 
@@ -32,5 +34,7 @@ bool OptionsParser::nextLine() {
 	return false;
 
 } // bool OptionsParser::nextLine();
+
+TEABAG_INTERNAL_END
 
 TEABAG_NS_END
