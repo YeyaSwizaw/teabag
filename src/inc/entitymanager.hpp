@@ -15,8 +15,6 @@ class GameMap;
 
 TEABAG_INTERNAL
 
-typedef sf::Sprite Entity;
-
 class EntityManager {
 private:
 	friend class teabag::Game;
@@ -27,10 +25,10 @@ private:
 
 	int addEntity(std::string name, int x, int y);
 
-	Entity* getEntity(std::string name);
+	sf::Sprite* getEntity(std::string name);
 
 	std::unordered_map<std::string, sf::Texture> texMap;
-	std::unordered_map<std::string, Entity> entityMap;
+	std::unordered_map<std::string, sf::Sprite> entityMap;
 
 }; // class EntityManager;
 

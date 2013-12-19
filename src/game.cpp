@@ -108,10 +108,10 @@ void Game::scrollMap(int xd, int yd) {
 
 } // void Game::scrollMap(int xd, int yd);
 
-internal::Entity* Game::getEntity(std::string name) {
-	return &(gameMap.entityManager.entityMap[name]);
+Entity Game::getEntity(std::string name) {
+	return Entity(gameMap.entityManager.getEntity(name));
 
-} // Entity* Game::getEntity(std::string name);
+} // Entity Game::getEntity(std::string name);
 
 void Game::exit() {
 	gameWind.close();

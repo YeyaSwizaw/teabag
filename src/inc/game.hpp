@@ -4,6 +4,7 @@
 #include "defines.hpp"
 #include "eventmanager.hpp"
 #include "optionsparser.hpp"
+#include "entity.hpp"
 #include "entitymanager.hpp"
 #include "map.hpp"
 
@@ -71,7 +72,7 @@ public:
 	 * @param name The name of the entity, as defined in the map's .tea file.
 	 * @return A pointer to the entity.
 	 */
-	internal::Entity* getEntity(std::string name);
+	Entity getEntity(std::string name);
 
 	/**
 	 * Ends the game.

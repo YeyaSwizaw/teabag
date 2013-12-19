@@ -56,13 +56,18 @@ int EntityManager::addEntity(std::string name, int x, int y) {
 
 	} // if(texMap.find(sprname) == texMap.end());
 
-	entityMap[name] = Entity();
+	entityMap[name] = sf::Sprite();
 	entityMap[name].setPosition(x, y);
 	entityMap[name].setTexture(texMap[sprname]);
 
 	return 0;
 
 } // int EntityManager::addEntity(std::string name, int x, int y);
+
+sf::Sprite* EntityManager::getEntity(std::string name) {
+	return &(entityMap[name]);
+
+} // sf::Sprite* EntityManager::getEntity(std::string name);
 
 TEABAG_INTERNAL_END
 
