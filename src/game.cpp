@@ -68,7 +68,7 @@ int Game::init(bool loadMapNow) {
 
 	return 0;
 
-} // int Game::init(bool loadMapNow);
+} // int Game::Game::init(bool loadMapNow);
 
 int Game::loadMap(std::string mapname) {
 	if(gameMap.loadMap(mapname) < 0) {
@@ -81,12 +81,7 @@ int Game::loadMap(std::string mapname) {
 
 	return 0;
 
-} // int Game::loadMap(std::string mapname);
-
-int Game::addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback) {
-	return eventManager.addEventCallback(eventType, callback);
-
-} // int Game::addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback);
+} // int Game::Game::loadMap(std::string mapname);
 
 int Game::run() {
 	while(gameWind.isOpen()) {
@@ -106,7 +101,7 @@ int Game::run() {
 
 	return 0;
 
-} // int Game::run();
+} // int Game::Game::run();
 
 void Game::scrollMap(int xd, int yd) {
 	mapSprite.move(xd, yd);
@@ -122,5 +117,102 @@ void Game::exit() {
 	gameWind.close();
 
 } // void Game::exit();
+
+// Event Functions
+
+int Game::addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(eventType, callback);
+
+} // int Game::addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback);
+
+int Game::onClose(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::Closed, callback);
+
+} // int Game::onClose(std::function<void(sf::Event)> callback);
+
+int Game::onResize(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::Resized, callback);
+
+} // int Game::onResize(std::function<void(sf::Event)> callback);
+
+int Game::onFocusLoss(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::LostFocus, callback);
+
+} // int Game::onFocusLoss(std::function<void(sf::Event)> callback);
+
+int Game::onFocusGain(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::GainedFocus, callback);
+
+} // int Game::onFocusGain(std::function<void(sf::Event)> callback);
+
+int Game::onTextEntry(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::TextEntered, callback);
+
+} // int Game::onTextEntry(std::function<void(sf::Event)> callback);
+
+int Game::onKeyPress(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::KeyPressed, callback);
+
+} // int Game::onKeyPress(std::function<void(sf::Event)> callback);
+
+int Game::onKeyRelease(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::KeyReleased, callback);
+
+} // int Game::onKeyRelease(std::function<void(sf::Event)> callback);
+
+int Game::onMouseWheelMove(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::MouseWheelMoved, callback);
+
+} // int Game::onMouseWheelMove(std::function<void(sf::Event)> callback);
+
+int Game::onMouseButtonPress(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::MouseButtonPressed, callback);
+
+} // int Game::onMouseButtonPress(std::function<void(sf::Event)> callback);
+
+int Game::onMouseButtonRelease(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::MouseButtonReleased, callback);
+
+} // int Game::onMouseButtonRelease(std::function<void(sf::Event)> callback);
+
+int Game::onMouseMove(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::MouseMoved, callback);
+
+} // int Game::onMouseMove(std::function<void(sf::Event)> callback);
+
+int Game::onMouseEntry(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::MouseEntered, callback);
+
+} // int Game::onMouseEntry(std::function<void(sf::Event)> callback);
+
+int Game::onMouseLeave(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::MouseLeft, callback);
+
+} // int Game::onMouseLeave(std::function<void(sf::Event)> callback);
+
+int Game::onJoystickButtonPress(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::JoystickButtonPressed, callback);
+
+} // int Game::onJoystickButtonPress(std::function<void(sf::Event)> callback);
+
+int Game::onJoystickButtonRelease(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::JoystickButtonReleased, callback);
+
+} // int Game::onJoystickButtonRelease(std::function<void(sf::Event)> callback);
+
+int Game::onJoystickMove(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::JoystickMoved, callback);
+
+} // int Game::onJoystickMove(std::function<void(sf::Event)> callback);
+
+int Game::onJoystickConnection(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::JoystickConnected, callback);
+
+} // int Game::onJoystickConnection(std::function<void(sf::Event)> callback);
+
+int Game::onJoystickDisconnection(std::function<void(sf::Event)> callback) {
+	return eventManager.addEventCallback(sf::Event::JoystickDisconnected, callback);
+
+} // int Game::onJoystickDisconnection(std::function<void(sf::Event)> callback);
 
 TEABAG_NS_END

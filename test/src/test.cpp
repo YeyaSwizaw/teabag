@@ -10,8 +10,8 @@ int Test::run() {
 
 	} // if(g.init() < 0);
 
-	g.addEventCallback(sf::Event::Closed, [this](sf::Event e) { g.exit(); });
-	g.addEventCallback(sf::Event::KeyPressed, std::bind(&Test::keyPressed, this, std::placeholders::_1));
+	g.onClose([this](sf::Event e) { g.exit(); });
+	g.onKeyPress(std::bind(&Test::keyPressed, this, std::placeholders::_1));
 
 	return g.run();
 
