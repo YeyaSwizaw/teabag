@@ -10,36 +10,44 @@ int Test::run() {
 
 	} // if(g.init() < 0);
 
-	g.onClose([this](sf::Event e) { g.exit(); });
-	g.onKeyPress(std::bind(&Test::keyPressed, this, std::placeholders::_1));
+	g.onClose(std::bind(&teabag::Game::exit, &g));
+
+	player = g.getEntity("test");
+	g.onKey(sf::Keyboard::Up, std::bind(&teabag::Entity::move, &player, 0, -5));
+	g.onKey(sf::Keyboard::Down, std::bind(&teabag::Entity::move, &player, 0, 5));
+	g.onKey(sf::Keyboard::Left, std::bind(&teabag::Entity::move, &player, -5, 0));
+	g.onKey(sf::Keyboard::Right, std::bind(&teabag::Entity::move, &player, 5, 0));
+	g.onCollision("test", std::bind(&Test::playerCollision, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
 	return g.run();
 
 } // int Test::run();
 
-void Test::keyPressed(sf::Event e) {
-	if(e.key.code == sf::Keyboard::Up) {
-		g.scrollMap(0, -5);
+void Test::playerCollision(sf::FloatRect e1, sf::FloatRect e2, sf::FloatRect coll) {
+	if(coll.width <= coll.height) {
+		if(e1.left <= e2.left) {
+			player.move(-1, 0);
 
-	} // if(e.key.code == sf::Keyboard::Up);
-	else if(e.key.code == sf::Keyboard::Down) {
-		g.scrollMap(0, 5);
+		} // if(e1.left <= e2.left);
+		else {
+			player.move(1, 0);
 
-	} // else if(e.key.code == sf::Keyboard::Down);
-	else if(e.key.code == sf::Keyboard::Left) {
-		g.scrollMap(-5, 0);
+		} // else;
 
-	} // else if(e.key.code == sf::Keyboard::Left);
-	else if(e.key.code == sf::Keyboard::Right) {
-		g.scrollMap(5, 0);
+	} // if(coll.width <= coll.height);
+	else {
+		if(e1.top <= e2.top) {
+			player.move(0, -1);
 
-	} // else if(e.key.code == sf::Keyboard::Right);
-	else if(e.key.code == sf::Keyboard::Space) {
-		g.getEntity("test").move(10, 10);
+		} // if(e1.top <= e2.top);
+		else {
+			player.move(0, 1);
 
-	} // else if(e.key.code == sf::Keyboard::Space);
+		} // else;
 
-} // void Test::keyPressed(sf::Event e);
+	} // else;
+
+} // void Test::playerCollision(sf::FloatRect e1, sf::FloatRect e2, sf::FloatRect coll);
 
 int main(int argc, char* argv[]) {
 	Test t;

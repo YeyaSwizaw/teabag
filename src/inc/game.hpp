@@ -118,6 +118,27 @@ public:
 	int addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback);
 
 	/**
+	 * Adds a key callback.
+	 * Any function added here gets called every tick the key is held down.
+	 *
+	 * @param keyCode The key to register the function with.
+	 * @param callback The function to be called.
+	 * @return Negative on failure, 0 on success.
+	 */
+	int onKey(sf::Keyboard::Key keyCode, std::function<void()> callback);
+
+	/**
+	 * Adds a collision callback.
+	 * Any function added here gets called every tick the provided entity is
+	 * colliding with either another entity or a tile.
+	 *
+	 * @param entityName The name of the entity.
+	 * @param callback The function to be called.
+	 * @return Negative on failure, 0 on success.
+	 */
+	int onCollision(std::string entityName, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback);
+
+	/**
 	 * @}
 	 */
 

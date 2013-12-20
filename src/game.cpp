@@ -53,6 +53,9 @@ int Game::init(bool loadMapNow) {
 
 	gameWind.create(sf::VideoMode(width, height), name);
 
+	// FIX
+	gameWind.setFramerateLimit(60);
+
 	if(loadMapNow) {
 		if(start.empty()) {
 			return -1;
@@ -85,7 +88,7 @@ int Game::loadMap(std::string mapname) {
 
 int Game::run() {
 	while(gameWind.isOpen()) {
-		eventManager.tick(gameWind);
+		eventManager.tick(gameWind, gameMap.entityManager);
 
 		gameWind.clear();
 		gameWind.draw(mapSprite);
@@ -214,5 +217,15 @@ int Game::onJoystickDisconnection(std::function<void(sf::Event)> callback) {
 	return eventManager.addEventCallback(sf::Event::JoystickDisconnected, callback);
 
 } // int Game::onJoystickDisconnection(std::function<void(sf::Event)> callback);
+
+int Game::onKey(sf::Keyboard::Key keyCode, std::function<void()> callback) {
+	return eventManager.addKeyCallback(keyCode, callback);
+
+} // int Game::addKeyCallback(sf::Keyboard::Key keyCode, std::function<void()> callback);
+
+int Game::onCollision(std::string entityName, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback) {
+	return eventManager.addCollisionCallback(entityName, callback);
+
+} // int Game::onCollision(std::string entityName, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback);
 
 TEABAG_NS_END

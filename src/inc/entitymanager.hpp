@@ -11,14 +11,17 @@
 TEABAG_NS
 
 class Game;
-class GameMap;
 
 TEABAG_INTERNAL
+
+class GameMap;
+class EventManager;
 
 class EntityManager {
 private:
 	friend class teabag::Game;
 	friend class GameMap;
+	friend class EventManager;
 
 	EntityManager();
 	~EntityManager();

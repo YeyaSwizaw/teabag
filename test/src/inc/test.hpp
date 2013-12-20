@@ -11,10 +11,11 @@ public:
 
 	int run();
 
-	void keyPressed(sf::Event e);
+	void playerCollision(sf::FloatRect e1, sf::FloatRect e2, sf::FloatRect coll);
 
 private:
 	teabag::Game g;
+	teabag::Entity player;
 
 }; // class Test;
 
