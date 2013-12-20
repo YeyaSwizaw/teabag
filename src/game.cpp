@@ -112,7 +112,7 @@ void Game::scrollMap(int xd, int yd) {
 } // void Game::scrollMap(int xd, int yd);
 
 Entity Game::getEntity(std::string name) {
-	return Entity(gameMap.entityManager.getEntity(name));
+	return Entity(name, &(gameMap.entityManager), &eventManager);
 
 } // Entity Game::getEntity(std::string name);
 

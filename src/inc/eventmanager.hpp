@@ -12,6 +12,7 @@
 TEABAG_NS
 
 class Game;
+class Entity;
 
 TEABAG_INTERNAL
 
@@ -22,6 +23,7 @@ TEABAG_INTERNAL
 class EventManager {
 private:
 	friend class teabag::Game;
+	friend class teabag::Entity;
 
 	EventManager();
 

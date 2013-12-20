@@ -17,7 +17,7 @@ int Test::run() {
 	g.onKey(sf::Keyboard::Down, std::bind(&teabag::Entity::move, &player, 0, 5));
 	g.onKey(sf::Keyboard::Left, std::bind(&teabag::Entity::move, &player, -5, 0));
 	g.onKey(sf::Keyboard::Right, std::bind(&teabag::Entity::move, &player, 5, 0));
-	g.onCollision("test", std::bind(&Test::playerCollision, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+	player.onCollision(std::bind(&Test::playerCollision, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
 	return g.run();
 
