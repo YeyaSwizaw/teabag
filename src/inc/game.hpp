@@ -145,6 +145,8 @@ public:
 private:
 	sf::RenderWindow gameWind;
 
+	internal::TileManager tileManager;
+	internal::EntityManager entityManager;
 	internal::GameMap gameMap;
 	internal::EventManager eventManager;
 

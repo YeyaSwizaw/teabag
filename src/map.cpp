@@ -4,9 +4,11 @@ TEABAG_NS
 
 TEABAG_INTERNAL
 
-GameMap::GameMap() {
+GameMap::GameMap(TileManager& tileManager, EntityManager& entityManager)
+	: tileManager(tileManager),
+	  entityManager(entityManager) {
 
-} // GameMap::GameMap();
+} // GameMap::GameMap(TileManager& tileManager, EntityManager& entityManager);
 
 int GameMap::loadMap(std::string mapname) {
 	return (loadText(mapname) >= 0) && (loadImg(mapname) >= 0) && (renderTex() >= 0);

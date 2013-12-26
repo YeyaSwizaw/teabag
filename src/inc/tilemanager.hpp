@@ -13,9 +13,12 @@
 
 TEABAG_NS
 
-class GameMap;
+class Game;
 
 TEABAG_INTERNAL
+
+class GameMap;
+class EventManager;
 
 /**
  * This struct stores the information for a tile.
@@ -33,7 +36,9 @@ struct TileInfo {
 
 class TileManager {
 private:
+	friend class teabag::Game;
 	friend class GameMap;
+	friend class EventManager;
 
 	TileManager();
 	~TileManager();
@@ -45,9 +50,10 @@ private:
 
 	void clear();
 
+	int tileWidth, tileHeight;
+
 	std::unordered_map<sf::Color, TileInfo*, std::function<size_t(sf::Color)>> colourMap;
 	std::unordered_map<std::string, TileInfo*> nameMap;
-	unsigned int tileWidth, tileHeight;
 
 }; // class TileManager;
 

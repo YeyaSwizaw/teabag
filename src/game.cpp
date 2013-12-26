@@ -2,7 +2,11 @@
 
 TEABAG_NS
 
-Game::Game() {
+Game::Game()
+	: tileManager(),
+	  entityManager(),
+	  gameMap(tileManager, entityManager),
+	  eventManager(entityManager, tileManager, gameMap) {
 
 } // Game::Game();
 
@@ -88,13 +92,13 @@ int Game::loadMap(std::string mapname) {
 
 int Game::run() {
 	while(gameWind.isOpen()) {
-		eventManager.tick(gameWind, gameMap.entityManager);
+		eventManager.tick(gameWind);
 
 		gameWind.clear();
 		gameWind.draw(mapSprite);
 
 		for(auto n : gameMap.entityNames) {
-			gameWind.draw(gameMap.entityManager.entityMap[n]);
+			gameWind.draw(entityManager.entityMap[n]);
 
 		} // for(auto n : gameMap.entityNames);
 
@@ -112,7 +116,7 @@ void Game::scrollMap(int xd, int yd) {
 } // void Game::scrollMap(int xd, int yd);
 
 Entity Game::getEntity(std::string name) {
-	return Entity(name, &(gameMap.entityManager), &eventManager);
+	return Entity(name, &entityManager, &eventManager);
 
 } // Entity Game::getEntity(std::string name);
 

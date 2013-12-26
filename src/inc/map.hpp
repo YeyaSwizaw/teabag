@@ -23,7 +23,7 @@ class GameMap {
 private:
 	friend class teabag::Game;
 
-	GameMap();
+	GameMap(TileManager& tileManager, EntityManager& entityManager);
 
 	int loadMap(std::string mapname);
 
@@ -31,8 +31,8 @@ private:
 	int loadImg(std::string mapname);
 	int renderTex();
 
-	TileManager tileManager;
-	EntityManager entityManager;
+	TileManager& tileManager;
+	EntityManager& entityManager;
 
 	std::vector<std::vector<std::string>> tileNames;
 	std::vector<std::string> entityNames;
