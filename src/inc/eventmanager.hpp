@@ -1,6 +1,7 @@
 #ifndef TEABAG_EVENTMANAGER_HPP
 #define TEABAG_EVENTMANAGER_HPP
 
+#include "map.hpp"
 #include "defines.hpp"
 #include "entitymanager.hpp"
 #include "tilemanager.hpp"

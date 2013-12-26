@@ -15,6 +15,8 @@ class Game;
 
 TEABAG_INTERNAL
 
+class EventManager;
+
 /**
  * Loads and manages the game map.
  * This class is used internally to load, store data about, and render maps.
@@ -22,6 +24,7 @@ TEABAG_INTERNAL
 class GameMap {
 private:
 	friend class teabag::Game;
+	friend class EventManager;
 
 	GameMap(TileManager& tileManager, EntityManager& entityManager);
 

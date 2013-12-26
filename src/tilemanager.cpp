@@ -55,6 +55,11 @@ TileInfo* TileManager::getTile(std::string name) {
 
 } // TileInfo* TileManager::getTile(std::string name);
 
+bool TileManager::isBlocking(std::string name) {
+	return (nameMap[name] == nullptr ? false : nameMap[name]->blocking);
+
+} // bool TileManager::isBlocking(std::string name);
+
 void TileManager::clear() {
 	for(auto& p : colourMap) {
 		delete p.second;

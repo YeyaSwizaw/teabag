@@ -47,6 +47,7 @@ private:
 
 	TileInfo* getTile(sf::Color c);
 	TileInfo* getTile(std::string name);
+	bool isBlocking(std::string name);
 
 	void clear();
 
