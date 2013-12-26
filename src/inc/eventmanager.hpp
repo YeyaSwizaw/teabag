@@ -16,9 +16,17 @@ TEABAG_NS
 class Game;
 class Entity;
 
+struct Collision {
+	std::string e1name;
+	std::string e2name;
+	sf::FloatRect collision;
+	bool e2tile;
+
+}; // struct Collision;
+
 typedef std::function<void(sf::Event)> EventCallback;
 typedef std::function<void()> KeyCallback;
-typedef std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> CollisionCallback;
+typedef std::function<void(sf::FloatRect, sf::FloatRect, Collision)> CollisionCallback;
 
 TEABAG_INTERNAL
 

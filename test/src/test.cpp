@@ -23,8 +23,8 @@ int Test::run() {
 
 } // int Test::run();
 
-void Test::playerCollision(sf::FloatRect e1, sf::FloatRect e2, sf::FloatRect coll) {
-	if(coll.width <= coll.height) {
+void Test::playerCollision(sf::FloatRect e1, sf::FloatRect e2, teabag::Collision coll) {
+	if(coll.collision.width <= coll.collision.height) {
 		if(e1.left <= e2.left) {
 			player.move(-1, 0);
 

@@ -94,7 +94,7 @@ void EventManager::checkCollision() {
 
 						if(entity.getGlobalBounds().intersects(tileRect, coll)) {
 							for(auto f : p.second) {
-								f(entity.getGlobalBounds(), tileRect, coll);
+								f(entity.getGlobalBounds(), tileRect, {p.first, tile, coll, true});
 
 							} // for(auto f : p.second);
 
@@ -112,7 +112,7 @@ void EventManager::checkCollision() {
 			for(auto entp : entityManager.entityMap) {
 				if((p.first != entp.first) && entity.getGlobalBounds().intersects(entp.second.getGlobalBounds(), coll)) {
 					for(auto f : p.second) {
-						f(entity.getGlobalBounds(), entp.second.getGlobalBounds(), coll);
+						f(entity.getGlobalBounds(), entp.second.getGlobalBounds(), {p.first, entp.first, coll, false});
 
 					} // for(auto f : p.second);
 

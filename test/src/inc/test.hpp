@@ -11,7 +11,7 @@ public:
 
 	int run();
 
-	void playerCollision(sf::FloatRect e1, sf::FloatRect e2, sf::FloatRect coll);
+	void playerCollision(sf::FloatRect e1, sf::FloatRect e2, teabag::Collision coll);
 
 private:
 	teabag::Game g;
