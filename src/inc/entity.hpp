@@ -18,7 +18,7 @@ public:
 	Entity();
 
 	void move(int xd, int yd);
-	void onCollision(std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback);
+	void onCollision(CollisionCallback callback);
 
 private:
 	friend class Game;
@@ -30,7 +30,7 @@ private:
 	std::string name;
 
 	std::function<void(int, int)> funcMove;
-	std::function<void(std::string, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)>)> funcCollision; 
+	std::function<void(std::string, CollisionCallback)> funcCollision; 
 
 }; // class Entity;
 

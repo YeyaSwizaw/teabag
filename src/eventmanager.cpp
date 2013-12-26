@@ -15,26 +15,26 @@ EventManager::EventManager(EntityManager& entityManager, TileManager& tileManage
 
 } // EventManager::EventManager(EntityManager& entityManager, TileManager& tileManager, GameMap& gameMap);
 
-int EventManager::addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback) {
+int EventManager::addEventCallback(sf::Event::EventType eventType, teabag::EventCallback callback) {
 	eventCallbacks[eventType].push_back(callback);
 
 	return 0;
 
-} // int EventManager::addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback);
+} // int EventManager::addEventCallback(sf::Event::EventType eventType, teabag::EventCallback callback);
 
-int EventManager::addKeyCallback(sf::Keyboard::Key keyCode, std::function<void()> callback) {
+int EventManager::addKeyCallback(sf::Keyboard::Key keyCode, teabag::KeyCallback callback) {
 	keyCallbacks[keyCode].push_back(callback);
 
 	return 0;
 
-} // int EventManager::addKeyCallback(sf::Keyboard::Key keyCode, std::function<void()> callback);
+} // int EventManager::addKeyCallback(sf::Keyboard::Key keyCode, teabag::KeyCallback callback);
 
-int EventManager::addCollisionCallback(std::string entityName, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback) {
+int EventManager::addCollisionCallback(std::string entityName, teabag::CollisionCallback callback) {
 	collisionCallbacks[entityName].push_back(callback);
 
 	return 0;
 
-} // int EventManager::addCollisionCallback(std::string entityName, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback);
+} // int EventManager::addCollisionCallback(std::string entityName, teabag::CollisionCallback callback);
 
 void EventManager::tick(sf::RenderWindow& wind) {
 	checkEvents(wind);

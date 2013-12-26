@@ -87,24 +87,24 @@ public:
 	 * as a callback, and return 0 on success or negative on failure.
 	 * @{
 	 */
-	int onClose(std::function<void(sf::Event)> callback);
-	int onResize(std::function<void(sf::Event)> callback);
-	int onFocusLoss(std::function<void(sf::Event)> callback);
-	int onFocusGain(std::function<void(sf::Event)> callback);
-	int onTextEntry(std::function<void(sf::Event)> callback);
-	int onKeyPress(std::function<void(sf::Event)> callback);
-	int onKeyRelease(std::function<void(sf::Event)> callback);
-	int onMouseWheelMove(std::function<void(sf::Event)> callback);
-	int onMouseButtonPress(std::function<void(sf::Event)> callback);
-	int onMouseButtonRelease(std::function<void(sf::Event)> callback);
-	int onMouseMove(std::function<void(sf::Event)> callback);
-	int onMouseEntry(std::function<void(sf::Event)> callback);
-	int onMouseLeave(std::function<void(sf::Event)> callback);
-	int onJoystickButtonPress(std::function<void(sf::Event)> callback);
-	int onJoystickButtonRelease(std::function<void(sf::Event)> callback);
-	int onJoystickMove(std::function<void(sf::Event)> callback);
-	int onJoystickConnection(std::function<void(sf::Event)> callback);
-	int onJoystickDisconnection(std::function<void(sf::Event)> callback);
+	int onClose(EventCallback callback);
+	int onResize(EventCallback callback);
+	int onFocusLoss(EventCallback callback);
+	int onFocusGain(EventCallback callback);
+	int onTextEntry(EventCallback callback);
+	int onKeyPress(EventCallback callback);
+	int onKeyRelease(EventCallback callback);
+	int onMouseWheelMove(EventCallback callback);
+	int onMouseButtonPress(EventCallback callback);
+	int onMouseButtonRelease(EventCallback callback);
+	int onMouseMove(EventCallback callback);
+	int onMouseEntry(EventCallback callback);
+	int onMouseLeave(EventCallback callback);
+	int onJoystickButtonPress(EventCallback callback);
+	int onJoystickButtonRelease(EventCallback callback);
+	int onJoystickMove(EventCallback callback);
+	int onJoystickConnection(EventCallback callback);
+	int onJoystickDisconnection(EventCallback callback);
 
 	/**
 	 * Adds an event callback.
@@ -115,7 +115,7 @@ public:
 	 * @param callback The function to be called.
 	 * @return Negative on failure, 0 on success.
 	 */
-	int addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback);
+	int addEventCallback(sf::Event::EventType eventType, EventCallback callback);
 
 	/**
 	 * Adds a key callback.
@@ -125,7 +125,7 @@ public:
 	 * @param callback The function to be called.
 	 * @return Negative on failure, 0 on success.
 	 */
-	int onKey(sf::Keyboard::Key keyCode, std::function<void()> callback);
+	int onKey(sf::Keyboard::Key keyCode, KeyCallback callback);
 
 	/**
 	 * Adds a collision callback.
@@ -136,7 +136,7 @@ public:
 	 * @param callback The function to be called.
 	 * @return Negative on failure, 0 on success.
 	 */
-	int onCollision(std::string entityName, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback);
+	int onCollision(std::string entityName, CollisionCallback callback);
 
 	/**
 	 * @}

@@ -15,6 +15,10 @@ TEABAG_NS
 class Game;
 class Entity;
 
+typedef std::function<void(sf::Event)> EventCallback;
+typedef std::function<void()> KeyCallback;
+typedef std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> CollisionCallback;
+
 TEABAG_INTERNAL
 
 /**
@@ -28,9 +32,9 @@ private:
 
 	EventManager(EntityManager& entityManager, TileManager& tileManager, GameMap& gameMap);
 
-	int addEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> callback);
-	int addKeyCallback(sf::Keyboard::Key keyCode, std::function<void()> callback);
-	int addCollisionCallback(std::string entityName, std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback);
+	int addEventCallback(sf::Event::EventType eventType, teabag::EventCallback callback);
+	int addKeyCallback(sf::Keyboard::Key keyCode, teabag::KeyCallback callback);
+	int addCollisionCallback(std::string entityName, teabag::CollisionCallback callback);
 
 	void tick(sf::RenderWindow& wind);
 
@@ -38,9 +42,9 @@ private:
 	void checkKeyboard();
 	void checkCollision();
 
-	std::unordered_map<sf::Event::EventType, std::vector<std::function<void(sf::Event)>>, std::hash<int>> eventCallbacks;
-	std::unordered_map<sf::Keyboard::Key, std::vector<std::function<void()>>, std::hash<int>> keyCallbacks;
-	std::unordered_map<std::string, std::vector<std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)>>, std::hash<std::string>> collisionCallbacks;
+	std::unordered_map<sf::Event::EventType, std::vector<teabag::EventCallback>, std::hash<int>> eventCallbacks;
+	std::unordered_map<sf::Keyboard::Key, std::vector<teabag::KeyCallback>, std::hash<int>> keyCallbacks;
+	std::unordered_map<std::string, std::vector<teabag::CollisionCallback>, std::hash<std::string>> collisionCallbacks;
 
 	EntityManager& entityManager;
 	TileManager& tileManager;

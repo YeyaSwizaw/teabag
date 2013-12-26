@@ -17,13 +17,13 @@ Entity::Entity(std::string name, internal::EntityManager* entMan, internal::Even
 
 } // Entity::Entity(std::string name, internal::EntityManager* entMan, internal::EventManager* evtMgr);
 
-void Entity::onCollision(std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback) {
+void Entity::onCollision(CollisionCallback callback) {
 	if(valid) {
 		funcCollision(name, callback);
 
 	} // if(valid);
 
-} // void Entity::onCollision(std::function<void(sf::FloatRect, sf::FloatRect, sf::FloatRect)> callback);
+} // void Entity::onCollision(CollisionCallback callback);
 
 void Entity::move(int xd, int yd) {
 	if(valid) {
