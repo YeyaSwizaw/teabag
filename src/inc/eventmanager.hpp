@@ -6,6 +6,7 @@
 #include "entitymanager.hpp"
 #include "tilemanager.hpp"
 
+#include <cmath>
 #include <unordered_map>
 #include <vector>
 
@@ -45,11 +46,11 @@ private:
 	int addKeyCallback(sf::Keyboard::Key keyCode, teabag::KeyCallback callback);
 	int addCollisionCallback(std::string entityName, teabag::CollisionCallback callback);
 
-	void tick(sf::RenderWindow& wind);
+	void tick(sf::RenderWindow& wind, sf::Sprite& mapSprite);
 
 	void checkEvents(sf::RenderWindow& wind);
 	void checkKeyboard();
-	void checkCollision();
+	void checkCollision(sf::Sprite& mapSprite);
 
 	std::unordered_map<sf::Event::EventType, std::vector<teabag::EventCallback>, std::hash<int>> eventCallbacks;
 	std::unordered_map<sf::Keyboard::Key, std::vector<teabag::KeyCallback>, std::hash<int>> keyCallbacks;

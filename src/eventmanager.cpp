@@ -36,10 +36,10 @@ int EventManager::addCollisionCallback(std::string entityName, teabag::Collision
 
 } // int EventManager::addCollisionCallback(std::string entityName, teabag::CollisionCallback callback);
 
-void EventManager::tick(sf::RenderWindow& wind) {
+void EventManager::tick(sf::RenderWindow& wind, sf::Sprite& mapSprite) {
 	checkEvents(wind);
 	checkKeyboard();
-	checkCollision();
+	checkCollision(mapSprite);
 
 } // void EventManager::tick(sf::RenderWindow& wind);
 
@@ -69,7 +69,7 @@ void EventManager::checkKeyboard() {
 
 } // void EventManager::checkKeyboard();
 
-void EventManager::checkCollision() {
+void EventManager::checkCollision(sf::Sprite &mapSprite) {
 	sf::FloatRect coll;
 	bool collisionFound = false;
 
@@ -83,26 +83,39 @@ void EventManager::checkCollision() {
 			int x0 = entity.getGlobalBounds().left / tileManager.tileWidth;
 			int y0 = entity.getGlobalBounds().top / tileManager.tileHeight;
 
+			int offsetX = (entity.getGlobalBounds().left - mapSprite.getGlobalBounds().left) / tileManager.tileWidth;
+			int offsetY = (entity.getGlobalBounds().top - mapSprite.getGlobalBounds().top) / tileManager.tileHeight;
+
 			int x1 = x0 + (entity.getGlobalBounds().width / tileManager.tileWidth) + 2;
 			int y1 = y0 + (entity.getGlobalBounds().height / tileManager.tileHeight) + 2;
 
 			for(int x = (x0 > 0 ? x0 - 1 : 0); x < x1; x++) {
 				for(int y = (y0 > 0 ? y0 - 1 : 0); y < y1; y++) {
-					std::string tile = gameMap.tileNames[x][y];
-					if(tileManager.isBlocking(tile)) {
-						sf::FloatRect tileRect = sf::FloatRect(x * tileManager.tileWidth, y * tileManager.tileHeight, tileManager.tileWidth, tileManager.tileHeight);
+					int tileX = offsetX + (x - x0);
+					int tileY = offsetY + (y - y0);
 
-						if(entity.getGlobalBounds().intersects(tileRect, coll)) {
-							for(auto f : p.second) {
-								f(entity.getGlobalBounds(), tileRect, {p.first, tile, coll, true});
+					if(tileX >= 0 && tileY >= 0 && tileX < gameMap.tileNames.size() && tileY < gameMap.tileNames[0].size()) {
+						std::string tile = gameMap.tileNames[tileX][tileY];
 
-							} // for(auto f : p.second);
+						if(tileManager.isBlocking(tile)) {
+							sf::FloatRect tileRect = sf::FloatRect(
+								(tileX * tileManager.tileWidth) + mapSprite.getGlobalBounds().left,
+								(tileY * tileManager.tileHeight) + mapSprite.getGlobalBounds().top,
+								tileManager.tileWidth, tileManager.tileHeight);
 
-							collisionFound = true;
+							if(entity.getGlobalBounds().intersects(tileRect, coll)) {
+								for(auto f : p.second) {
+									f(entity.getGlobalBounds(), tileRect, {p.first, tile, coll, true});
 
-						} // if(entity.getGlobalBounds().intersects(tileRect, coll));
+								} // for(auto f : p.second);
 
-					} // if(tileManager.isBlocking(tile));
+								collisionFound = true;
+
+							} // if(entity.getGlobalBounds().intersects(tileRect, coll));
+
+						} // if(tileManager.isBlocking(tile));
+
+					} // if(tileX >= 0 && tileY >= 0 && tileX < gameMap.tileNames.size() && gameMap.tileNames[0].size());
 
 				} // for(int y = (y0 > 0 ? y0 - 1 : 0); y < y1; y++);
 

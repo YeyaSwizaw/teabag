@@ -92,7 +92,7 @@ int Game::loadMap(std::string mapname) {
 
 int Game::run() {
 	while(gameWind.isOpen()) {
-		eventManager.tick(gameWind);
+		eventManager.tick(gameWind, mapSprite);
 
 		gameWind.clear();
 		gameWind.draw(mapSprite);

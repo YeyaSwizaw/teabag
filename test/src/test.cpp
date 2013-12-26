@@ -17,6 +17,12 @@ int Test::run() {
 	g.onKey(sf::Keyboard::Down, std::bind(&teabag::Entity::move, &player, 0, 5));
 	g.onKey(sf::Keyboard::Left, std::bind(&teabag::Entity::move, &player, -5, 0));
 	g.onKey(sf::Keyboard::Right, std::bind(&teabag::Entity::move, &player, 5, 0));
+
+	g.onKey(sf::Keyboard::W, std::bind(&teabag::Game::scrollMap, &g, 0, -5));
+	g.onKey(sf::Keyboard::S, std::bind(&teabag::Game::scrollMap, &g, 0, 5));
+	g.onKey(sf::Keyboard::A, std::bind(&teabag::Game::scrollMap, &g, -5, 0));
+	g.onKey(sf::Keyboard::D, std::bind(&teabag::Game::scrollMap, &g, 5, 0));
+
 	player.onCollision(std::bind(&Test::playerCollision, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
 	return g.run();
