@@ -20,6 +20,10 @@ public:
 	void move(int xd, int yd);
 	void onCollision(CollisionCallback callback);
 
+	sf::FloatRect getBounds();
+	int getX();
+	int getY();
+
 private:
 	friend class Game;
 
@@ -27,10 +31,9 @@ private:
 
 	Entity(std::string name, internal::EntityManager* entMan, internal::EventManager* evtMgr);
 
-	std::string name;
-
 	std::function<void(int, int)> funcMove;
-	std::function<void(std::string, CollisionCallback)> funcCollision; 
+	std::function<void(CollisionCallback)> funcCollision; 
+	std::function<sf::FloatRect()> funcGetBounds;
 
 }; // class Entity;
 
