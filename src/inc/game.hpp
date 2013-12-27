@@ -138,6 +138,8 @@ public:
 	 */
 	int onCollision(std::string entityName, CollisionCallback callback);
 
+	int onTick(TickCallback callback);
+
 	/**
 	 * @}
 	 */

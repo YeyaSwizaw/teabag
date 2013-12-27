@@ -232,4 +232,9 @@ int Game::onCollision(std::string entityName, CollisionCallback callback) {
 
 } // int Game::onCollision(std::string entityName, CollisionCallback callback);
 
+int Game::onTick(TickCallback callback) {
+	return eventManager.addTickCallback(callback);
+
+} // int Game::onTick(TickCallback callback);
+
 TEABAG_NS_END

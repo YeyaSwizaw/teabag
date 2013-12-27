@@ -8,6 +8,7 @@ EventManager::EventManager(EntityManager& entityManager, TileManager& tileManage
 	: eventCallbacks(),
 	  keyCallbacks(),
 	  collisionCallbacks(),
+	  tickCallbacks(),
 
 	  entityManager(entityManager),
 	  tileManager(tileManager),
@@ -36,7 +37,19 @@ int EventManager::addCollisionCallback(std::string entityName, teabag::Collision
 
 } // int EventManager::addCollisionCallback(std::string entityName, teabag::CollisionCallback callback);
 
+int EventManager::addTickCallback(teabag::TickCallback callback) {
+	tickCallbacks.push_back(callback);
+
+	return 0;
+
+} // int EventManager::addTickCallback(teabag::TickCallback callback);
+
 void EventManager::tick(sf::RenderWindow& wind, sf::Sprite& mapSprite) {
+	for(auto f : tickCallbacks) {
+		f();
+
+	} // for(auto f : tickCallbacks);
+
 	checkEvents(wind);
 	checkKeyboard();
 	checkCollision(mapSprite);

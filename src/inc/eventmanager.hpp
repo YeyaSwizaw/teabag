@@ -28,6 +28,7 @@ struct Collision {
 typedef std::function<void(sf::Event)> EventCallback;
 typedef std::function<void()> KeyCallback;
 typedef std::function<void(sf::FloatRect, sf::FloatRect, Collision)> CollisionCallback;
+typedef std::function<void()> TickCallback;
 
 TEABAG_INTERNAL
 
@@ -45,6 +46,7 @@ private:
 	int addEventCallback(sf::Event::EventType eventType, teabag::EventCallback callback);
 	int addKeyCallback(sf::Keyboard::Key keyCode, teabag::KeyCallback callback);
 	int addCollisionCallback(std::string entityName, teabag::CollisionCallback callback);
+	int addTickCallback(teabag::TickCallback callback);
 
 	void tick(sf::RenderWindow& wind, sf::Sprite& mapSprite);
 
@@ -55,6 +57,7 @@ private:
 	std::unordered_map<sf::Event::EventType, std::vector<teabag::EventCallback>, std::hash<int>> eventCallbacks;
 	std::unordered_map<sf::Keyboard::Key, std::vector<teabag::KeyCallback>, std::hash<int>> keyCallbacks;
 	std::unordered_map<std::string, std::vector<teabag::CollisionCallback>, std::hash<std::string>> collisionCallbacks;
+	std::vector<teabag::TickCallback> tickCallbacks;
 
 	EntityManager& entityManager;
 	TileManager& tileManager;
