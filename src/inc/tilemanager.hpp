@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 #include <SFML/Graphics.hpp>
 
@@ -31,6 +32,7 @@ struct TileInfo {
 	sf::Color colour;
 	bool blocking;
 	sf::Texture texture;
+	std::vector<std::vector<bool>>* collisionMap;
 
 }; // struct TileInfo;
 
@@ -43,11 +45,13 @@ private:
 	TileManager();
 	~TileManager();
 
-	int addTile(std::string name, int r, int g, int b, bool blocking);
+	int addTile(std::string name, int r, int g, int b, bool blocking, bool hasMap);
 
 	TileInfo* getTile(sf::Color c);
 	TileInfo* getTile(std::string name);
 	bool isBlocking(std::string name);
+	bool hasCollisionMap(std::string name);
+	std::vector<std::vector<bool>>* getCollisionMap(std::string name);
 
 	void clear();
 

@@ -35,18 +35,18 @@ int GameMap::loadText(std::string mapname) {
 		if(option == "tile") {
 			int r, g, b;
 			std::string name;
-			bool blocking;
+			bool blocking, hasMap;
 
-			if(!parser.get(r) || !parser.get(g) || !parser.get(b) || !parser.get(name) || !parser.get(blocking)) {
+			if(!parser.get(r) || !parser.get(g) || !parser.get(b) || !parser.get(name) || !parser.get(blocking) || !parser.get(hasMap)) {
 				TEABAG_FILE_PARSE_ERROR(filename, parser.line);
 				return -1;
 
-			} // if(!parser.get(r) || !parser.get(g) || !parser.get(name) || !parser.get(name) || !parser.get(blocking));
+			} // if(!parser.get(r) || !parser.get(g) || !parser.get(name) || !parser.get(name) || !parser.get(blocking) || !parser.get(hasMap));
 
-			if(tileManager.addTile(name, r, g, b, blocking) < 0) {
+			if(tileManager.addTile(name, r, g, b, blocking, hasMap) < 0) {
 				return -1;
 
-			} // if(tileManager.addTile(name, r, g, b, blocking) < 0);
+			} // if(tileManager.addTile(name, r, g, b, blocking, hasMap) < 0);
 
 		} // if(option == "tile");
 

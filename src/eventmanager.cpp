@@ -117,12 +117,26 @@ void EventManager::checkCollision(sf::Sprite &mapSprite) {
 								tileManager.tileWidth, tileManager.tileHeight);
 
 							if(entity.getGlobalBounds().intersects(tileRect, coll)) {
-								for(auto f : p.second) {
-									f(entity.getGlobalBounds(), tileRect, {p.first, tile, coll, true});
+								bool c = false;
 
-								} // for(auto f : p.second);
+								if(tileManager.hasCollisionMap(tile)) {
+									c = checkDetailedCollision(entity.getGlobalBounds(), tileRect, tileManager.getCollisionMap(tile), coll);
 
-								collisionFound = true;
+								} // if(tileManager.hasCollisionMap(tile));
+								else {
+									c = true;
+
+								} // else;
+
+								if(c) {
+									for(auto f : p.second) {
+										f(entity.getGlobalBounds(), tileRect, {p.first, tile, coll, true});
+	
+									} // for(auto f : p.second);
+
+									collisionFound = true;
+
+								} // if(c);
 
 							} // if(entity.getGlobalBounds().intersects(tileRect, coll));
 
@@ -153,6 +167,41 @@ void EventManager::checkCollision(sf::Sprite &mapSprite) {
 	} while(collisionFound);
 
 } // void EventManager::checkCollision(EntityManager& entman);
+
+bool EventManager::checkDetailedCollision(sf::FloatRect obj1, sf::FloatRect obj2, std::vector<std::vector<bool>>* obj1map, sf::FloatRect& collision) {
+	int maxX = collision.left;
+	int maxY = collision.top;
+
+	int minX = collision.left + collision.width;
+	int minY = collision.top + collision.height;
+
+	bool ret = false;
+
+	for(int x = collision.left; x < collision.left + collision.width; x++) {
+		for(int y = collision.top; y < collision.top + collision.height; y++) {
+			if(obj1map->operator[](x - obj2.left)[y - obj2.top]) {
+				minX = std::min(minX, x);
+				minY = std::min(minY, y);
+
+				maxX = std::max(maxX, x);
+				maxY = std::max(maxY, y);
+
+				ret = true;
+
+			} // if(obj1map->operator[](x)[y]);
+
+		} // for(int y = collision.top; y < collision.height; y++);
+
+	} // for(int x = collision.left; x < collision.width; x++);
+
+	if(ret) {
+		collision = sf::FloatRect(minX, minY, maxX - minX, maxY - minY); 
+
+	} // if(ret);
+
+	return ret;
+
+} // bool EventManager::checkDetailedCollision(sf::FloatRect obj1, sf::FloatRect obj2, std::vector<std::vector<bool>>* obj1map, sf::FloatRect& collision);
 
 TEABAG_INTERNAL_END
 

@@ -54,6 +54,8 @@ private:
 	void checkKeyboard();
 	void checkCollision(sf::Sprite& mapSprite);
 
+	bool checkDetailedCollision(sf::FloatRect obj1, sf::FloatRect obj2, std::vector<std::vector<bool>>* obj1map, sf::FloatRect& collision);
+
 	std::unordered_map<sf::Event::EventType, std::vector<teabag::EventCallback>, std::hash<int>> eventCallbacks;
 	std::unordered_map<sf::Keyboard::Key, std::vector<teabag::KeyCallback>, std::hash<int>> keyCallbacks;
 	std::unordered_map<std::string, std::vector<teabag::CollisionCallback>, std::hash<std::string>> collisionCallbacks;
