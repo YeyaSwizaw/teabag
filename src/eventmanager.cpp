@@ -83,90 +83,70 @@ void EventManager::checkKeyboard() {
 } // void EventManager::checkKeyboard();
 
 void EventManager::checkCollision(sf::Sprite &mapSprite) {
-	sf::FloatRect coll;
-	bool collisionFound = false;
+    sf::FloatRect coll;
+    bool collisionFound;
+    do {
+        collisionFound = false;
+        for(auto p : collisionCallbacks) {
+            sf::Sprite& entity = entityManager.entityMap[p.first];
 
-	do {
-		collisionFound = false;
+            // Tile Collisions
+            sf::FloatRect& entityBounds = entity.getGlobalBounds();
+            int x0 = entityBounds.left / tileManager.tileWidth;
+            int y0 = entityBounds.top  / tileManager.tileHeight;
 
-		for(auto p : collisionCallbacks) {
-			sf::Sprite& entity = entityManager.entityMap[p.first];
+            sf::FloatRect& mapBounds = mapSprite.getGlobalBounds();
+            int offsetX = (entityBounds.left - mapBounds.left) / tileManager.tileWidth;
+            int offsetY = (entityBounds.top  - mapBounds.top)  / tileManager.tileHeight;
 
-			// Tile Collisions
-			int x0 = entity.getGlobalBounds().left / tileManager.tileWidth;
-			int y0 = entity.getGlobalBounds().top / tileManager.tileHeight;
+            int x1 = x0 + (entityBounds.width  / tileManager.tileWidth)  + 2;
+            int y1 = y0 + (entityBounds.height / tileManager.tileHeight) + 2;
 
-			int offsetX = (entity.getGlobalBounds().left - mapSprite.getGlobalBounds().left) / tileManager.tileWidth;
-			int offsetY = (entity.getGlobalBounds().top - mapSprite.getGlobalBounds().top) / tileManager.tileHeight;
+            for(int x = (x0 > 0 ? x0 - 1 : 0); x < x1; x++) {
+                for(int y = (y0 > 0 ? y0 - 1 : 0); y < y1; y++) {
+                    int tileX = offsetX + (x - x0);
+                    int tileY = offsetY + (y - y0);
+                    if(tileX >= 0 && tileX < gameMap.tileNames.size()
+                    && tileY >= 0 && tileY < gameMap.tileNames[0].size()) {
+                        std::string tile = gameMap.tileNames[tileX][tileY];
+                        if(tileManager.isBlocking(tile)) {
+                            sf::FloatRect tileRect = sf::FloatRect(
+                                (tileX * tileManager.tileWidth) + mapSprite.getGlobalBounds().left,
+                                (tileY * tileManager.tileHeight) + mapSprite.getGlobalBounds().top,
+                                tileManager.tileWidth, tileManager.tileHeight);
+                            if(entityBounds.intersects(tileRect, coll)) {
+                                bool c = true;
+                                if(tileManager.hasCollisionMap(tile)) {
+                                    c = checkDetailedCollision(
+                                            entity.getGlobalBounds(),
+                                            tileRect,
+                                            tileManager.getCollisionMap(tile),
+                                            coll);
+                                }
+                                if(c) {
+                                    for(auto f : p.second) {
+                                        f(entityBounds, tileRect, {p.first, tile, coll, true});
+                                    }
+                                    collisionFound = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
-			int x1 = x0 + (entity.getGlobalBounds().width / tileManager.tileWidth) + 2;
-			int y1 = y0 + (entity.getGlobalBounds().height / tileManager.tileHeight) + 2;
-
-			for(int x = (x0 > 0 ? x0 - 1 : 0); x < x1; x++) {
-				for(int y = (y0 > 0 ? y0 - 1 : 0); y < y1; y++) {
-					int tileX = offsetX + (x - x0);
-					int tileY = offsetY + (y - y0);
-
-					if(tileX >= 0 && tileY >= 0 && tileX < gameMap.tileNames.size() && tileY < gameMap.tileNames[0].size()) {
-						std::string tile = gameMap.tileNames[tileX][tileY];
-
-						if(tileManager.isBlocking(tile)) {
-							sf::FloatRect tileRect = sf::FloatRect(
-								(tileX * tileManager.tileWidth) + mapSprite.getGlobalBounds().left,
-								(tileY * tileManager.tileHeight) + mapSprite.getGlobalBounds().top,
-								tileManager.tileWidth, tileManager.tileHeight);
-
-							if(entity.getGlobalBounds().intersects(tileRect, coll)) {
-								bool c = false;
-
-								if(tileManager.hasCollisionMap(tile)) {
-									c = checkDetailedCollision(entity.getGlobalBounds(), tileRect, tileManager.getCollisionMap(tile), coll);
-
-								} // if(tileManager.hasCollisionMap(tile));
-								else {
-									c = true;
-
-								} // else;
-
-								if(c) {
-									for(auto f : p.second) {
-										f(entity.getGlobalBounds(), tileRect, {p.first, tile, coll, true});
-	
-									} // for(auto f : p.second);
-
-									collisionFound = true;
-
-								} // if(c);
-
-							} // if(entity.getGlobalBounds().intersects(tileRect, coll));
-
-						} // if(tileManager.isBlocking(tile));
-
-					} // if(tileX >= 0 && tileY >= 0 && tileX < gameMap.tileNames.size() && gameMap.tileNames[0].size());
-
-				} // for(int y = (y0 > 0 ? y0 - 1 : 0); y < y1; y++);
-
-			} // for(int x = (x0 > 0 ? x0 - 1: 0); x < x1; x++);
-
-			// Entity Collisions
-			for(auto entp : entityManager.entityMap) {
-				if((p.first != entp.first) && entity.getGlobalBounds().intersects(entp.second.getGlobalBounds(), coll)) {
-					for(auto f : p.second) {
-						f(entity.getGlobalBounds(), entp.second.getGlobalBounds(), {p.first, entp.first, coll, false});
-
-					} // for(auto f : p.second);
-
-					collisionFound = true;
-
-				} // if((p.first != entp.first) && entity.getGlobalBounds().intersects(entp.second.getGlobalBounds(), coll));
-
-			} // for(auto entp : entityManager.entityMap);
-
-		} // for(auto p : collisionCallbacks);
-
-	} while(collisionFound);
-
-} // void EventManager::checkCollision(EntityManager& entman);
+            // Entity Collisions
+            for(auto entp : entityManager.entityMap) {
+                if((p.first != entp.first) && entityBounds.intersects(entp.second.getGlobalBounds(), coll)) {
+                    for(auto f : p.second) {
+                        f(entityBounds, entp.second.getGlobalBounds(), {p.first, entp.first, coll, false});
+                    }
+                    collisionFound = true;
+                }
+            }
+        }
+    } while(collisionFound);
+}
 
 bool EventManager::checkDetailedCollision(sf::FloatRect obj1, sf::FloatRect obj2, std::vector<std::vector<bool>>* obj1map, sf::FloatRect& collision) {
 	int maxX = collision.left;
