@@ -115,6 +115,11 @@ void Game::scrollMap(int xd, int yd) {
 
 } // void Game::scrollMap(int xd, int yd);
 
+void Game::resizeView(int w, int h) {
+    gameWind.setView(sf::View(sf::FloatRect(0, 0, w, h)));
+
+} // void Game::resizeView(int w, int h);
+
 Entity Game::getEntity(std::string name) {
 	return Entity(name, &entityManager, &eventManager);
 

@@ -11,6 +11,7 @@ int RPG::run() {
 	} // if(g.init(true) < 0);
 
 	g.onClose(std::bind(&teabag::Game::exit, &g));
+    g.onResize(std::bind(&RPG::onResize, this, std::placeholders::_1));
 
 	player = Player(g.getEntity("player"));
 	player.e.onCollision(std::bind(&Player::onCollision, &player, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
@@ -25,6 +26,11 @@ void RPG::mouseRelease(sf::Event e) {
 	player.setMovementGoal(e.mouseButton.x, e.mouseButton.y);
 
 } // void RPG::onMouseButtonRelease(sf::Event e);
+
+void RPG::onResize(sf::Event e) {
+    g.resizeView(e.size.width, e.size.height);
+
+} // void RPG::onResize(sf::Event e);
 
 int main(int argc, char* argv[]) {
 	RPG rpg;

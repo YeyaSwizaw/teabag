@@ -14,6 +14,7 @@ public:
 	int run();
 
 	void mouseRelease(sf::Event e);
+    void onResize(sf::Event e);
 
 private:
 	teabag::Game g;

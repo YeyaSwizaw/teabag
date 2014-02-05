@@ -66,6 +66,14 @@ public:
 	 */
 	void scrollMap(int xd, int yd);
 
+    /**
+     * Resizes the window viewport.
+     *
+     * @param w The new viewport width.
+     * @param h The new viewport height.
+     */
+    void resizeView(int w, int h);
+        
 	/**
 	 * Gets an entity.
 	 *
