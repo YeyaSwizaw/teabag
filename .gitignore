@@ -6,3 +6,4 @@ Makefile
 *.so
 test/test
 *.swp
+.ycm*

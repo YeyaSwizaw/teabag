@@ -2,50 +2,33 @@
 #define TEABAG_MAP_HPP
 
 #include "defines.hpp"
-#include "optionsparser.hpp"
-#include "entitymanager.hpp"
 #include "tilemanager.hpp"
+#include "error.hpp"
 
-#include <vector>
 #include <string>
+#include <vector>
+
+#include <SFML/Graphics.hpp>
 
 TEABAG_NS
 
-class Game;
+class World;
 
-TEABAG_INTERNAL
-
-class EventManager;
-
-/**
- * Loads and manages the game map.
- * This class is used internally to load, store data about, and render maps.
- */
-class GameMap {
+class Map {
 private:
-	friend class teabag::Game;
-	friend class EventManager;
+    friend class World;
 
-	GameMap(TileManager& tileManager, EntityManager& entityManager);
+    void loadMap(std::string name);
 
-	int loadMap(std::string mapname);
+    internal::TileManager& tiles();
 
-	int loadText(std::string mapname);
-	int loadImg(std::string mapname);
-	int renderTex();
+    internal::TileManager tileManager;
+    std::vector<std::vector<std::string>> map;
 
-	TileManager& tileManager;
-	EntityManager& entityManager;
-
-	std::vector<std::vector<std::string>> tileNames;
-	std::vector<std::string> entityNames;
-
-	sf::RenderTexture mapTex;
-
-}; // class GameMap;
-
-TEABAG_INTERNAL_END
+    sf::RenderTexture rendTex;
+    sf::Sprite mapSprite;
+};
 
 TEABAG_NS_END
 
-#endif // TEABAG_MAP_HPP
+#endif

@@ -2,68 +2,58 @@
 #define TEABAG_TILEMANAGER_HPP
 
 #include "defines.hpp"
+#include "error.hpp"
+#include "tile.hpp"
 
+#include <string>
 #include <unordered_map>
 #include <functional>
-#include <sstream>
-#include <string>
-#include <iostream>
+#include <utility>
 #include <algorithm>
 
 #include <SFML/Graphics.hpp>
 
 TEABAG_NS
 
-class Game;
+class World;
+class Map;
 
 TEABAG_INTERNAL
 
-class GameMap;
-class EventManager;
-
-/**
- * This struct stores the information for a tile.
- * The information is loaded from the tile's .tea file, and consists of
- * the colour representing this tile on the map img; the name of the tile;
- * whether the tile is blocking or not; and the tile's texture.
- */
 struct TileInfo {
-	std::string name;
-	sf::Color colour;
-	bool blocking;
-	sf::Texture texture;
-	std::vector<std::vector<bool>>* collisionMap;
-
-}; // struct TileInfo;
+    std::string name;
+    int r, g, b;
+    bool blocking;
+}; 
 
 class TileManager {
 private:
-	friend class teabag::Game;
-	friend class GameMap;
-	friend class EventManager;
+    friend class teabag::World;
+    friend class teabag::Map;
 
-	TileManager();
-	~TileManager();
+    TileManager();
 
-	int addTile(std::string name, int r, int g, int b, bool blocking, bool hasMap);
+    void queueTile(std::string name, int r, int g, int b, bool blocking);
+    void loadQueue();
+    void loadTile(TileInfo& tile);
 
-	TileInfo* getTile(sf::Color c);
-	TileInfo* getTile(std::string name);
-	bool isBlocking(std::string name);
-	bool hasCollisionMap(std::string name);
-	std::vector<std::vector<bool>>* getCollisionMap(std::string name);
+    const Tile& tileFromName(std::string name);
+    const Tile& tileFromColour(sf::Color colour);
 
-	void clear();
+    unsigned int tileWidth();
+    unsigned int tileHeight();
 
-	int tileWidth, tileHeight;
+    std::vector<TileInfo> tileQueue;
 
-	std::unordered_map<sf::Color, TileInfo*, std::function<size_t(sf::Color)>> colourMap;
-	std::unordered_map<std::string, TileInfo*> nameMap;
+    std::unordered_map<std::string, Tile> tiles;
+    std::unordered_map<sf::Color, std::string, std::function<size_t(sf::Color)>> colours;
 
-}; // class TileManager;
+    unsigned int tileW;
+    unsigned int tileH;
+};
 
 TEABAG_INTERNAL_END
 
 TEABAG_NS_END
 
-#endif // TEABAG_TILEMANAGER_HPP
+#endif

@@ -2,43 +2,45 @@
 #define TEABAG_ENTITYMANAGER_HPP
 
 #include "defines.hpp"
-#include "optionsparser.hpp"
+#include "reader.hpp"
+#include "error.hpp"
+#include "entity.hpp"
 
+#include <string>
+#include <vector>
 #include <unordered_map>
 
 #include <SFML/Graphics.hpp>
 
 TEABAG_NS
 
-class Game;
-class Entity;
+class World;
 
 TEABAG_INTERNAL
 
-class GameMap;
-class EventManager;
+struct EntityInfo {
+    std::string name;
+    int x, y;
+}; 
 
 class EntityManager {
 private:
-	friend class teabag::Game;
-	friend class teabag::Entity;
-	friend class GameMap;
-	friend class EventManager;
+    friend class teabag::World;
 
-	EntityManager();
-	~EntityManager();
+    EntityManager();
 
-	int addEntity(std::string name, int x, int y);
+    void queueEntity(std::string name, int x, int y);
+    void loadQueue();
+    void loadEntity(EntityInfo& entity);
 
-	sf::Sprite* getEntity(std::string name);
+    std::vector<EntityInfo> entityQueue;
 
-	std::unordered_map<std::string, sf::Texture> texMap;
-	std::unordered_map<std::string, sf::Sprite> entityMap;
-
-}; // class EntityManager;
+    std::unordered_map<std::string, sf::Texture> textures;
+    std::unordered_map<std::string, teabag::Entity> entities;
+};
 
 TEABAG_INTERNAL_END
 
 TEABAG_NS_END
 
-#endif // TEABAG_ENTITYMANAGER_HPP
+#endif

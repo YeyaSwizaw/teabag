@@ -4,109 +4,52 @@ TEABAG_NS
 
 TEABAG_INTERNAL
 
-TileManager::TileManager()
-	: tileWidth(0), tileHeight(0), colourMap(10, [](sf::Color c) {
-		return std::hash<std::string>()(static_cast<std::ostringstream&>(std::ostringstream().flush() << c.r << c.g << c.b).str());
-									}) {
+TileManager::TileManager() 
+    : colours(10, [](sf::Color c) { return std::hash<int>()(c.r + 255 * (c.g + 255 * (c.b))); }),
+      tileW(0), tileH(0) {}
 
-} // TileManager::TileManager();
+void TileManager::queueTile(std::string name, int r, int g, int b, bool blocking) {
+    tileQueue.push_back({name, r, g, b, blocking});
+} 
 
-TileManager::~TileManager() {
-	clear();
+void TileManager::loadQueue() {
+    for(TileInfo& tile : tileQueue) {
+        loadTile(tile);
+    } 
 
-} // TileManager::~TileManager();
+    tileQueue.clear();
+} 
 
-int TileManager::addTile(std::string name, int r, int g, int b, bool blocking, bool hasMap) {
-	std::string filename = TEABAG_TILE_IMG(name);
+void TileManager::loadTile(TileInfo& tile) {
+    std::string texfile = TEABAG_TILE_IMG(tile.name);
 
-	sf::Texture tex;
-	if(!tex.loadFromFile(filename)) {
-		TEABAG_IMG_ERROR(filename);
-		return -1;
+    sf::Texture tex;
+    if(!tex.loadFromFile(texfile)) {
+        throw FileOpenError(texfile);
+    } 
 
-	} // if(!t.loadFromFile(filename));
+    tiles[tile.name] = {tile.name, sf::Color(tile.r, tile.g, tile.b), tile.blocking, tex};
+    colours[tiles[tile.name].colour] = tile.name;
 
-	if(colourMap.empty()) {
-		tileWidth = tex.getSize().x;
-		tileHeight = tex.getSize().y;
+    tileW = std::max(tileW, tex.getSize().x);
+    tileH = std::max(tileH, tex.getSize().y);
+} 
 
-	} // if(colourMap.empty());
+const Tile& TileManager::tileFromName(std::string name) {
+    return tiles[name];
+} 
 
-	TileInfo* t = new TileInfo;
-	t->name = name;
-	t->colour = sf::Color(r, g, b);
-	t->blocking = blocking;
-	t->texture = tex;
+const Tile& TileManager::tileFromColour(sf::Color colour) {
+    return tiles[colours[colour]];
+} 
 
-	if(hasMap) {
-		filename = TEABAG_TILE_COLL_IMG(name);
+unsigned int TileManager::tileWidth() {
+    return tileW;
+} 
 
-		sf::Image collImg;
-		if(!collImg.loadFromFile(filename)) {
-			TEABAG_IMG_ERROR(filename);
-			return -1;
-
-		} // if(!collImg.loadFromFile(filename));
-
-		t->collisionMap = new std::vector<std::vector<bool>>();
-		for(int i = 0; i < tileWidth; i++) {
-			t->collisionMap->push_back(std::vector<bool>());
-
-			for(int j = 0; j < tileHeight; j++) {
-				t->collisionMap->operator[](i).push_back(collImg.getPixel(i, j) != sf::Color::White);
-
-			} // for(int j = 0; j < tileHeight; j++);
-
-		} // for(int i = 0; i < tileWidth; i++);
-
-	} // if(hasMap);
-	else {
-		t->collisionMap = nullptr;
-
-	} // else;
-
-	colourMap.insert({t->colour, t});
-	nameMap.insert({t->name, t});
-
-	return 0;
-
-} // int TileManager::addTile(std::string name, int r, int g, int b, bool blocking, bool hasMap);
-
-TileInfo* TileManager::getTile(sf::Color c) {
-	return colourMap[c];
-
-} // TileInfo* TileManager::getTile(sf::Color c);
-
-TileInfo* TileManager::getTile(std::string name) {
-	return nameMap[name];
-
-} // TileInfo* TileManager::getTile(std::string name);
-
-bool TileManager::isBlocking(std::string name) {
-	return (nameMap[name] == nullptr ? false : nameMap[name]->blocking);
-
-} // bool TileManager::isBlocking(std::string name);
-
-bool TileManager::hasCollisionMap(std::string name) {
-	return (nameMap[name] == nullptr ? false : nameMap[name]->collisionMap != nullptr);
-
-} // bool TileManager::hasCollisionMap(std::string name);
-
-std::vector<std::vector<bool>>* TileManager::getCollisionMap(std::string name) {
-	return (hasCollisionMap(name) ? nameMap[name]->collisionMap : nullptr);
-
-} // std::vector<std::vector<bool>>* TileManager::getCollisionMap(std::string name);
-
-void TileManager::clear() {
-	for(auto& p : colourMap) {
-		delete p.second;
-
-	} // for(auto& p : colourMap);
-
-	colourMap.clear();
-	nameMap.clear();
-
-} // void TileManager::clear();
+unsigned int TileManager::tileHeight() {
+    return tileH;
+} 
 
 TEABAG_INTERNAL_END
 

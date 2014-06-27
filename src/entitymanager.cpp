@@ -4,70 +4,56 @@ TEABAG_NS
 
 TEABAG_INTERNAL
 
-EntityManager::EntityManager() {
+EntityManager::EntityManager() {}
 
-} // EntityManager::EntityManager();
+void EntityManager::queueEntity(std::string name, int x, int y) {
+    entityQueue.push_back({name, x, y});
+} 
 
-EntityManager::~EntityManager() {
+void EntityManager::loadQueue() {
+    for(EntityInfo& entity : entityQueue) {
+        loadEntity(entity);
+    } 
 
-} // EntityManager::~EntityManager();
+    entityQueue.clear();
+} 
 
-int EntityManager::addEntity(std::string name, int x, int y) {
-	std::string filename = TEABAG_ENTITY_TEA(name);
-	OptionsParser parser(filename);
-	if(!parser) {
-		TEABAG_FILE_OPEN_ERROR(filename);
-		return -1;
+void EntityManager::loadEntity(EntityInfo& entity) {
+    std::string file = TEABAG_ENTITY_TEA(entity.name);
 
-	} // if(!parser);
+    internal::Reader reader(file);
+    if(!reader) {
+        throw FileOpenError(file);
+    } 
 
-	std::string sprname;
+    std::string sprite;
 
-	while(parser.nextLine()) {
-		std::string option;
-		if(!parser.get(option)) {
-			TEABAG_FILE_PARSE_ERROR(filename, parser.line);
-			return -1;
+    while(reader.nextLine()) {
+        std::string option;
+        if(!reader.get(option)) {
+            throw LineReadError(file, reader.line);
+        } 
 
-		} // if(!parser.get(option));
+        if(option == "sprite") {
+            if(!reader.get(sprite)) {
+                throw LineReadError(file, reader.line);
+            } 
+        } 
+    } 
 
-		if(option == "sprite") {
-			if(!parser.get(sprname)) {
-				TEABAG_FILE_PARSE_ERROR(filename, parser.line);
-				return -1;
+    if(textures.find(sprite) == textures.end()) {
+        file = TEABAG_SPRITE_IMG(sprite);
 
-			} // if(!parser.get(sprname));
+        sf::Texture tex;
+        if(!tex.loadFromFile(file)) {
+            throw FileOpenError(file);
+        } 
 
-		} // if(option == "sprite");
+        textures.insert({sprite, tex});
+    } 
 
-	} // while(parser.nextLine());
-
-	if(texMap.find(sprname) == texMap.end()) {
-		filename = TEABAG_ENTITY_IMG(name);
-
-		sf::Texture tex;
-		if(!tex.loadFromFile(filename)) {
-			TEABAG_IMG_ERROR(filename);
-			return -1;
-
-		} // if(!tex.loadFromFile(filename));
-
-		texMap.insert({sprname, tex});
-
-	} // if(texMap.find(sprname) == texMap.end());
-
-	entityMap[name] = sf::Sprite();
-	entityMap[name].setPosition(x, y);
-	entityMap[name].setTexture(texMap[sprname]);
-
-	return 0;
-
-} // int EntityManager::addEntity(std::string name, int x, int y);
-
-sf::Sprite* EntityManager::getEntity(std::string name) {
-	return &(entityMap[name]);
-
-} // sf::Sprite* EntityManager::getEntity(std::string name);
+    entities.insert({entity.name, {entity.x, entity.y, textures[sprite]}});
+} 
 
 TEABAG_INTERNAL_END
 

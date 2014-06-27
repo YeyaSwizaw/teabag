@@ -1,42 +1,39 @@
 #ifndef TEABAG_ENTITY_HPP
 #define TEABAG_ENTITY_HPP
 
-#include <functional>
-
 #include "defines.hpp"
-#include "eventmanager.hpp"
-#include "entitymanager.hpp"
 
 #include <SFML/Graphics.hpp>
 
 TEABAG_NS
 
-class Game;
+class World;
 
+TEABAG_INTERNAL
+
+class EntityManager;
+
+TEABAG_INTERNAL_END
+
+/**
+ * This class represents an entity in the game world.
+ */
 class Entity {
 public:
-	Entity();
-
-	void move(int xd, int yd);
-	void onCollision(CollisionCallback callback);
-
-	sf::FloatRect getBounds();
-	int getX();
-	int getY();
+    /**
+     * Moves the entity
+     */
+    void move(int x, int y);
 
 private:
-	friend class Game;
+    friend class internal::EntityManager;
+    friend class World;
 
-	bool valid;
+    Entity(int x, int y, sf::Texture& tex);
 
-	Entity(std::string name, internal::EntityManager* entMan, internal::EventManager* evtMgr);
-
-	std::function<void(int, int)> funcMove;
-	std::function<void(CollisionCallback)> funcCollision; 
-	std::function<sf::FloatRect()> funcGetBounds;
-
-}; // class Entity;
+    sf::Sprite sprite;
+};
 
 TEABAG_NS_END
 
-#endif // TEABAG_ENTITY_HPP
+#endif
