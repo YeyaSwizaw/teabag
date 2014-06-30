@@ -7,6 +7,7 @@
 #include "map.hpp"
 #include "entitymanager.hpp"
 #include "entity.hpp"
+#include "signal.hpp"
 
 #include <string>
 
@@ -29,6 +30,11 @@ public:
     void loadLevel(std::string name);
 
     /**
+     * Returns the attached signals struct.
+     */
+    WorldSignals& signals();
+
+    /**
      * Returns a reference to the given entity, if found.
      * Otherwise throws an exception.
      */
@@ -39,8 +45,12 @@ private:
 
     void render(sf::RenderWindow& window);
 
+    void checkCollisions();
+
     Map map;
     internal::EntityManager entityManager;
+
+    WorldSignals sigs;
 };
 
 TEABAG_NS_END

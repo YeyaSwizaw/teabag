@@ -10,6 +10,8 @@ void Map::loadMap(std::string name) {
         throw FileOpenError(filename);
     } 
 
+    map = std::vector<std::vector<std::string>>();
+
     for(unsigned int x = 0; x < img.getSize().x; ++x) {
         map.push_back(std::vector<std::string>());
 

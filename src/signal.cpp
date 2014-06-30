@@ -157,4 +157,12 @@ void GameSignals::handleEvent(sf::Event& e) {
     } 
 } 
 
+StringSignal& WorldSignals::levelLoad() {
+    return sigLevelLoad;
+} 
+
+CollisionSignal& EntitySignals::collision() {
+    return sigCollision;
+} 
+
 TEABAG_NS_END

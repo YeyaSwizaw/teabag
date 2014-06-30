@@ -14,6 +14,9 @@ TEABAG_NS
 
 class World;
 
+/**
+ * This class stores the level map and tiles.
+ */
 class Map {
 private:
     friend class World;

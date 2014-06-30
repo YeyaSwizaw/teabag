@@ -56,6 +56,8 @@ void Game::run() {
             sigs.handleEvent(e);
         } 
 
+        w.checkCollisions();
+
         window.clear();
         w.render(window);
         window.display();

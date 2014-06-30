@@ -43,6 +43,12 @@ void World::loadLevel(std::string name) {
     map.loadMap(name);
 
     entityManager.loadQueue();
+
+    sigs.levelLoad().call(name);
+} 
+
+WorldSignals& World::signals() {
+    return sigs;
 } 
 
 Entity& World::entity(std::string name) {
@@ -58,6 +64,55 @@ void World::render(sf::RenderWindow& window) {
 
     for(auto& entityPair : entityManager.entities) {
         window.draw(entityPair.second.sprite);
+    } 
+}  
+
+void World::checkCollisions() {
+    sf::FloatRect collRect;
+
+    for(auto& e1pair : entityManager.entities) {
+        Entity& e1 = e1pair.second;
+
+        // Entity collision
+        for(auto& e2pair : entityManager.entities) {
+            Entity& e2 = e2pair.second;
+
+            if(e1.name != e2.name) {
+                if(e1.sprite.getGlobalBounds().intersects(e2.sprite.getGlobalBounds(), collRect)) {
+                    e1.signals().collision().call({collRect, e2.sprite.getGlobalBounds(), Collision::Type::Entity, e2.name});
+                } 
+            } 
+        } 
+
+        // Tile collision
+        int x0 = e1.sprite.getGlobalBounds().left / map.tiles().tileWidth();
+        int y0 = e1.sprite.getGlobalBounds().top / map.tiles().tileHeight();
+
+        int offsetX = (e1.sprite.getGlobalBounds().left - map.mapSprite.getGlobalBounds().left) / map.tiles().tileWidth();
+        int offsetY = (e1.sprite.getGlobalBounds().top - map.mapSprite.getGlobalBounds().top) / map.tiles().tileHeight();
+
+        int x1 = x0 + (e1.sprite.getGlobalBounds().width / map.tiles().tileWidth()) + 2;
+        int y1 = y0 + (e1.sprite.getGlobalBounds().height / map.tiles().tileHeight()) + 2;
+
+        for(int x = (x0 > 0 ? x0 - 1 : 0); x < x1; ++x) {
+            for(int y = (y0 > 0 ? y0 - 1 : 0); y < y1; ++y) {
+                int tx = offsetX + (x - x0);
+                int ty = offsetY + (y - y0);
+
+                if(tx >= 0 && ty >= 0 && tx < map.map.size() && ty < map.map[0].size()) {
+                    if(map.tiles().tileFromName(map.map[tx][ty]).blocking) {
+                        sf::FloatRect tileRect(
+                            (tx * map.tiles().tileWidth()) + map.mapSprite.getGlobalBounds().left,
+                            (ty * map.tiles().tileHeight()) + map.mapSprite.getGlobalBounds().top,
+                            map.tiles().tileWidth(), map.tiles().tileHeight());
+
+                        if(e1.sprite.getGlobalBounds().intersects(tileRect, collRect)) {
+                            e1.signals().collision().call({collRect, tileRect, Collision::Type::Tile, map.map[tx][ty]});
+                        } 
+                    } 
+                } 
+            } 
+        } 
     } 
 } 
 

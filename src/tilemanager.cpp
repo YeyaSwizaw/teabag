@@ -13,6 +13,9 @@ void TileManager::queueTile(std::string name, int r, int g, int b, bool blocking
 } 
 
 void TileManager::loadQueue() {
+    tiles.clear();
+    colours.clear();
+
     for(TileInfo& tile : tileQueue) {
         loadTile(tile);
     } 

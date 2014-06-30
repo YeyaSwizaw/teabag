@@ -2,6 +2,7 @@
 #define TEABAG_SIGNAL_HPP
 
 #include "defines.hpp"
+#include "collision.hpp"
 
 #include <vector>
 #include <functional>
@@ -10,12 +11,14 @@
 
 TEABAG_NS
 
+class Entity;
+class World;
 class Game;
 class GameSignals;
 
 /**
  * This class stores a vector of functions to be called whenever a
- * specific even happens.
+ * specific event happens.
  */
 template<typename ...Args>
 class Signal {
@@ -28,6 +31,7 @@ public:
 private:
     friend class Game;
     friend class GameSignals;
+    friend class World;
 
     std::vector<FuncType> funcs;
 
@@ -61,6 +65,8 @@ typedef Signal<unsigned int, unsigned int> UintUintSignal;
 typedef Signal<sf::Mouse::Button, int, int> MouseButSignal;
 typedef Signal<sf::Keyboard::Key, bool, bool, bool, bool> KeyCodeSignal;
 typedef Signal<unsigned int, sf::Joystick::Axis, float> JoyAxisSignal;
+typedef Signal<std::string> StringSignal;
+typedef Signal<Collision> CollisionSignal;
 
 // Storage structs
 class GameSignals {
@@ -109,6 +115,27 @@ private:
     JoyAxisSignal sigJoystickMove;
     UintSignal sigJoystickConnect;
     UintSignal sigJoystickDisconnect;
+}; 
+
+class WorldSignals {
+public:
+    StringSignal& levelLoad();
+
+private:
+    friend class World;
+
+    StringSignal sigLevelLoad;
+}; 
+
+class EntitySignals {
+public:
+    CollisionSignal& collision();
+
+private:
+    friend class World;
+    friend class Entity;
+
+    CollisionSignal sigCollision;
 }; 
 
 TEABAG_NS_END

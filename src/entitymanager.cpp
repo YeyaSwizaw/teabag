@@ -11,6 +11,9 @@ void EntityManager::queueEntity(std::string name, int x, int y) {
 } 
 
 void EntityManager::loadQueue() {
+    entities.clear();
+    textures.clear();
+
     for(EntityInfo& entity : entityQueue) {
         loadEntity(entity);
     } 
@@ -52,7 +55,7 @@ void EntityManager::loadEntity(EntityInfo& entity) {
         textures.insert({sprite, tex});
     } 
 
-    entities.insert({entity.name, {entity.x, entity.y, textures[sprite]}});
+    entities.insert({entity.name, {entity.name, entity.x, entity.y, textures[sprite]}});
 } 
 
 TEABAG_INTERNAL_END
