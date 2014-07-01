@@ -15,17 +15,23 @@ void Game::run() {
 } 
 
 void Game::tick() {
+    // Reset level (after 'r' or death
     if(reset) {
         game.world().loadLevel(current);
     } else {
+
+        // Jump
         if(up && !jumped) {
-            ySpeed -= JUMP_SPEED;
+            up = false;
+            ySpeed = -JUMP_SPEED;
             jumped = true;
         } 
 
+        // Apply gravity
         ySpeed += GRAVITY;
         ySpeed = std::min(MAX_FALL, ySpeed);
 
+        // Apply horizontal acceleration
         if(left || right) {
             xSpeed += ACCEL;
         } else {
@@ -35,35 +41,61 @@ void Game::tick() {
         xSpeed = std::max(0.0f, xSpeed);
         xSpeed = std::min(MAX_SPEED, xSpeed);
 
+        // Move
         game.world().entity("player").move(
-                (left || right) ? (xSpeed * (left ? -1 : 1)) : 0, 
-                ySpeed);
+            (left || right) ? (xSpeed * (left ? -1 : 1)) : 0, 
+            ySpeed); // ySpeed should really be called yVeloctiy but OH WELL
     }
 } 
 
 void Game::playerCollision(teabag::Collision coll) {
+    // Reached end of level
     if(coll.targetName == "goal") {
-        game.world().loadLevel(game.world().option("next"));
-    } else { 
-        if(coll.targetName == "spike") {
-            reset = true;
-        } else {
-            if(coll.collisionBounds.height <= coll.collisionBounds.width) {
-                if(game.world().entity("player").y() < coll.targetBounds.top) {
-                    ySpeed = 0;
-                    jumped = false;
-                    game.world().entity("player").move(0, -coll.collisionBounds.height);
-                } else {
-                    game.world().entity("player").move(0, coll.collisionBounds.height);
-                } 
+        if(coll.collisionBounds.width > 8 && coll.collisionBounds.height > 8) {
+            if(game.world().option("next") == "win") {
+                std::cout << "You Win!" << std::endl;
+                game.exit();
             } else {
-                xSpeed = 0;
-                game.world().entity("player").move(coll.collisionBounds.width * ((game.world().entity("player").x() < coll.targetBounds.left) ? -1 : 1), 0);
-            } 
+                game.world().loadLevel(game.world().option("next"));
+            }
         }
+    } 
+        
+    // Boost
+    else if(coll.targetName.find("boost") != std::string::npos) {
+        if(usedBoosts.find(coll.targetName) == usedBoosts.end()) {
+            jumped = false;
+            usedBoosts.insert(coll.targetName);
+        } 
+    } 
+
+    // Hit a spike
+    else if(coll.targetName == "spike") {
+        if(coll.collisionBounds.height > 4) {
+            reset = true;
+        } 
+    } 
+    
+    // Hit a wall
+    else {
+        if(coll.collisionBounds.height <= coll.collisionBounds.width) {
+            if(game.world().entity("player").y() < coll.targetBounds.top) {
+                ySpeed = 0;
+                jumped = false;
+                usedBoosts.clear();
+
+                game.world().entity("player").move(0, -coll.collisionBounds.height);
+            } else {
+                game.world().entity("player").move(0, coll.collisionBounds.height);
+            } 
+        } else {
+            xSpeed = 0;
+            game.world().entity("player").move(coll.collisionBounds.width * ((game.world().entity("player").x() < coll.targetBounds.left) ? -1 : 1), 0);
+        } 
     }
 } 
 
+// Key press or release (bool is true if press, false if release)
 void Game::key(sf::Keyboard::Key key, bool press) {
     switch(key) {
         case sf::Keyboard::Up:
@@ -94,6 +126,8 @@ void Game::levelLoaded(std::string name) {
     current = name;
 
     jumped = false;
+    usedBoosts.clear();
+
     up = false;
     left = false;
     right = false;

@@ -8,6 +8,7 @@
 #include <functional>
 #include <algorithm>
 #include <iostream>
+#include <unordered_set>
 
 #include <SFML/Window.hpp>
 
@@ -33,12 +34,14 @@ private:
     bool up, left, right, reset;
     bool jumped;
 
+    std::unordered_set<std::string> usedBoosts;
+
     teabag::Game game;
 };
 
 const float Game::ACCEL = 0.5;
 const float Game::MAX_SPEED = 3;
-const float Game::JUMP_SPEED = 7;
+const float Game::JUMP_SPEED = 6.5;
 const float Game::GRAVITY = 0.5;
 const float Game::MAX_FALL = 5;
 
