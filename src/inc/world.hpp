@@ -10,6 +10,7 @@
 #include "signal.hpp"
 
 #include <string>
+#include <unordered_map>
 
 #include <SFML/Graphics.hpp>
 
@@ -40,6 +41,11 @@ public:
      */
     Entity& entity(std::string name);
 
+    /**
+     * Returns the value of a loaded option
+     */
+    std::string option(std::string name);
+
 private:
     friend class Game;
 
@@ -51,6 +57,9 @@ private:
     internal::EntityManager entityManager;
 
     WorldSignals sigs;
+    std::unordered_map<std::string, std::string> opts;
+
+    bool justLoaded;
 };
 
 TEABAG_NS_END

@@ -10,6 +10,8 @@ void World::loadLevel(std::string name) {
         throw FileOpenError(file);
     } 
 
+    opts.clear();
+
     while(reader.nextLine()) {
         std::string option;
         if(!reader.get(option)) {
@@ -37,6 +39,15 @@ void World::loadLevel(std::string name) {
 
             entityManager.queueEntity(name, x, y);
         } 
+        else if(option == "option") {
+            std::string name, value;
+
+            if(!reader.get(name, value)) {
+                throw LineReadError(file, reader.line);
+            } 
+
+            opts[name] = value;
+        } 
     } 
 
     map.tiles().loadQueue();
@@ -45,6 +56,8 @@ void World::loadLevel(std::string name) {
     entityManager.loadQueue();
 
     sigs.levelLoad().call(name);
+
+    justLoaded = true;
 } 
 
 WorldSignals& World::signals() {
@@ -59,6 +72,14 @@ Entity& World::entity(std::string name) {
     return entityManager.entities.at(name);
 } 
 
+std::string World::option(std::string name) {
+    if(opts.find(name) == opts.end()) {
+        throw NoSuchOptionError(name);
+    } 
+
+    return opts.at(name);
+} 
+
 void World::render(sf::RenderWindow& window) {
     window.draw(map.mapSprite);
 
@@ -71,6 +92,10 @@ void World::checkCollisions() {
     sf::FloatRect collRect;
 
     for(auto& e1pair : entityManager.entities) {
+        if(justLoaded) {
+            break;
+        } 
+
         Entity& e1 = e1pair.second;
 
         // Entity collision
@@ -80,8 +105,16 @@ void World::checkCollisions() {
             if(e1.name != e2.name) {
                 if(e1.sprite.getGlobalBounds().intersects(e2.sprite.getGlobalBounds(), collRect)) {
                     e1.signals().collision().call({collRect, e2.sprite.getGlobalBounds(), Collision::Type::Entity, e2.name});
+
+                    if(justLoaded) {
+                        break;
+                    } 
                 } 
             } 
+        } 
+
+        if(justLoaded) {
+            break;
         } 
 
         // Tile collision
@@ -108,9 +141,17 @@ void World::checkCollisions() {
 
                         if(e1.sprite.getGlobalBounds().intersects(tileRect, collRect)) {
                             e1.signals().collision().call({collRect, tileRect, Collision::Type::Tile, map.map[tx][ty]});
+
+                            if(justLoaded) {
+                                break;
+                            } 
                         } 
                     } 
                 } 
+            } 
+
+            if(justLoaded) {
+                break;
             } 
         } 
     } 

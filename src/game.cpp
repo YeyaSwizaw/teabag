@@ -49,14 +49,30 @@ World& Game::world() {
 
 void Game::run() {
     while(window.isOpen()) {
+        if(w.justLoaded) {
+            w.justLoaded = false;
+        }
+
         sigs.tick().call();
 
         sf::Event e;
         while(window.pollEvent(e)) {
+            if(w.justLoaded) {
+                break;
+            } 
+
             sigs.handleEvent(e);
         } 
 
+        if(w.justLoaded) {
+            continue;
+        } 
+
         w.checkCollisions();
+
+        if(w.justLoaded) {
+            continue;
+        } 
 
         window.clear();
         w.render(window);

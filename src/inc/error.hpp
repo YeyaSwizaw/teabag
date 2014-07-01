@@ -32,6 +32,11 @@ public:
     NoSuchEntityError(std::string name);
 }; 
 
+class NoSuchOptionError : public Error {
+public:
+    NoSuchOptionError(std::string name);
+}; 
+
 TEABAG_NS_END
 
 #endif

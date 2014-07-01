@@ -22,4 +22,8 @@ LineReadError::LineReadError(std::string file, std::string line)
 NoSuchEntityError::NoSuchEntityError(std::string name)
     : Error("No such entity in world: " + name) {}
 
+// No Such Option Error
+NoSuchOptionError::NoSuchOptionError(std::string name)
+    : Error("No such option in world: " + name) {}
+
 TEABAG_NS_END

@@ -1,7 +1,7 @@
 solution "Teabag Engine"
 	configurations { "debug", "release" }
 	include "test"
-	--include "examples"
+	include "examples/platformer"
 
 project "teabag"
 	kind "SharedLib"

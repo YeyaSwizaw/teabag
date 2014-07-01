@@ -1,0 +1,111 @@
+#include "inc/game.hpp"
+
+void Game::run() {
+    game.init();
+
+    game.signals().close().connect(std::bind(&teabag::Game::exit, &game));
+    game.signals().resize().connect(std::bind(&teabag::Game::resizeView, &game, std::placeholders::_1, std::placeholders::_2));
+    game.signals().tick().connect(std::bind(&Game::tick, this));
+    game.signals().keyPress().connect(std::bind(&Game::key, this, std::placeholders::_1, true));
+    game.signals().keyRelease().connect(std::bind(&Game::key, this, std::placeholders::_1, false));
+    game.world().signals().levelLoad().connect(std::bind(&Game::levelLoaded, this, std::placeholders::_1));
+
+    game.world().loadLevel("lvl1");
+    game.run();
+} 
+
+void Game::tick() {
+    if(reset) {
+        game.world().loadLevel(current);
+    } else {
+        if(up && !jumped) {
+            ySpeed -= JUMP_SPEED;
+            jumped = true;
+        } 
+
+        ySpeed += GRAVITY;
+        ySpeed = std::min(MAX_FALL, ySpeed);
+
+        if(left || right) {
+            xSpeed += ACCEL;
+        } else {
+            xSpeed -= ACCEL;
+        } 
+
+        xSpeed = std::max(0.0f, xSpeed);
+        xSpeed = std::min(MAX_SPEED, xSpeed);
+
+        game.world().entity("player").move(
+                (left || right) ? (xSpeed * (left ? -1 : 1)) : 0, 
+                ySpeed);
+    }
+} 
+
+void Game::playerCollision(teabag::Collision coll) {
+    if(coll.targetName == "goal") {
+        game.world().loadLevel(game.world().option("next"));
+    } else { 
+        if(coll.targetName == "spike") {
+            reset = true;
+        } else {
+            if(coll.collisionBounds.height <= coll.collisionBounds.width) {
+                if(game.world().entity("player").y() < coll.targetBounds.top) {
+                    ySpeed = 0;
+                    jumped = false;
+                    game.world().entity("player").move(0, -coll.collisionBounds.height);
+                } else {
+                    game.world().entity("player").move(0, coll.collisionBounds.height);
+                } 
+            } else {
+                xSpeed = 0;
+                game.world().entity("player").move(coll.collisionBounds.width * ((game.world().entity("player").x() < coll.targetBounds.left) ? -1 : 1), 0);
+            } 
+        }
+    }
+} 
+
+void Game::key(sf::Keyboard::Key key, bool press) {
+    switch(key) {
+        case sf::Keyboard::Up:
+        case sf::Keyboard::W:
+            up = press;
+            break;
+
+        case sf::Keyboard::Left:
+        case sf::Keyboard::A:
+            left = press;
+            break;
+
+        case sf::Keyboard::Right:
+        case sf::Keyboard::D:
+            right = press;
+            break;
+
+        case sf::Keyboard::R:
+            reset = press;
+            break;
+
+        default:
+            break;
+    } 
+} 
+
+void Game::levelLoaded(std::string name) {
+    current = name;
+
+    jumped = false;
+    up = false;
+    left = false;
+    right = false;
+    reset = false;
+
+    xSpeed = 0;
+    ySpeed = 0;
+
+    game.world().entity("player").signals().collision().connect(std::bind(&Game::playerCollision, this, std::placeholders::_1));
+} 
+
+int main(int argc, char* argv[]) {
+    Game g;
+    g.run();
+} 
