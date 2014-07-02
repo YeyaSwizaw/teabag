@@ -1,9 +1,0 @@
-build
-doc/html
-doc/latex
-Makefile
-*.make
-*.so
-test/test
-*.swp
-.ycm*

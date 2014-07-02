@@ -1,0 +1,6 @@
+<map id="Error" name="Error">
+<area shape="rect" id="node2" href="$classFileOpenError.html" title="FileOpenError" alt="" coords="5,80,107,107"/>
+<area shape="rect" id="node3" href="$classLineReadError.html" title="LineReadError" alt="" coords="131,80,236,107"/>
+<area shape="rect" id="node4" href="$classNoSuchEntityError.html" title="NoSuchEntityError" alt="" coords="260,80,389,107"/>
+<area shape="rect" id="node5" href="$classNoSuchOptionError.html" title="NoSuchOptionError" alt="" coords="415,80,549,107"/>
+</map>
