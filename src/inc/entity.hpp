@@ -14,6 +14,11 @@ TEABAG_INTERNAL
 
 class EntityManager;
 
+struct Texture {
+    sf::Texture tex;
+    int spriteWidth, spriteHeight;
+}; 
+
 TEABAG_INTERNAL_END
 
 /**
@@ -37,6 +42,11 @@ public:
     void place(int x, int y);
 
     /**
+     * Sets the current sprite from the spritesheet.
+     */
+    void setSpriteCoord(int x, int y);
+
+    /**
      * Gets the x position of the entity
      */
     int x() const;
@@ -50,7 +60,7 @@ private:
     friend class internal::EntityManager;
     friend class World;
 
-    Entity(std::string name, int x, int y, sf::Texture& tex);
+    Entity(std::string name, int x, int y, internal::Texture& tex);
 
     EntitySignals sigs;
 

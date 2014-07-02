@@ -32,10 +32,11 @@ private:
     void queueEntity(std::string name, int x, int y);
     void loadQueue();
     void loadEntity(EntityInfo& entity);
+    void loadTexture(std::string name);
 
     std::vector<EntityInfo> entityQueue;
 
-    std::unordered_map<std::string, sf::Texture> textures;
+    std::unordered_map<std::string, Texture> textures;
     std::unordered_map<std::string, teabag::Entity> entities;
 };
 

@@ -45,18 +45,43 @@ void EntityManager::loadEntity(EntityInfo& entity) {
     } 
 
     if(textures.find(sprite) == textures.end()) {
-        file = TEABAG_SPRITE_IMG(sprite);
-
-        sf::Texture tex;
-        if(!tex.loadFromFile(file)) {
-            throw FileOpenError(file);
-        } 
-
-        textures.insert({sprite, tex});
+        loadTexture(sprite);
     } 
 
     entities.insert({entity.name, {entity.name, entity.x, entity.y, textures[sprite]}});
 } 
+
+void EntityManager::loadTexture(std::string name) {
+    std::string file = TEABAG_SPRITE_IMG(name);
+
+    sf::Texture tex;
+    if(!tex.loadFromFile(file)) {
+        throw FileOpenError(file);
+    } 
+
+    int w = tex.getSize().x;
+    int h = tex.getSize().y;
+
+    file = TEABAG_SPRITE_TEA(name);
+
+    internal::Reader reader(file);
+    if(reader) {
+        while(reader.nextLine()) {
+            std::string option;
+            if(!reader.get(option)) {
+                throw LineReadError(file, reader.line);
+            } 
+
+            if(option == "size") {
+                if(!reader.get(w, h)) {
+                    throw LineReadError(file, reader.line);
+                } 
+            } 
+        } 
+    } 
+
+    textures.insert({name, {tex, w, h}});
+}
 
 TEABAG_INTERNAL_END
 

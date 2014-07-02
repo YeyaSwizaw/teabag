@@ -17,5 +17,6 @@
 #define TEABAG_TILE_IMG(name) "data/tiles/" + name + ".png"
 #define TEABAG_ENTITY_TEA(name) "data/entities/" + name + ".tea"
 #define TEABAG_SPRITE_IMG(name) "data/sprites/" + name + ".png"
+#define TEABAG_SPRITE_TEA(name) "data/sprites/" + name + ".tea"
 
 #endif

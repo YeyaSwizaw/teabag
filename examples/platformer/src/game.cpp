@@ -66,6 +66,7 @@ void Game::playerCollision(teabag::Collision coll) {
         if(usedBoosts.find(coll.targetName) == usedBoosts.end()) {
             jumped = false;
             usedBoosts.insert(coll.targetName);
+            game.world().entity(coll.targetName).setSpriteCoord(1, 0);
         } 
     } 
 
@@ -82,6 +83,10 @@ void Game::playerCollision(teabag::Collision coll) {
             if(game.world().entity("player").y() < coll.targetBounds.top) {
                 ySpeed = 0;
                 jumped = false;
+
+                for(std::string b : usedBoosts) {
+                    game.world().entity(b).setSpriteCoord(0, 0);
+                } 
                 usedBoosts.clear();
 
                 game.world().entity("player").move(0, -coll.collisionBounds.height);
@@ -126,6 +131,10 @@ void Game::levelLoaded(std::string name) {
     current = name;
 
     jumped = false;
+
+    for(std::string b : usedBoosts) {
+        game.world().entity(b).setSpriteCoord(0, 0);
+    } 
     usedBoosts.clear();
 
     up = false;
