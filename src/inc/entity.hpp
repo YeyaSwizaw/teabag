@@ -62,7 +62,8 @@ public:
     void place(int x, int y);
 
     /**
-     * Sets the current sprite from the spritesheet.
+     * Sets the current sprite from the spritesheet. x and y are the coordinates
+     * of the sprite in the grid of sprites.
      */
     void setSpriteCoord(int x, int y);
 

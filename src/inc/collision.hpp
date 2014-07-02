@@ -29,6 +29,13 @@
 
 TEABAG_NS
 
+/**
+ * This class holds information about a collision, including:
+ * - The bounds of the collision.
+ * - The bounds of the object collided with.
+ * - Whether the object was a tile or another entity.
+ * - The name of the object.
+ */
 class Collision {
 public:
     enum Type {

@@ -1,0 +1,5 @@
+/**
+ * @mainpage libteabag
+ * teabag is an engine for creating games that deals with all the loading 
+ * and rendering, and leaves you to focus on the game design and logic.
+ */

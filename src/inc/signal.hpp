@@ -43,9 +43,19 @@ class GameSignals;
 template<typename ...Args>
 class Signal {
 public:
+    /**
+     * The type of the callback functions for this signal.
+     */
     typedef std::function<void(Args...)> FuncType;
 
+    /**
+     * Add a function to be called when the signal is called.
+     */
     void connect(FuncType func);
+
+    /**
+     * Remove all callbacks from this signal.
+     */
     void clear();
 
 private:
