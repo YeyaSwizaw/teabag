@@ -23,8 +23,8 @@ void Game::tick() {
         // Jump
         if(up && !jumped) {
             up = false;
-            ySpeed = -JUMP_SPEED;
             jumped = true;
+            ySpeed = std::min(ySpeed, -JUMP_SPEED);
         } 
 
         // Apply gravity
@@ -65,7 +65,19 @@ void Game::playerCollision(teabag::Collision coll) {
     else if(coll.targetName.find("boost") != std::string::npos) {
         if(usedBoosts.find(coll.targetName) == usedBoosts.end()) {
             jumped = false;
+
             usedBoosts.insert(coll.targetName);
+            game.world().entity(coll.targetName).setSpriteCoord(1, 0);
+        } 
+    } 
+
+
+    // Bounce
+    else if(coll.targetName.find("bounce") != std::string::npos) {
+        if(usedBounces.find(coll.targetName) == usedBounces.end()) {
+            ySpeed = -BOUNCE_FACTOR * JUMP_SPEED;
+
+            usedBounces.insert(coll.targetName);
             game.world().entity(coll.targetName).setSpriteCoord(1, 0);
         } 
     } 
@@ -83,11 +95,8 @@ void Game::playerCollision(teabag::Collision coll) {
             if(game.world().entity("player").y() < coll.targetBounds.top) {
                 ySpeed = 0;
                 jumped = false;
-
-                for(std::string b : usedBoosts) {
-                    game.world().entity(b).setSpriteCoord(0, 0);
-                } 
-                usedBoosts.clear();
+                resetBoosts();
+                resetBounces();
 
                 game.world().entity("player").move(0, -coll.collisionBounds.height);
             } else {
@@ -131,11 +140,8 @@ void Game::levelLoaded(std::string name) {
     current = name;
 
     jumped = false;
-
-    for(std::string b : usedBoosts) {
-        game.world().entity(b).setSpriteCoord(0, 0);
-    } 
-    usedBoosts.clear();
+    resetBoosts();
+    resetBounces();
 
     up = false;
     left = false;
@@ -146,6 +152,20 @@ void Game::levelLoaded(std::string name) {
     ySpeed = 0;
 
     game.world().entity("player").signals().collision().connect(std::bind(&Game::playerCollision, this, std::placeholders::_1));
+} 
+
+void Game::resetBoosts() {
+    for(std::string b : usedBoosts) {
+        game.world().entity(b).setSpriteCoord(0, 0);
+    } 
+    usedBoosts.clear();
+} 
+
+void Game::resetBounces() {
+    for(std::string b : usedBounces) {
+        game.world().entity(b).setSpriteCoord(0, 0);
+    } 
+    usedBounces.clear();
 } 
 
 int main(int argc, char* argv[]) {
