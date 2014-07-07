@@ -36,7 +36,7 @@ TEABAG_NS
  * - Whether the object was a tile or another entity.
  * - The name of the object.
  */
-class Collision {
+class TEABAG_API Collision {
 public:
     enum Type {
         Entity,

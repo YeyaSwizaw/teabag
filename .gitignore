@@ -7,3 +7,13 @@ Makefile
 test/test
 *.swp
 .ycm*
+*.vcxproj*
+*.sln
+*.dll
+*.exe
+*.sdf
+*.suo
+*.ilk
+*.exp
+*.lib
+*~

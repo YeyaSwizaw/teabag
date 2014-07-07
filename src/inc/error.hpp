@@ -27,7 +27,7 @@
 
 TEABAG_NS
 
-class Error {
+class TEABAG_API Error {
 public:
     Error(std::string msg);
 
@@ -37,22 +37,22 @@ private:
     std::string msg;
 };
 
-class FileOpenError : public Error {
+class TEABAG_API FileOpenError : public Error {
 public:
     FileOpenError(std::string file);
 }; 
 
-class LineReadError : public Error {
+class TEABAG_API LineReadError : public Error {
 public:
     LineReadError(std::string file, std::string line);
 }; 
 
-class NoSuchEntityError : public Error {
+class TEABAG_API NoSuchEntityError : public Error {
 public:
     NoSuchEntityError(std::string name);
 }; 
 
-class NoSuchOptionError : public Error {
+class TEABAG_API NoSuchOptionError : public Error {
 public:
     NoSuchOptionError(std::string name);
 }; 

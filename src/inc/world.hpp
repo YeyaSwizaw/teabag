@@ -42,7 +42,7 @@ class Game;
  * This class stores everything about the game world - map,
  * entities, etc.
  */
-class World {
+class TEABAG_API World {
 public:
     /**
      * Clear the current level (if any) and load the provided.

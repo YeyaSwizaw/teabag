@@ -37,7 +37,7 @@ TEABAG_NS
  * engine. It contains functions to manage initialisation, events, entities,
  * and the game map.
  */
-class Game {
+class TEABAG_API Game {
 public:
 	/**
 	 * Initialises the game.
