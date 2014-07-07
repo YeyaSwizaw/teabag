@@ -44,7 +44,7 @@ TEABAG_INTERNAL_END
 /**
  * This class represents an entity in the game world.
  */
-class Entity {
+class TEABAG_API Entity {
 public:
     /**
      * Returns the attached signals struct.

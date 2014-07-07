@@ -29,7 +29,7 @@
 
 TEABAG_NS
 
-struct Tile {
+struct TEABAG_API Tile {
     std::string name;
     sf::Color colour;
     bool blocking;

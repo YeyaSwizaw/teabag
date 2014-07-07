@@ -62,7 +62,7 @@ private:
 
 template<typename T>
 bool Reader::get(T& t) {
-    return (linestream >> t);
+    return !!(linestream >> t);
 } 
 
 template<typename T, typename ...Args> 
