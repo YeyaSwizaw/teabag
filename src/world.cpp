@@ -68,12 +68,23 @@ void World::loadLevel(std::string name) {
 
             opts[name] = value;
         } 
+        else if(option == "ui") {
+            std::string name;
+
+            if(!reader.get(name)) {
+                throw LineReadError(file, reader.line);
+            } 
+
+            _ui.queue(name);
+        } 
     } 
 
     map.tiles().loadQueue();
     map.loadMap(name);
 
     entityManager.loadQueue();
+
+    _ui.load();
 
     sigs.levelLoad().call(name);
 
@@ -90,6 +101,10 @@ Entity& World::entity(std::string name) {
     } 
 
     return entityManager.entities.at(name);
+} 
+
+UI& World::ui() {
+    return _ui;
 } 
 
 std::string World::option(std::string name) {

@@ -31,6 +31,7 @@ TEABAG_NS
 
 class Game;
 class World;
+class UI;
 
 TEABAG_INTERNAL
 
@@ -44,6 +45,7 @@ class Reader {
 private:
     friend class teabag::Game;
     friend class teabag::World;
+    friend class teabag::UI;
     friend class EntityManager;
 
     Reader(std::string filename);

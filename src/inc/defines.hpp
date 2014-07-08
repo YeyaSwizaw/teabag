@@ -38,6 +38,8 @@
 #define TEABAG_ENTITY_TEA(name) "data/entities/" + name + ".tea"
 #define TEABAG_SPRITE_IMG(name) "data/sprites/" + name + ".png"
 #define TEABAG_SPRITE_TEA(name) "data/sprites/" + name + ".tea"
+#define TEABAG_UI_TEA(name) "data/ui/" + name + ".tea"
+#define TEABAG_FONT(name) "data/ui/fonts/" + name
 
 #ifdef _MSC_VER
  #ifdef TEABAG_EXPORT
