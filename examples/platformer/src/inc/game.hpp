@@ -38,6 +38,11 @@ private:
     bool up, left, right, reset;
     bool jumped;
 
+    sf::Clock clock;
+   
+    int lvl, deaths, totalDeaths;
+    sf::Time time;
+
     std::unordered_set<std::string> usedBoosts, usedBounces;
 
     teabag::Game game;
