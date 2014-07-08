@@ -99,7 +99,7 @@ typedef Signal<std::string> StringSignal;
 typedef Signal<Collision> CollisionSignal;
 
 // Storage structs
-class GameSignals {
+class TEABAG_API GameSignals {
 public:
     VoidSignal& tick();
     VoidSignal& close();
@@ -147,7 +147,7 @@ private:
     UintSignal sigJoystickDisconnect;
 }; 
 
-class WorldSignals {
+class TEABAG_API WorldSignals {
 public:
     StringSignal& levelLoad();
 
@@ -157,7 +157,7 @@ private:
     StringSignal sigLevelLoad;
 }; 
 
-class EntitySignals {
+class TEABAG_API EntitySignals {
 public:
     CollisionSignal& collision();
 

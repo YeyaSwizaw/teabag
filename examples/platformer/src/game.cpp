@@ -1,6 +1,10 @@
 #include "inc/game.hpp"
 
 void Game::run() {
+    lvl = 0;
+    totalDeaths = 0;
+    time = sf::Time::Zero;
+
     game.init();
 
     game.signals().close().connect(std::bind(&teabag::Game::exit, &game));
@@ -52,11 +56,22 @@ void Game::playerCollision(teabag::Collision coll) {
     // Reached end of level
     if(coll.targetName == "goal") {
         if(coll.collisionBounds.width > 8 && coll.collisionBounds.height > 8) {
+            sf::Time t = clock.getElapsedTime();
+            std::cout << "Level " << lvl << ": " << t.asSeconds() << "s, " << deaths << " deaths" << std::endl;
+
+            time += t;
+            totalDeaths += deaths;
+
             if(game.world().option("next") == "win") {
                 std::cout << "You Win!" << std::endl;
+                std::cout << "Total: " << time.asSeconds() << "s, " << totalDeaths << " deaths" << std::endl;
                 game.exit();
             } else {
                 game.world().loadLevel(game.world().option("next"));
+
+                lvl++;
+                deaths = 0;
+                clock.restart();
             }
         }
     } 
@@ -85,6 +100,7 @@ void Game::playerCollision(teabag::Collision coll) {
     // Hit a spike
     else if(coll.targetName == "spike") {
         if(coll.collisionBounds.height > 4) {
+            deaths++;
             reset = true;
         } 
     } 

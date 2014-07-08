@@ -39,4 +39,14 @@
 #define TEABAG_SPRITE_IMG(name) "data/sprites/" + name + ".png"
 #define TEABAG_SPRITE_TEA(name) "data/sprites/" + name + ".tea"
 
+#ifdef _MSC_VER
+ #ifdef TEABAG_EXPORT
+  #define TEABAG_API __declspec(dllexport)
+ #else
+  #define TEABAG_API __declspec(dllimport)
+ #endif
+#else
+ #define TEABAG_API
+#endif
+
 #endif
