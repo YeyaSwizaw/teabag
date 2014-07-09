@@ -2,6 +2,7 @@
 
 void Game::run() {
     lvl = 0;
+    deaths = 0;
     totalDeaths = 0;
     time = sf::Time::Zero;
 
@@ -19,9 +20,13 @@ void Game::run() {
 } 
 
 void Game::tick() {
+    game.world().ui().label("score").set(std::to_string(clock.getElapsedTime().asSeconds()));
+
     // Reset level (after 'r' or death
     if(reset) {
         game.world().loadLevel(current);
+
+        game.world().ui().label("deaths").set(std::to_string(deaths));
     } else {
 
         // Jump
@@ -72,6 +77,9 @@ void Game::playerCollision(teabag::Collision coll) {
                 lvl++;
                 deaths = 0;
                 clock.restart();
+
+                game.world().ui().label("score").set(std::to_string(clock.getElapsedTime().asSeconds()));
+                game.world().ui().label("deaths").set(std::to_string(deaths));
             }
         }
     } 
@@ -99,7 +107,7 @@ void Game::playerCollision(teabag::Collision coll) {
 
     // Hit a spike
     else if(coll.targetName == "spike") {
-        if(coll.collisionBounds.height > 4) {
+        if(coll.collisionBounds.height > 4 && !reset) {
             deaths++;
             reset = true;
         } 
@@ -168,6 +176,8 @@ void Game::levelLoaded(std::string name) {
     ySpeed = 0;
 
     game.world().entity("player").signals().collision().connect(std::bind(&Game::playerCollision, this, std::placeholders::_1));
+    game.world().ui().label("scorelabel").set("Time:");
+    game.world().ui().label("deathslabel").set("Deaths:");
 } 
 
 void Game::resetBoosts() {

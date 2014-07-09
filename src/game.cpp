@@ -53,7 +53,7 @@ void Game::init() {
     } 
 
     // Create SFML window
-    window.create(sf::VideoMode(width, height), name);
+    window.create(sf::VideoMode(width, height), name, sf::Style::Titlebar | sf::Style::Close);
 
     // #FIXME
     window.setFramerateLimit(60);

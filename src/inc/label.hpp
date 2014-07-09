@@ -14,45 +14,55 @@
 //// limitations under the License.
 ///////////////////////////////////////////////////////////////////////////////
 //// Project: Teabag
-//// File: src/fontmanager.cpp
+//// File: src/inc/label.hpp
 //// Author: Samuel Sleight <samuel(dot)sleight(at)gmail(dot)com>
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "inc/fontmanager.hpp"
+#ifndef TEABAG_LABEL_HPP
+#define TEABAG_LABEL_HPP
+
+#include "defines.hpp"
+#include "anchor.hpp"
+#include "fontmanager.hpp"
+
+#include <memory>
+
+#include <SFML/Graphics.hpp>
 
 TEABAG_NS
 
+class UI;
+
 TEABAG_INTERNAL
 
-void FontManager::queueFont(std::string name, std::string font, int size) {
-    queue.push_back({name, font, size});
-}
-
-void FontManager::loadQueue() {
-    fontFiles.clear();
-    fonts.clear();
-
-    for(FontInfo& info : queue) {
-        loadFont(info);
-    } 
-
-    queue.clear();
-} 
-
-void FontManager::loadFont(FontInfo& info) {
-    if(fontFiles.find(info.font) == fontFiles.end()) {
-        std::string file = TEABAG_FONT(info.font);
-        sf::Font font;
-        if(!font.loadFromFile(file)) {
-            throw teabag::FileOpenError(file);
-        } 
-
-        fontFiles[info.font] = font;
-    } 
-
-    fonts[info.name] = info;
-} 
+class Anchor;
+class ItemAnchor;
 
 TEABAG_INTERNAL_END
 
+class Label {
+public:
+    Label();
+
+    /**
+     * Sets the label text. This triggers a recalculation of the position of this
+     * and all following items.
+     */
+    void set(std::string string);
+
+private:
+    friend class UI;
+    friend class internal::ItemAnchor;
+
+    Label(internal::Anchor* horizontalAnchor, internal::Anchor* verticalAnchor, sf::Font& font, int size);
+    void recalculate(sf::RenderWindow& window);
+
+    std::unique_ptr<internal::Anchor> horizontalAnchor, verticalAnchor;
+    sf::Text text;
+
+    bool changed;
+};
+
 TEABAG_NS_END
+
+#endif

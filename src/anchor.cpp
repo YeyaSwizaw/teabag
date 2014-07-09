@@ -14,45 +14,59 @@
 //// limitations under the License.
 ///////////////////////////////////////////////////////////////////////////////
 //// Project: Teabag
-//// File: src/fontmanager.cpp
+//// File: src/anchor.cpp
 //// Author: Samuel Sleight <samuel(dot)sleight(at)gmail(dot)com>
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "inc/fontmanager.hpp"
+#include "inc/anchor.hpp"
 
 TEABAG_NS
 
 TEABAG_INTERNAL
 
-void FontManager::queueFont(std::string name, std::string font, int size) {
-    queue.push_back({name, font, size});
+WindowAnchor::WindowAnchor(Type type, int offset)
+    : type(type), offset(offset) {}
+
+int WindowAnchor::calculate(int itemW, int itemH, int winW, int winH) {
+    switch(type) {
+        case Top:
+            return offset;
+
+        case Bottom:
+            return winH - itemH - offset;
+
+        case Left:
+            return offset;
+
+        case Right:
+            return winW - itemW - offset;
+    } 
+} 
+
+
+ItemAnchor::ItemAnchor(Type type, int offset, teabag::Label& anchor)
+    : type(type), offset(offset), anchor(anchor) {}
+
+int ItemAnchor::calculate(int itemW, int itemH, int winW, int winH) {
+    const auto& bounds = anchor.text.getGlobalBounds();
+
+    switch(type) {
+        case Top:
+            return bounds.top - itemH - offset;
+
+        case Bottom:
+            return bounds.top + bounds.height + offset;
+
+        case Left:
+            return bounds.left - itemW - offset;
+
+        case Right:
+            return bounds.left + bounds.width + offset;
+    } 
 }
-
-void FontManager::loadQueue() {
-    fontFiles.clear();
-    fonts.clear();
-
-    for(FontInfo& info : queue) {
-        loadFont(info);
-    } 
-
-    queue.clear();
-} 
-
-void FontManager::loadFont(FontInfo& info) {
-    if(fontFiles.find(info.font) == fontFiles.end()) {
-        std::string file = TEABAG_FONT(info.font);
-        sf::Font font;
-        if(!font.loadFromFile(file)) {
-            throw teabag::FileOpenError(file);
-        } 
-
-        fontFiles[info.font] = font;
-    } 
-
-    fonts[info.name] = info;
-} 
 
 TEABAG_INTERNAL_END
 
 TEABAG_NS_END
+
+

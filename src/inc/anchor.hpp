@@ -14,45 +14,66 @@
 //// limitations under the License.
 ///////////////////////////////////////////////////////////////////////////////
 //// Project: Teabag
-//// File: src/fontmanager.cpp
+//// File: src/inc/anchor.hpp
 //// Author: Samuel Sleight <samuel(dot)sleight(at)gmail(dot)com>
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "inc/fontmanager.hpp"
+#ifndef TEABAG_ANCHOR_HPP
+#define TEABAG_ANCHOR_HPP
+
+#include "defines.hpp"
+#include "label.hpp"
+
+#include <SFML/Graphics.hpp>
 
 TEABAG_NS
 
+class UI;
+class Label;
+
 TEABAG_INTERNAL
 
-void FontManager::queueFont(std::string name, std::string font, int size) {
-    queue.push_back({name, font, size});
-}
+class Anchor {
+protected:
+    friend class teabag::UI;
+    friend class teabag::Label;
 
-void FontManager::loadQueue() {
-    fontFiles.clear();
-    fonts.clear();
+    enum Type {
+        Top, Bottom, Left, Right
+    }; 
 
-    for(FontInfo& info : queue) {
-        loadFont(info);
-    } 
+    virtual int calculate(int itemW, int itemH, int winW, int winH) = 0;
+}; 
 
-    queue.clear();
-} 
+class WindowAnchor : public Anchor {
+private:
+    friend class teabag::UI;
+    friend class teabag::Label;
 
-void FontManager::loadFont(FontInfo& info) {
-    if(fontFiles.find(info.font) == fontFiles.end()) {
-        std::string file = TEABAG_FONT(info.font);
-        sf::Font font;
-        if(!font.loadFromFile(file)) {
-            throw teabag::FileOpenError(file);
-        } 
+    WindowAnchor(Type type, int offset);
 
-        fontFiles[info.font] = font;
-    } 
+    Type type;
+    int offset;
 
-    fonts[info.name] = info;
-} 
+    virtual int calculate(int itemW, int itemH, int winW, int winH);
+}; 
+
+class ItemAnchor : public Anchor {
+private:
+    friend class teabag::UI;
+    friend class teabag::Label;
+
+    ItemAnchor(Type type, int offset, teabag::Label& anchor);
+
+    Type type;
+    int offset;
+    teabag::Label& anchor;
+
+    virtual int calculate(int itemW, int itemH, int winW, int winH);
+}; 
 
 TEABAG_INTERNAL_END
 
 TEABAG_NS_END
+
+#endif

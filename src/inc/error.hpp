@@ -57,6 +57,21 @@ public:
     NoSuchOptionError(std::string name);
 }; 
 
+class TEABAG_API NoSuchFontError : public Error {
+public:
+    NoSuchFontError(std::string name);
+}; 
+
+class TEABAG_API NoSuchLabelError : public Error {
+public:
+    NoSuchLabelError(std::string name);
+}; 
+
+class TEABAG_API InvalidAnchor : public Error {
+public:
+    InvalidAnchor(std::string name, bool vertical);
+};
+
 TEABAG_NS_END
 
 #endif

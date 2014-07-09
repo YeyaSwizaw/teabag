@@ -46,4 +46,16 @@ NoSuchEntityError::NoSuchEntityError(std::string name)
 NoSuchOptionError::NoSuchOptionError(std::string name)
     : Error("No such option in world: " + name) {}
 
+// No Such Font Error
+NoSuchFontError::NoSuchFontError(std::string name) 
+    : Error("No such font: " + name) {}
+
+// No Such Label Error
+NoSuchLabelError::NoSuchLabelError(std::string name)
+    : Error("No such UI label: " + name) {}
+
+// Invalid UI Anchor Error
+InvalidAnchor::InvalidAnchor(std::string name, bool vertical)
+    : Error("'" + name + "' is an invalid " + (vertical ? "vertical" : "horizontal") + "anchor") {}
+
 TEABAG_NS_END

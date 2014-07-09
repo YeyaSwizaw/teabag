@@ -121,6 +121,8 @@ void World::render(sf::RenderWindow& window) {
     for(auto& entityPair : entityManager.entities) {
         window.draw(entityPair.second.sprite);
     } 
+
+    _ui.draw(window);
 }  
 
 void World::checkCollisions() {

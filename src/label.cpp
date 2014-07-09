@@ -14,45 +14,48 @@
 //// limitations under the License.
 ///////////////////////////////////////////////////////////////////////////////
 //// Project: Teabag
-//// File: src/fontmanager.cpp
+//// File: src/label.cpp
 //// Author: Samuel Sleight <samuel(dot)sleight(at)gmail(dot)com>
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "inc/fontmanager.hpp"
+#include "inc/label.hpp"
 
 TEABAG_NS
 
-TEABAG_INTERNAL
+Label::Label()
+    : horizontalAnchor(nullptr), verticalAnchor(nullptr) {}
 
-void FontManager::queueFont(std::string name, std::string font, int size) {
-    queue.push_back({name, font, size});
-}
+Label::Label(internal::Anchor* horizontalAnchor, internal::Anchor* verticalAnchor, sf::Font& font, int size)
+    : horizontalAnchor(horizontalAnchor), verticalAnchor(verticalAnchor), changed(true) {
 
-void FontManager::loadQueue() {
-    fontFiles.clear();
-    fonts.clear();
-
-    for(FontInfo& info : queue) {
-        loadFont(info);
-    } 
-
-    queue.clear();
+    text.setFont(font);
+    text.setCharacterSize(size);
 } 
 
-void FontManager::loadFont(FontInfo& info) {
-    if(fontFiles.find(info.font) == fontFiles.end()) {
-        std::string file = TEABAG_FONT(info.font);
-        sf::Font font;
-        if(!font.loadFromFile(file)) {
-            throw teabag::FileOpenError(file);
-        } 
-
-        fontFiles[info.font] = font;
-    } 
-
-    fonts[info.name] = info;
+void Label::set(std::string string) {
+    text.setString(string);
+    changed = true;
 } 
 
-TEABAG_INTERNAL_END
+void Label::recalculate(sf::RenderWindow& window) {
+    int x = 0;
+    int y = 0;
+    int w = text.getGlobalBounds().width;
+    int h = text.getGlobalBounds().height;
+
+    int winW = window.getSize().x;
+    int winH = window.getSize().y;
+
+    if(horizontalAnchor) {
+        x = horizontalAnchor->calculate(w, h, winW, winH);
+    } 
+
+    if(verticalAnchor) {
+        y = verticalAnchor->calculate(w, h, winW, winH);
+    } 
+
+    text.setPosition(x, y);
+    changed = false;
+} 
 
 TEABAG_NS_END
