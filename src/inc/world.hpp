@@ -28,7 +28,6 @@
 #include "entitymanager.hpp"
 #include "entity.hpp"
 #include "signal.hpp"
-#include "ui.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -63,11 +62,6 @@ public:
     Entity& entity(std::string name);
 
     /**
-     * Returns the ui class, for access to labels etc.
-     */
-    UI& ui();
-
-    /**
      * Returns the value of a loaded option
      */
     std::string option(std::string name);
@@ -81,7 +75,6 @@ private:
 
     Map map;
     internal::EntityManager entityManager;
-    UI _ui;
 
     WorldSignals sigs;
     std::unordered_map<std::string, std::string> opts;

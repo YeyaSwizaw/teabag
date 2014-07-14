@@ -47,7 +47,7 @@ struct ItemInfo {
 
 TEABAG_INTERNAL_END
 
-class World;
+class Game;
 
 class TEABAG_API UI {
 public:
@@ -56,19 +56,20 @@ public:
      */
     Label& label(std::string name);
 
-private:
-    friend class World;
+    /**
+     * Loads the given ui
+     */
+    void loadUi(std::string name);
 
-    void queue(std::string name);
-    void load();
+private:
+    friend class Game;
 
     void queueItem(std::string name, std::string font, std::string vert, int voff, std::string hor, int hoff);
     void loadItems();
     void loadItem(internal::ItemInfo& info);
 
-    void draw(sf::RenderWindow& window);
+    void render(sf::RenderWindow& window);
 
-    std::string queued;
     std::vector<internal::ItemInfo> itemQueue;
 
     std::unordered_map<std::string, teabag::Label> items;

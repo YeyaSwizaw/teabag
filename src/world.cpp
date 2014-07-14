@@ -68,23 +68,12 @@ void World::loadLevel(std::string name) {
 
             opts[name] = value;
         } 
-        else if(option == "ui") {
-            std::string name;
-
-            if(!reader.get(name)) {
-                throw LineReadError(file, reader.line);
-            } 
-
-            _ui.queue(name);
-        } 
     } 
 
     map.tiles().loadQueue();
     map.loadMap(name);
 
     entityManager.loadQueue();
-
-    _ui.load();
 
     sigs.levelLoad().call(name);
 
@@ -103,10 +92,6 @@ Entity& World::entity(std::string name) {
     return entityManager.entities.at(name);
 } 
 
-UI& World::ui() {
-    return _ui;
-} 
-
 std::string World::option(std::string name) {
     if(opts.find(name) == opts.end()) {
         throw NoSuchOptionError(name);
@@ -121,8 +106,6 @@ void World::render(sf::RenderWindow& window) {
     for(auto& entityPair : entityManager.entities) {
         window.draw(entityPair.second.sprite);
     } 
-
-    _ui.draw(window);
 }  
 
 void World::checkCollisions() {

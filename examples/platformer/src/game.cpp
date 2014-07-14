@@ -16,17 +16,21 @@ void Game::run() {
     game.world().signals().levelLoad().connect(std::bind(&Game::levelLoaded, this, std::placeholders::_1));
 
     game.world().loadLevel("lvl1");
+    game.ui().loadUi("level");
+    game.ui().label("scorelabel").set("Time:");
+    game.ui().label("deathslabel").set("Deaths:");
+
     game.run();
 } 
 
 void Game::tick() {
-    game.world().ui().label("score").set(std::to_string(clock.getElapsedTime().asSeconds()));
+    game.ui().label("score").set(std::to_string(clock.getElapsedTime().asSeconds()));
 
     // Reset level (after 'r' or death
     if(reset) {
         game.world().loadLevel(current);
 
-        game.world().ui().label("deaths").set(std::to_string(deaths));
+        game.ui().label("deaths").set(std::to_string(deaths));
     } else {
 
         // Jump
@@ -78,8 +82,8 @@ void Game::playerCollision(teabag::Collision coll) {
                 deaths = 0;
                 clock.restart();
 
-                game.world().ui().label("score").set(std::to_string(clock.getElapsedTime().asSeconds()));
-                game.world().ui().label("deaths").set(std::to_string(deaths));
+                game.ui().label("score").set(std::to_string(clock.getElapsedTime().asSeconds()));
+                game.ui().label("deaths").set(std::to_string(deaths));
             }
         }
     } 
@@ -176,8 +180,6 @@ void Game::levelLoaded(std::string name) {
     ySpeed = 0;
 
     game.world().entity("player").signals().collision().connect(std::bind(&Game::playerCollision, this, std::placeholders::_1));
-    game.world().ui().label("scorelabel").set("Time:");
-    game.world().ui().label("deathslabel").set("Deaths:");
 } 
 
 void Game::resetBoosts() {

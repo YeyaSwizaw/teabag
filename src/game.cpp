@@ -67,6 +67,10 @@ World& Game::world() {
     return w;
 } 
 
+UI& Game::ui() {
+    return _ui;
+} 
+
 void Game::run() {
     while(window.isOpen()) {
         if(w.justLoaded) {
@@ -96,6 +100,7 @@ void Game::run() {
 
         window.clear();
         w.render(window);
+        _ui.render(window);
         window.display();
     } 
 } 

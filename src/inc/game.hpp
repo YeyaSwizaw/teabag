@@ -26,6 +26,7 @@
 #include "reader.hpp"
 #include "signal.hpp"
 #include "world.hpp"
+#include "ui.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -58,6 +59,13 @@ public:
      */
     World& world();
 
+
+    /**
+     * Returns a reference to the ui object, for access to ui elements such as 
+     * labels.
+     */
+    UI& ui();
+
     /**
 	 * Runs the game.
 	 * Starts the main loop, calling tick callbacks every loop, event callbacks
@@ -81,6 +89,7 @@ private:
     sf::RenderWindow window;
     GameSignals sigs;
     World w;
+    UI _ui;
 };
 
 TEABAG_NS_END

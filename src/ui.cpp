@@ -22,56 +22,45 @@
 
 TEABAG_NS
 
-void UI::queue(std::string name) {
-   queued = name;
-} 
+void UI::loadUi(std::string name) {
+    std::string file = TEABAG_UI_TEA(name);
 
-void UI::load() {
-    items.clear();
-    itemOrder.clear();
-    
-    if(!queued.empty()) {
-        std::string file = TEABAG_UI_TEA(queued);
+    internal::Reader reader(file);
+    if(!reader) {
+        throw FileOpenError(file);
+    } 
 
-        internal::Reader reader(file);
-        if(!reader) {
-            throw FileOpenError(file);
+    while(reader.nextLine()) {
+        std::string option;
+        if(!reader.get(option)) {
+            throw LineReadError(file, reader.line);
         } 
 
-        while(reader.nextLine()) {
-            std::string option;
-            if(!reader.get(option)) {
+        if(option == "font") {
+            std::string name, font;
+            int size;
+
+            if(!reader.get(name, font, size)) {
                 throw LineReadError(file, reader.line);
             } 
 
-            if(option == "font") {
-                std::string name, font;
-                int size;
-
-                if(!reader.get(name, font, size)) {
-                    throw LineReadError(file, reader.line);
-                } 
-
-                fonts.queueFont(name, font, size);
-            } 
-
-            else if(option == "label") {
-                std::string name, font, ver, hor;
-                int voff, hoff;
-
-                if(!reader.get(name, font, ver, voff, hor, hoff)) {
-                    throw LineReadError(file, reader.line);
-                } 
-
-                queueItem(name, font, ver, voff, hor, hoff);
-            } 
+            fonts.queueFont(name, font, size);
         } 
 
-        queued.clear();
+        else if(option == "label") {
+            std::string name, font, ver, hor;
+            int voff, hoff;
 
-        fonts.loadQueue();
-        loadItems();
+            if(!reader.get(name, font, ver, voff, hor, hoff)) {
+                throw LineReadError(file, reader.line);
+            } 
+
+            queueItem(name, font, ver, voff, hor, hoff);
+        } 
     } 
+
+    fonts.loadQueue();
+    loadItems();
 } 
 
 void UI::queueItem(std::string name, std::string font, std::string vert, int voff, std::string hor, int hoff) {
@@ -147,7 +136,7 @@ void UI::loadItem(internal::ItemInfo& info) {
     itemOrder.push_back(info.name);
 } 
 
-void UI::draw(sf::RenderWindow& window) {
+void UI::render(sf::RenderWindow& window) {
     bool changed = false;
 
     for(std::string& name : itemOrder) {
