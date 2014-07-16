@@ -29,8 +29,6 @@
 #include "entity.hpp"
 #include "signal.hpp"
 
-#include <chrono>
-#include <random>
 #include <string>
 #include <unordered_map>
 
@@ -64,15 +62,6 @@ public:
     Entity& entity(std::string name);
 
     /**
-     * Loads a new entity, placing it at the given position and using the
-     * given sprite.
-     * If no name is given, a random one is generated.
-     * @return A reference to the new entity.
-     */
-    Entity& newEntity(std::string name, int x, int y, std::string sprite);
-    Entity& newEntity(int x, int y, std::string sprite);
-
-    /**
      * Returns the value of a loaded option
      */
     std::string option(std::string name);
@@ -80,13 +69,9 @@ public:
 private:
     friend class Game;
 
-    World();
-
     void render(sf::RenderWindow& window);
 
     void checkCollisions();
-
-    std::mt19937 rndEng;
 
     Map map;
     internal::EntityManager entityManager;

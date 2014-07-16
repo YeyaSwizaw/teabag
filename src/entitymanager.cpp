@@ -68,25 +68,7 @@ void EntityManager::loadEntity(EntityInfo& entity) {
         loadTexture(sprite);
     } 
 
-    entities.insert({
-        entity.name, {
-            entity.name, entity.x, entity.y, textures[sprite], 
-            [this, name=entity.name](){ this->entities.erase(name); }
-    }});
-} 
-
-Entity& EntityManager::loadAdditionalEntity(std::string name, int x, int y, std::string sprite) {
-    if(textures.find(sprite) == textures.end()) {
-        loadTexture(sprite);
-    } 
-
-    entities.insert({
-        name, {
-            name, x, y, textures[sprite],
-            [this, name](){ this->entities.erase(name); }
-    }});
-
-    return entities[name];
+    entities.insert({entity.name, {entity.name, entity.x, entity.y, textures[sprite]}});
 } 
 
 void EntityManager::loadTexture(std::string name) {

@@ -27,7 +27,6 @@
 #include "entity.hpp"
 
 #include <string>
-#include <sstream>
 #include <vector>
 #include <unordered_map>
 
@@ -53,7 +52,6 @@ private:
     void queueEntity(std::string name, int x, int y);
     void loadQueue();
     void loadEntity(EntityInfo& entity);
-    Entity& loadAdditionalEntity(std::string name, int x, int y, std::string sprite);
     void loadTexture(std::string name);
 
     std::vector<EntityInfo> entityQueue;
