@@ -22,8 +22,10 @@
 
 TEABAG_NS
 
-Entity::Entity(std::string name, int x, int y, internal::Texture& tex)
-    : name(name) {
+Entity::Entity() {}
+
+Entity::Entity(std::string name, int x, int y, internal::Texture& tex, std::function<void()> funcRemove)
+    : name(name), funcRemove(funcRemove) {
 
     sprite.setPosition(x, y);
     sprite.setTexture(tex.tex);
@@ -41,6 +43,10 @@ void Entity::place(int x, int y) {
 void Entity::setSpriteCoord(int x, int y) {
     auto r = sprite.getTextureRect();
     sprite.setTextureRect({x * r.width, y * r.height, r.width, r.height});
+} 
+
+void Entity::remove() {
+    funcRemove();
 } 
 
 EntitySignals& Entity::signals() {

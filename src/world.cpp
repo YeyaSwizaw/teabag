@@ -22,6 +22,12 @@
 
 TEABAG_NS
 
+World::World() {
+    auto tp = std::chrono::system_clock::now();
+    auto dur = tp.time_since_epoch();
+    rndEng.seed(dur.count());
+} 
+
 void World::loadLevel(std::string name) {
     std::string file = TEABAG_MAP_TEA(name);
 
@@ -90,6 +96,22 @@ Entity& World::entity(std::string name) {
     } 
 
     return entityManager.entities.at(name);
+} 
+
+Entity& World::newEntity(std::string name, int x, int y, std::string sprite) {
+    return entityManager.loadAdditionalEntity(name, x, y, sprite);
+} 
+
+Entity& World::newEntity(int x, int y, std::string sprite) {
+    std::ostringstream str;
+    str << sprite << x << y;
+
+    std::string name;
+    do {
+        name = str.str() + std::to_string(rndEng());
+    } while(entityManager.entities.find(name) != entityManager.entities.end());
+
+   return newEntity(name, x, y, sprite); 
 } 
 
 std::string World::option(std::string name) {
