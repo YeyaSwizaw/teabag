@@ -24,6 +24,8 @@
 #include "defines.hpp"
 #include "signal.hpp"
 
+#include <functional>
+
 #include <SFML/Graphics.hpp>
 
 TEABAG_NS
@@ -46,6 +48,8 @@ TEABAG_INTERNAL_END
  */
 class TEABAG_API Entity {
 public:
+    Entity();
+
     /**
      * Returns the attached signals struct.
      */
@@ -60,6 +64,11 @@ public:
      * Places the entity at a specific location
      */
     void place(int x, int y);
+
+    /**
+     * Deletes the entity
+     */
+    void remove();
 
     /**
      * Sets the current sprite from the spritesheet. x and y are the coordinates
@@ -81,11 +90,12 @@ private:
     friend class internal::EntityManager;
     friend class World;
 
-    Entity(std::string name, int x, int y, internal::Texture& tex);
-
-    EntitySignals sigs;
+    Entity(std::string name, int x, int y, internal::Texture& tex, std::function<void()> funcRemove);
 
     std::string name;
+    std::function<void()> funcRemove;
+
+    EntitySignals sigs;
 
     sf::Sprite sprite;
 };
