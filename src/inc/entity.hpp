@@ -48,8 +48,6 @@ TEABAG_INTERNAL_END
  */
 class TEABAG_API Entity {
 public:
-    Entity();
-
     /**
      * Returns the attached signals struct.
      */

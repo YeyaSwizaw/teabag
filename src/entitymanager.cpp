@@ -86,7 +86,7 @@ Entity& EntityManager::loadAdditionalEntity(std::string name, int x, int y, std:
             [this, name](){ this->entities.erase(name); }
     }});
 
-    return entities[name];
+    return entities.at(name);
 } 
 
 void EntityManager::loadTexture(std::string name) {

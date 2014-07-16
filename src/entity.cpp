@@ -22,8 +22,6 @@
 
 TEABAG_NS
 
-Entity::Entity() {}
-
 Entity::Entity(std::string name, int x, int y, internal::Texture& tex, std::function<void()> funcRemove)
     : name(name), funcRemove(funcRemove) {
 
