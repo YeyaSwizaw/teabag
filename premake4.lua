@@ -1,6 +1,5 @@
 solution "Teabag Engine"
 	configurations { "debug", "release" }
-	include "test"
 	include "examples/platformer"
 
 project "teabag"

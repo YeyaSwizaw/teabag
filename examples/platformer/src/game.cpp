@@ -9,7 +9,7 @@ void Game::run() {
     game.init();
 
     game.signals().close().connect(std::bind(&teabag::Game::exit, &game));
-    game.signals().resize().connect(std::bind(&teabag::Game::resizeView, &game, std::placeholders::_1, std::placeholders::_2));
+    game.signals().resize().connect(std::bind(&teabag::View::resize, std::ref(game.view()), std::placeholders::_1, std::placeholders::_2));
     game.signals().tick().connect(std::bind(&Game::tick, this));
     game.signals().keyPress().connect(std::bind(&Game::key, this, std::placeholders::_1, true));
     game.signals().keyRelease().connect(std::bind(&Game::key, this, std::placeholders::_1, false));

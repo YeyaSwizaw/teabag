@@ -68,7 +68,7 @@ private:
     void loadItems();
     void loadItem(internal::ItemInfo& info);
 
-    void render(sf::RenderWindow& window);
+    void render(sf::RenderWindow& window, bool recalculate=false);
 
     std::vector<internal::ItemInfo> itemQueue;
 

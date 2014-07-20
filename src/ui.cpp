@@ -136,14 +136,12 @@ void UI::loadItem(internal::ItemInfo& info) {
     itemOrder.push_back(info.name);
 } 
 
-void UI::render(sf::RenderWindow& window) {
-    bool changed = false;
-
+void UI::render(sf::RenderWindow& window, bool recalculate) {
     for(std::string& name : itemOrder) {
         teabag::Label& label = items[name];
-        changed = changed || label.changed;
+        recalculate = recalculate || label.changed;
 
-        if(changed) {
+        if(recalculate) {
             label.recalculate(window);
         } 
 

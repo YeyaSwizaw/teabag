@@ -35,6 +35,8 @@ void Game::init() {
     unsigned int width = TEABAG_DEFAULT_WINDOW_W;
     unsigned int height = TEABAG_DEFAULT_WINDOW_H;
 
+    bool resizable;
+
     // Parse main file
     while(reader.nextLine()) {
         std::string option;
@@ -49,14 +51,22 @@ void Game::init() {
             if(!reader.get(width, height)) {
                 throw LineReadError(file, reader.line);
             } 
+
+            if(!reader.get(resizable)) {
+                resizable = false;
+            } 
         } 
     } 
 
     // Create SFML window
-    window.create(sf::VideoMode(width, height), name, sf::Style::Titlebar | sf::Style::Close);
+    if(resizable) {
+        v.window.create(sf::VideoMode(width, height), name);
+    } else {
+        v.window.create(sf::VideoMode(width, height), name, sf::Style::Titlebar | sf::Style::Close);
+    }
 
     // #FIXME
-    window.setFramerateLimit(60);
+    v.window.setFramerateLimit(60);
 }
 
 GameSignals& Game::signals() {
@@ -68,11 +78,15 @@ World& Game::world() {
 } 
 
 UI& Game::ui() {
-    return _ui;
+    return v.ui;
+} 
+
+View& Game::view() {
+    return v;
 } 
 
 void Game::run() {
-    while(window.isOpen()) {
+    while(v.window.isOpen()) {
         if(w.justLoaded) {
             w.justLoaded = false;
         }
@@ -80,7 +94,7 @@ void Game::run() {
         sigs.tick().call();
 
         sf::Event e;
-        while(window.pollEvent(e)) {
+        while(v.window.pollEvent(e)) {
             if(w.justLoaded) {
                 break;
             } 
@@ -98,19 +112,15 @@ void Game::run() {
             continue;
         } 
 
-        window.clear();
-        w.render(window);
-        _ui.render(window);
-        window.display();
+        v.window.clear();
+        w.render(v.window);
+        v.ui.render(v.window);
+        v.window.display();
     } 
 } 
 
-void Game::resizeView(int w, int h) {
-    window.setView(sf::View({0, 0, (float)w, (float)h}));
-} 
-
 void Game::exit() {
-    window.close();
+    v.window.close();
 } 
 
 TEABAG_NS_END

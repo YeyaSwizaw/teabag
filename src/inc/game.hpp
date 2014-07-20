@@ -27,6 +27,7 @@
 #include "signal.hpp"
 #include "world.hpp"
 #include "ui.hpp"
+#include "view.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -59,6 +60,11 @@ public:
      */
     World& world();
 
+    /**
+     * Returns a reference to the view object, for access to view scrolling /
+     * resizing.
+     */
+    View& view();
 
     /**
      * Returns a reference to the ui object, for access to ui elements such as 
@@ -75,21 +81,14 @@ public:
     void run();
 
     /**
-     * Resizes the window view.
-     * Generally to be called when the window is resized.
-     */
-    void resizeView(int w, int h);
-
-    /**
      * Exits the game
      */
     void exit();
 
 private:
-    sf::RenderWindow window;
     GameSignals sigs;
     World w;
-    UI _ui;
+    View v;
 };
 
 TEABAG_NS_END

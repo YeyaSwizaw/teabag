@@ -1,0 +1,23 @@
+#include "inc/view.hpp"
+
+TEABAG_NS
+
+void View::resize(int w, int h)  {
+    sf::View view = window.getView();
+    view.setSize(w, h);
+    window.setView(view);
+} 
+
+void View::scroll(int x, int y) {
+    sf::View view = window.getView();
+    view.move(x, y);
+    window.setView(view);
+} 
+
+void View::centerOn(int x, int y) {
+    sf::View view = window.getView();
+    view.setCenter(x, y);
+    window.setView(view);
+} 
+
+TEABAG_NS_END
