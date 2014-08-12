@@ -34,6 +34,7 @@
 #define TEABAG_MAIN_FILE "data/main.tea"
 #define TEABAG_MAP_TEA(name) "data/maps/" + name + ".tea"
 #define TEABAG_MAP_IMG(name) "data/maps/" + name + ".png"
+#define TEABAG_TILE_TEA(name) "data/tiles/" + name + ".tea"
 #define TEABAG_TILE_IMG(name) "data/tiles/" + name + ".png"
 #define TEABAG_ENTITY_TEA(name) "data/entities/" + name + ".tea"
 #define TEABAG_SPRITE_IMG(name) "data/sprites/" + name + ".png"

@@ -36,6 +36,7 @@ class UI;
 TEABAG_INTERNAL
 
 class EntityManager;
+class TileManager;
 
 /**
  * Reads files one token at a time.
@@ -47,6 +48,7 @@ private:
     friend class teabag::World;
     friend class teabag::UI;
     friend class EntityManager;
+    friend class TileManager;
 
     Reader(std::string filename);
     ~Reader();

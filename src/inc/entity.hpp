@@ -84,6 +84,16 @@ public:
      */
     int y() const;
 
+    /**
+     * Gets the width of the entity.
+     */
+    int w() const;
+
+    /**
+     * Gets the height of the entity.
+     */
+    int h() const;
+
 private:
     friend class internal::EntityManager;
     friend class World;

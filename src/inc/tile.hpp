@@ -34,6 +34,7 @@ struct TEABAG_API Tile {
     sf::Color colour;
     bool blocking;
     sf::Texture tex;
+    int x0, x1, y0, y1;
 };
 
 TEABAG_NS_END

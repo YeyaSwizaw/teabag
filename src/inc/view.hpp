@@ -28,6 +28,26 @@ public:
      */
     void centerOn(int x, int y);
 
+    /**
+     * Gets the x position of the view center
+     */
+    int x() const;
+
+    /**
+     * Gets the y position of the view center
+     */
+    int y() const;
+
+    /**
+     * Gets the view width
+     */
+    int w() const;
+
+    /**
+     * Gets the view height
+     */
+    int h() const;
+
 private:
     friend class Game;
 

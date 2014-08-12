@@ -28,8 +28,8 @@ TileManager::TileManager()
     : colours(10, [](sf::Color c) { return std::hash<int>()(c.r + 255 * (c.g + 255 * (c.b))); }),
       tileW(0), tileH(0) {}
 
-void TileManager::queueTile(std::string name, int r, int g, int b, bool blocking) {
-    tileQueue.push_back({name, r, g, b, blocking});
+void TileManager::queueTile(std::string name, int r, int g, int b) {
+    tileQueue.push_back({name, r, g, b});
 } 
 
 void TileManager::loadQueue() {
@@ -51,7 +51,35 @@ void TileManager::loadTile(TileInfo& tile) {
         throw FileOpenError(texfile);
     } 
 
-    tiles[tile.name] = {tile.name, sf::Color(tile.r, tile.g, tile.b), tile.blocking, tex};
+    bool blocking = true;
+    int x0 = 0;
+    int y0 = 0;
+    int x1 = tex.getSize().x;
+    int y1 = tex.getSize().y;
+
+    std::string file = TEABAG_TILE_TEA(tile.name);
+    internal::Reader reader(file);
+    if(reader) {
+        while(reader.nextLine()) {
+            std::string option;
+            if(!reader.get(option)) {
+                throw LineReadError(file, reader.line);
+            } 
+            
+            if(option == "blocking") {
+                if(!reader.get(blocking)) {
+                    throw LineReadError(file, reader.line);
+                } 
+            }
+            else if(option == "rect") {
+                if(!reader.get(x0, y0, x1, y1)) {
+                    throw LineReadError(file, reader.line);
+                } 
+            } 
+        } 
+    }  
+
+    tiles[tile.name] = {tile.name, sf::Color(tile.r, tile.g, tile.b), blocking, tex, x0, x1, y0, y1};
     colours[tiles[tile.name].colour] = tile.name;
 
     tileW = std::max(tileW, tex.getSize().x);

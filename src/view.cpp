@@ -20,4 +20,20 @@ void View::centerOn(int x, int y) {
     window.setView(view);
 } 
 
+int View::x() const {
+    return window.getView().getCenter().x;
+} 
+
+int View::y() const {
+    return window.getView().getCenter().y;
+} 
+
+int View::w() const {
+    return window.getView().getSize().x;
+} 
+
+int View::h() const {
+    return window.getView().getSize().y;
+} 
+
 TEABAG_NS_END

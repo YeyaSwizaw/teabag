@@ -24,6 +24,7 @@
 #include "defines.hpp"
 #include "error.hpp"
 #include "tile.hpp"
+#include "reader.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -43,7 +44,6 @@ TEABAG_INTERNAL
 struct TileInfo {
     std::string name;
     int r, g, b;
-    bool blocking;
 }; 
 
 class TileManager {
@@ -53,7 +53,7 @@ private:
 
     TileManager();
 
-    void queueTile(std::string name, int r, int g, int b, bool blocking);
+    void queueTile(std::string name, int r, int g, int b);
     void loadQueue();
     void loadTile(TileInfo& tile);
 

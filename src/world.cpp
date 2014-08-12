@@ -47,13 +47,12 @@ void World::loadLevel(std::string name) {
         if(option == "tile") {
             int r, g, b;
             std::string name;
-            bool blocking;
 
-            if(!reader.get(r, g, b, name, blocking)) {
+            if(!reader.get(r, g, b, name)) {
                 throw LineReadError(file, reader.line);
             } 
 
-            map.tiles().queueTile(name, r, g, b, blocking);
+            map.tiles().queueTile(name, r, g, b);
         } 
         else if(option == "entity") {
             std::string name;
@@ -175,11 +174,12 @@ void World::checkCollisions() {
                 int ty = offsetY + (y - y0);
 
                 if(tx >= 0 && ty >= 0 && tx < map.map.size() && ty < map.map[0].size()) {
-                    if(map.tiles().tileFromName(map.map[tx][ty]).blocking) {
+                    const Tile& tile = map.tiles().tileFromName(map.map[tx][ty]);
+                    if(tile.blocking) {
                         sf::FloatRect tileRect(
-                            (tx * map.tiles().tileWidth()) + map.mapSprite.getGlobalBounds().left,
-                            (ty * map.tiles().tileHeight()) + map.mapSprite.getGlobalBounds().top,
-                            map.tiles().tileWidth(), map.tiles().tileHeight());
+                            (tx * map.tiles().tileWidth()) + map.mapSprite.getGlobalBounds().left + tile.x0,
+                            (ty * map.tiles().tileHeight()) + map.mapSprite.getGlobalBounds().top + tile.y0,
+                            tile.x1, tile.y1);
 
                         if(e1.sprite.getGlobalBounds().intersects(tileRect, collRect)) {
                             e1.signals().collision().call({collRect, tileRect, Collision::Type::Tile, map.map[tx][ty]});

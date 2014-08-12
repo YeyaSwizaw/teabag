@@ -59,4 +59,12 @@ int Entity::y() const {
     return sprite.getPosition().y;
 } 
 
+int Entity::w() const {
+    return sprite.getGlobalBounds().width;
+} 
+
+int Entity::h() const {
+    return sprite.getGlobalBounds().height;
+}
+
 TEABAG_NS_END
