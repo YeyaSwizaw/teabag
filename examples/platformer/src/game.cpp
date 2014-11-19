@@ -56,7 +56,7 @@ void Game::tick() {
 
         // Move
         game.world().entity("player").move(
-            (left || right) ? (xSpeed * (left ? -1 : 1)) : 0, 
+            (left || right) ? (xSpeed * (left ? -1.0 : 1.0)) : 0, 
             ySpeed); // ySpeed should really be called yVeloctiy but OH WELL
     }
 } 

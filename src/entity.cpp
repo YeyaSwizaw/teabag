@@ -23,14 +23,14 @@
 TEABAG_NS
 
 Entity::Entity(std::string name, int x, int y, internal::Texture& tex, std::function<void()> funcRemove)
-    : name(name), funcRemove(funcRemove) {
+    : name(name), funcRemove(funcRemove), currentAction(nullptr) {
 
     sprite.setPosition(x, y);
     sprite.setTexture(tex.tex);
     sprite.setTextureRect({0, 0, tex.spriteWidth, tex.spriteHeight});
 } 
 
-void Entity::move(int x, int y) {
+void Entity::move(float x, float y) {
     sprite.move(x, y);
 } 
 
@@ -45,6 +45,48 @@ void Entity::setSpriteCoord(int x, int y) {
 
 void Entity::remove() {
     funcRemove();
+} 
+
+void Entity::doAction(Action* action) {
+    if(action != nullptr) {
+        for(Action* act : actionQueue) {
+            if(act != nullptr) {
+                delete act;
+            }
+        } 
+        actionQueue.clear();
+
+        if(currentAction != nullptr) {
+            delete currentAction;
+        } 
+
+        currentAction = nullptr;
+        actionQueue.push_back(action);
+    }
+} 
+
+void Entity::queueAction(Action* action) {
+    if(action != nullptr) {
+        actionQueue.push_back(action);
+    } 
+} 
+
+void Entity::tick() {
+    if(currentAction == nullptr && !actionQueue.empty()) {
+        currentAction = actionQueue.front();
+        actionQueue.pop_front();
+
+        if(currentAction != nullptr) {
+            currentAction->start(*this);
+        }
+    } 
+
+    if(currentAction != nullptr) {
+        if(currentAction->tick(*this)) {
+            delete currentAction;
+            currentAction = nullptr;
+        } 
+    } 
 } 
 
 EntitySignals& Entity::signals() {

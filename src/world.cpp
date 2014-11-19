@@ -129,6 +129,16 @@ void World::render(sf::RenderWindow& window) {
     } 
 }  
 
+void World::tickActions() {
+    for(auto& epair : entityManager.entities) {
+        if(justLoaded) {
+            break;
+        } 
+
+        epair.second.tick();
+    } 
+} 
+
 void World::checkCollisions() {
     sf::FloatRect collRect;
 

@@ -23,13 +23,16 @@
 
 #include "defines.hpp"
 #include "signal.hpp"
+#include "action.hpp"
 
 #include <functional>
+#include <deque>
 
 #include <SFML/Graphics.hpp>
 
 TEABAG_NS
 
+class Game;
 class World;
 
 TEABAG_INTERNAL
@@ -56,7 +59,7 @@ public:
     /**
      * Moves the entity
      */
-    void move(int x, int y);
+    void move(float x, float y);
 
     /**
      * Places the entity at a specific location
@@ -67,6 +70,9 @@ public:
      * Deletes the entity
      */
     void remove();
+
+    void doAction(Action* action);
+    void queueAction(Action* action);
 
     /**
      * Sets the current sprite from the spritesheet. x and y are the coordinates
@@ -97,6 +103,9 @@ public:
 private:
     friend class internal::EntityManager;
     friend class World;
+    friend class Game;
+
+    void tick();
 
     Entity(std::string name, int x, int y, internal::Texture& tex, std::function<void()> funcRemove);
 
@@ -104,6 +113,9 @@ private:
     std::function<void()> funcRemove;
 
     EntitySignals sigs;
+
+    std::deque<Action*> actionQueue;
+    Action* currentAction;
 
     sf::Sprite sprite;
 };

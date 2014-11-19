@@ -40,6 +40,9 @@ int WindowAnchor::calculate(int itemW, int itemH, int winW, int winH) {
 
         case Right:
             return winW - itemW - offset;
+
+        default:
+            return -1;
     } 
 } 
 
@@ -62,6 +65,9 @@ int ItemAnchor::calculate(int itemW, int itemH, int winW, int winH) {
 
         case Right:
             return bounds.left + bounds.width + offset;
+
+        default:
+            return -1;
     } 
 }
 

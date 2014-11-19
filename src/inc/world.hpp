@@ -84,6 +84,7 @@ private:
 
     void render(sf::RenderWindow& window);
 
+    void tickActions();
     void checkCollisions();
 
     std::mt19937 rndEng;

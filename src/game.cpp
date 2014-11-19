@@ -106,6 +106,7 @@ void Game::run() {
             continue;
         } 
 
+        w.tickActions();
         w.checkCollisions();
 
         if(w.justLoaded) {
