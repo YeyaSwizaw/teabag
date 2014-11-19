@@ -29,6 +29,16 @@ public:
     void centerOn(int x, int y);
 
     /**
+     * Gets the x position of the mouse.
+     */
+    int mouseX() const;
+
+    /**
+     * Gets the y position of the mouse.
+     */
+    int mouseY() const;
+
+    /**
      * Gets the x position of the view center
      */
     int x() const;

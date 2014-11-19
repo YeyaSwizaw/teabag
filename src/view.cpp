@@ -20,6 +20,14 @@ void View::centerOn(int x, int y) {
     window.setView(view);
 } 
 
+int View::mouseX() const {
+    return sf::Mouse::getPosition(window).x;
+} 
+
+int View::mouseY() const {
+    return sf::Mouse::getPosition(window).y;
+} 
+
 int View::x() const {
     return window.getView().getCenter().x;
 } 
