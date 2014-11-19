@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['map',['Map',['../classMap.html',1,'']]],
-  ['move',['move',['../classEntity.html#abd3c1da61bfefb942f609e5f8606f1cc',1,'Entity']]]
+  ['init',['init',['../classGame.html#af5d1198a49789a502c2a20c97c68a9d5',1,'Game']]],
+  ['invalidanchor',['InvalidAnchor',['../classInvalidAnchor.html',1,'']]],
+  ['itemanchor',['ItemAnchor',['../classItemAnchor.html',1,'']]],
+  ['iteminfo',['ItemInfo',['../structItemInfo.html',1,'']]]
 ];

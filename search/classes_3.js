@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['game',['Game',['../classGame.html',1,'']]],
-  ['gamesignals',['GameSignals',['../classGameSignals.html',1,'']]]
+  ['fileopenerror',['FileOpenError',['../classFileOpenError.html',1,'']]],
+  ['fontinfo',['FontInfo',['../structFontInfo.html',1,'']]],
+  ['fontmanager',['FontManager',['../classFontManager.html',1,'']]]
 ];

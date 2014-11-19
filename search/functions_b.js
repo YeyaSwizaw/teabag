@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y',['y',['../classEntity.html#a86f22547ca6c74b64246e43bdfa57a6d',1,'Entity']]]
+  ['ui',['ui',['../classGame.html#a4e3758ddd566947384a893430007da38',1,'Game']]]
 ];

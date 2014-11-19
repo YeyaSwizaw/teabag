@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['nosuchentityerror',['NoSuchEntityError',['../classNoSuchEntityError.html',1,'']]],
-  ['nosuchoptionerror',['NoSuchOptionError',['../classNoSuchOptionError.html',1,'']]]
+  ['label',['Label',['../classLabel.html',1,'']]],
+  ['linereaderror',['LineReadError',['../classLineReadError.html',1,'']]]
 ];

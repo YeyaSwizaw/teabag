@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['x',['x',['../classEntity.html#a8992d1495d3f800c676a8e2f4b8cec97',1,'Entity']]]
+  ['texture',['Texture',['../structTexture.html',1,'']]],
+  ['tile',['Tile',['../structTile.html',1,'']]],
+  ['tileinfo',['TileInfo',['../structTileInfo.html',1,'']]],
+  ['tilemanager',['TileManager',['../classTileManager.html',1,'']]]
 ];

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['map',['Map',['../classMap.html',1,'']]]
+  ['invalidanchor',['InvalidAnchor',['../classInvalidAnchor.html',1,'']]],
+  ['itemanchor',['ItemAnchor',['../classItemAnchor.html',1,'']]],
+  ['iteminfo',['ItemInfo',['../structItemInfo.html',1,'']]]
 ];

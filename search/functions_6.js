@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['place',['place',['../classEntity.html#aad23fb55ed3efb10393fa2b8dff2f347',1,'Entity']]]
+  ['newentity',['newEntity',['../classWorld.html#ac53ac926aff095ffe5cc206a2818ba9d',1,'World']]]
 ];

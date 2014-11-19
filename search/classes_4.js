@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['linereaderror',['LineReadError',['../classLineReadError.html',1,'']]]
+  ['game',['Game',['../classGame.html',1,'']]],
+  ['gamesignals',['GameSignals',['../classGameSignals.html',1,'']]]
 ];

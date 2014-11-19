@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classEntity.html" title="This class represents an entity in the game world. " alt="" coords="5,5,61,32"/>
+<area shape="rect" id="node1" href="$classAnchor.html" title="Anchor" alt="" coords="5,31,68,57"/>
+<area shape="rect" id="node2" href="$classItemAnchor.html" title="ItemAnchor" alt="" coords="127,5,215,32"/>
+<area shape="rect" id="node3" href="$classWindowAnchor.html" title="WindowAnchor" alt="" coords="116,56,225,83"/>
 </map>
