@@ -28,6 +28,7 @@
 #include "world.hpp"
 #include "ui.hpp"
 #include "view.hpp"
+#include "options.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -39,7 +40,7 @@ TEABAG_NS
  * engine. It contains functions to manage initialisation, events, entities,
  * and the game map.
  */
-class TEABAG_API Game {
+class TEABAG_API Game : public internal::HasOptions {
 public:
 	/**
 	 * Initialises the game.

@@ -71,12 +71,12 @@ void Game::playerCollision(teabag::Collision coll) {
             time += t;
             totalDeaths += deaths;
 
-            if(game.world().option("next") == "win") {
+            if(game.world().options().get("next") == "win") {
                 std::cout << "You Win!" << std::endl;
                 std::cout << "Total: " << time.asSeconds() << "s, " << totalDeaths << " deaths" << std::endl;
                 game.exit();
             } else {
-                game.world().loadLevel(game.world().option("next"));
+                game.world().loadLevel(game.world().options().get("next"));
 
                 lvl++;
                 deaths = 0;

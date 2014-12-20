@@ -56,6 +56,15 @@ void Game::init() {
                 resizable = false;
             } 
         } 
+        else if(option == "option") {
+            std::string name, value;
+
+            if(!reader.get(name, value)) {
+                throw LineReadError(file, reader.line);
+            } 
+
+            setOption(name, value);
+        } 
     } 
 
     // Create SFML window

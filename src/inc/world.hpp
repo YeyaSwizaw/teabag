@@ -28,6 +28,7 @@
 #include "entitymanager.hpp"
 #include "entity.hpp"
 #include "signal.hpp"
+#include "options.hpp"
 
 #include <chrono>
 #include <random>
@@ -44,7 +45,7 @@ class Game;
  * This class stores everything about the game world - map,
  * entities, etc.
  */
-class TEABAG_API World {
+class TEABAG_API World : public internal::HasOptions {
 public:
     /**
      * Clear the current level (if any) and load the provided.
@@ -71,11 +72,6 @@ public:
      */
     Entity& newEntity(std::string name, int x, int y, std::string sprite);
     Entity& newEntity(int x, int y, std::string sprite);
-
-    /**
-     * Returns the value of a loaded option
-     */
-    std::string option(std::string name);
 
 private:
     friend class Game;

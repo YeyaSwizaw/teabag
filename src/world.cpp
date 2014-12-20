@@ -71,7 +71,7 @@ void World::loadLevel(std::string name) {
                 throw LineReadError(file, reader.line);
             } 
 
-            opts[name] = value;
+            setOption(name, value);
         } 
     } 
 
@@ -111,14 +111,6 @@ Entity& World::newEntity(int x, int y, std::string sprite) {
     } while(entityManager.entities.find(name) != entityManager.entities.end());
 
    return newEntity(name, x, y, sprite); 
-} 
-
-std::string World::option(std::string name) {
-    if(opts.find(name) == opts.end()) {
-        throw NoSuchOptionError(name);
-    } 
-
-    return opts.at(name);
 } 
 
 void World::render(sf::RenderWindow& window) {
