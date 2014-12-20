@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['option',['option',['../classWorld.html#aef30e1157b093c36900336a4fc89d672',1,'World']]]
+  ['newentity',['newEntity',['../classWorld.html#ac53ac926aff095ffe5cc206a2818ba9d',1,'World']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['map',['Map',['../classMap.html',1,'']]]
+  ['label',['Label',['../classLabel.html',1,'']]],
+  ['linereaderror',['LineReadError',['../classLineReadError.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['place',['place',['../classEntity.html#aad23fb55ed3efb10393fa2b8dff2f347',1,'Entity']]]
+  ['options',['options',['../classHasOptions.html#a7c8727d41efdcb60ff41a1c8e7d764ad',1,'HasOptions']]]
 ];

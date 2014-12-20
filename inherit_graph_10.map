@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classGame.html" title="The base class for a game. " alt="" coords="5,5,63,32"/>
+<area shape="rect" id="node2" href="$classGame.html" title="The base class for a game. " alt="" coords="144,5,201,32"/>
+<area shape="rect" id="node3" href="$classWorld.html" title="This class stores everything about the game world &#45; map, entities, etc. " alt="" coords="145,56,201,83"/>
 </map>

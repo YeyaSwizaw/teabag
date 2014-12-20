@@ -1,7 +1,7 @@
 var searchData=
 [
   ['scroll',['scroll',['../classView.html#a2ae52feb63e4aa57af049e693c2ca927',1,'View']]],
-  ['set',['set',['../classLabel.html#a81938ecc4a84830abb85f6078aab9181',1,'Label']]],
+  ['set',['set',['../classLabel.html#a81938ecc4a84830abb85f6078aab9181',1,'Label::set()'],['../classOptions.html#a5cf5f97e64d661d6ca8d489d7f5c5586',1,'Options::set()']]],
   ['setspritecoord',['setSpriteCoord',['../classEntity.html#ae8233f69df52205151d1aef20ca50194',1,'Entity']]],
   ['signal',['Signal',['../classSignal.html',1,'']]],
   ['signal_3c_20collision_20_3e',['Signal&lt; Collision &gt;',['../classSignal.html',1,'']]],

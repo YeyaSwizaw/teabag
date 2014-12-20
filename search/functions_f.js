@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y',['y',['../classEntity.html#a86f22547ca6c74b64246e43bdfa57a6d',1,'Entity::y()'],['../classView.html#ae7185044bf2d11e81904a7d0ca3859ac',1,'View::y()']]]
+  ['x',['x',['../classEntity.html#a8992d1495d3f800c676a8e2f4b8cec97',1,'Entity::x()'],['../classView.html#a4860b645e4d47df752681f73e037c16f',1,'View::x()']]]
 ];
