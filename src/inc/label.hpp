@@ -57,7 +57,7 @@ private:
     Label(internal::Anchor* horizontalAnchor, internal::Anchor* verticalAnchor, sf::Font& font, int size);
     void recalculate(sf::RenderWindow& window);
 
-    std::unique_ptr<internal::Anchor> horizontalAnchor, verticalAnchor;
+    std::shared_ptr<internal::Anchor> horizontalAnchor, verticalAnchor;
     sf::Text text;
 
     bool changed;

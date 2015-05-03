@@ -71,7 +71,7 @@ void EntityManager::loadEntity(EntityInfo& entity) {
     entities.insert({
         entity.name, {
             entity.name, entity.x, entity.y, textures[sprite], 
-            [this, name=entity.name](){ this->entities.erase(name); }
+            [this, &entity](){ this->entities.erase(entity.name); }
     }});
 } 
 

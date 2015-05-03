@@ -55,7 +55,7 @@ private:
 
 TEABAG_INTERNAL
 
-class HasOptions {
+class TEABAG_API HasOptions {
 public:
     /**
      * Gets the object containing the options for a class.
